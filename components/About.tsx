@@ -1,0 +1,59 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Section } from "./Section";
+import { portfolioData } from "@/data/portfolio";
+import { PersonalInfoCard } from "./PersonalInfoCard";
+
+export const About = () => {
+    return (
+        <Section id="about">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="space-y-12"
+            >
+                <PersonalInfoCard
+                    name={portfolioData.name}
+                    role={portfolioData.title}
+                    location={portfolioData.location}
+                    email={portfolioData.contact.email}
+                    github={portfolioData.contact.github}
+                    linkedin={portfolioData.contact.linkedin}
+                />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                    <div className="space-y-6">
+                        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                            <span className="w-1 h-8 bg-cyan-500 rounded-full" />
+                            Engineering Mindset
+                        </h2>
+                        <p className="text-zinc-400 leading-relaxed text-lg">
+                            {portfolioData.about.description}
+                        </p>
+                    </div>
+
+                    <div className="grid gap-4">
+                        {portfolioData.about.points.map((point, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1, duration: 0.5 }}
+                                className="p-5 glass-card rounded-md hover:-translate-y-1 group"
+                            >
+                                <p className="text-zinc-300 text-sm font-mono flex items-start gap-3">
+                                    <span className="text-cyan-500 mt-1">/</span>
+                                    <span className="group-hover:text-white transition-colors">{point}</span>
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
+        </Section>
+    );
+};
