@@ -55,6 +55,8 @@ export const NeuralBackground = () => {
     const prefersReducedMotion = useReducedMotion();
     const [paths, setPaths] = useState<PathData[]>([]);
     const [isMounted, setIsMounted] = useState(false);
+    const [isLowPower, setIsLowPower] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
     const [isIdle, setIsIdle] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout>(null);
 
@@ -63,8 +65,20 @@ export const NeuralBackground = () => {
     const yVelocity = useSpring(scrollY, { stiffness: 100, damping: 30 });
     const shift = useTransform(scrollY, [0, 5000], [0, 50]); // Parallax shift
 
-    // Idle detection
+    // Performance & Idle detection
     useEffect(() => {
+        // Detect low-power devices
+        if (typeof navigator !== 'undefined') {
+            const concurrency = navigator.hardwareConcurrency || 4;
+            if (concurrency <= 4) setIsLowPower(true);
+        }
+
+        // Visibility API to pause animations
+        const handleVisibilityChange = () => {
+            setIsVisible(document.visibilityState === 'visible');
+        };
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
         const resetIdle = () => {
             setIsIdle(false);
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -76,11 +90,14 @@ export const NeuralBackground = () => {
         resetIdle();
 
         return () => {
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
             window.removeEventListener("mousemove", resetIdle);
             window.removeEventListener("scroll", resetIdle);
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
     }, []);
+
+    const shouldAnimate = !prefersReducedMotion && !isLowPower && isVisible;
 
     useEffect(() => {
         setIsMounted(true);
@@ -96,7 +113,7 @@ export const NeuralBackground = () => {
 
     if (!isMounted) return null;
 
-    if (prefersReducedMotion) {
+    if (!shouldAnimate) {
         return (
             <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-20">
                 {/* Fallback Static SVG */}
