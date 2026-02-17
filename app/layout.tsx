@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { StickyContact } from "@/components/StickyContact";
-import { NebulaField } from "@/components/NebulaField";
+import WarpField from "@/components/WarpField";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,11 +29,8 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased text-foreground h-full selection:bg-cyan-500/30 selection:text-cyan-200`}
       >
-        {/* Layer 0: Solid dark base */}
-        <div className="fixed inset-0 bg-zinc-950 pointer-events-none" style={{ zIndex: 0 }} />
-
-        {/* Layer 1: Nebula Field */}
-        <NebulaField />
+        {/* Layer 1: Warp Field Background */}
+        <WarpField />
 
         {/* Layer 2: Ambient glow */}
         <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(6,182,212,0.08),transparent_60%)] pointer-events-none" style={{ zIndex: 2 }} />

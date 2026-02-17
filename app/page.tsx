@@ -9,21 +9,23 @@ import { SectionDivider } from "@/components/SectionDivider";
 export default function Home() {
   return (
     <main className="min-h-screen relative overflow-hidden">
-      <Hero />
-      <SectionDivider />
-      <About />
-      <SectionDivider />
-      <Experience />
-      <SectionDivider />
-      <Projects />
-      <SectionDivider />
-      <Skills />
-      <SectionDivider />
-      <Contact />
+      <div className="relative z-10">
+        <Hero />
+        <SectionDivider />
+        <About />
+        <SectionDivider />
+        <Experience />
+        <SectionDivider />
+        <Projects />
+        <SectionDivider />
+        <Skills />
+        <SectionDivider />
+        <Contact />
 
-      <footer className="py-8 text-center text-zinc-600 text-xs font-mono border-t border-zinc-900">
-        <p>© {new Date().getFullYear()} Ishwar Soni. Built with Next.js & Tailwind.</p>
-      </footer>
+        <footer className="py-8 text-center text-zinc-600 text-xs font-mono border-t border-zinc-900">
+          <p>© {new Date().getFullYear()} Ishwar Soni. Built with Next.js & Tailwind.</p>
+        </footer>
+      </div>
     </main>
   );
 }

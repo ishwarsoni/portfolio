@@ -1,19 +1,10 @@
 import { Section } from "./Section";
 import { portfolioData } from "@/data/portfolio";
-import { PersonalInfoCard } from "./PersonalInfoCard";
 
 export const About = () => {
     return (
         <Section id="about">
-            <div className="space-y-12">
-                <PersonalInfoCard
-                    name={portfolioData.name}
-                    role={portfolioData.title}
-                    location={portfolioData.location}
-                    email={portfolioData.contact.email}
-                    github={portfolioData.contact.github}
-                    linkedin={portfolioData.contact.linkedin}
-                />
+            <div className="space-y-12 pb-12">
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
                     <div className="space-y-6">

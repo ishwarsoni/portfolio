@@ -55,8 +55,8 @@ export const portfolioData = {
             stack: ["Python", "NumPy", "Blender API", "SMPL-H"],
             isFlagship: true,
             links: {
-                github: "#",
-                demo: "#",
+                github: "",
+                demo: "",
             },
         },
         {
@@ -70,8 +70,8 @@ export const portfolioData = {
             whyThisMatters: "Demonstrates full-stack ML engineering capability, from EDA to Dockerized deployment.",
             stack: ["XGBoost", "FastAPI", "Docker", "AWS"],
             links: {
-                github: "#",
-                demo: "#",
+                github: "https://github.com/ishwarsoni/bengaluru-house-price-predictor",
+                demo: "",
             },
         },
         {
@@ -85,7 +85,7 @@ export const portfolioData = {
             whyThisMatters: "Proves ability to write clean, maintainable, and leak-proof ML code.",
             stack: ["Scikit-learn", "Pandas", "Python"],
             links: {
-                github: "#",
+                github: "https://github.com/ishwarsoni/ml-preprocessing-pipelines",
             },
         },
         {
@@ -99,7 +99,7 @@ export const portfolioData = {
             whyThisMatters: "Shows capability in data engineering and handling unstructured data at scale.",
             stack: ["Python", "BeautifulSoup", "Pandas", "Requests"],
             links: {
-                github: "#",
+                github: "https://github.com/ishwarsoni/python-company-scraper",
             },
         },
     ],
