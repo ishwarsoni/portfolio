@@ -1,8 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
 const TERMINAL_LINES = [
     { text: "> initializing neural interface...", color: "text-zinc-400" },
     { text: "> loading modules [vision, nlp, rl]...", color: "text-zinc-400" },
@@ -12,29 +9,8 @@ const TERMINAL_LINES = [
 ];
 
 export const HeroTerminal = () => {
-    const [lineCount, setLineCount] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setLineCount(prev => {
-                if (prev < TERMINAL_LINES.length) {
-                    return prev + 1;
-                }
-                clearInterval(interval);
-                return prev;
-            });
-        }, 800);
-
-        return () => clearInterval(interval);
-    }, []);
-
     return (
-        <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="w-full max-w-lg mx-auto relative group"
-        >
+        <div className="w-full max-w-lg mx-auto relative group">
             {/* Glow backing */}
             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
 
@@ -52,21 +28,19 @@ export const HeroTerminal = () => {
 
                 {/* Content */}
                 <div className="p-6 font-mono text-sm space-y-2 h-[200px] overflow-hidden">
-                    {TERMINAL_LINES.slice(0, lineCount).map((line, i) => (
-                        <motion.div
+                    {TERMINAL_LINES.map((line, i) => (
+                        <div
                             key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
                             className={`${line.color}`}
                         >
                             {line.text}
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
 
                 {/* Scanline Effect */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/5 to-transparent opacity-20 pointer-events-none animate-scan" />
             </div>
-        </motion.div>
+        </div>
     );
 };

@@ -8,7 +8,7 @@ import { SectionDivider } from "@/components/SectionDivider";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background relative overflow-hidden">
+    <main className="min-h-screen relative overflow-hidden">
       <Hero />
       <SectionDivider />
       <About />
@@ -21,7 +21,7 @@ export default function Home() {
       <SectionDivider />
       <Contact />
 
-      <footer className="py-8 text-center text-zinc-600 text-xs font-mono border-t border-zinc-900 bg-zinc-950">
+      <footer className="py-8 text-center text-zinc-600 text-xs font-mono border-t border-zinc-900">
         <p>© {new Date().getFullYear()} Ishwar Soni. Built with Next.js & Tailwind.</p>
       </footer>
     </main>

@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ArrowRight, Download, Mail, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { Section } from "@/components/Section";
@@ -10,12 +7,7 @@ export default function HireMe() {
         <div className="min-h-screen pt-24 pb-12">
             <Section id="hire-me-content">
                 <div className="max-w-3xl mx-auto space-y-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-center space-y-6"
-                    >
+                    <div className="text-center space-y-6">
                         <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white">
                             Ready to Build Systems <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
@@ -26,14 +18,9 @@ export default function HireMe() {
                             I specialize in turning research code into reliable production pipelines.
                             If you need an engineer who cares about data integrity, stability, and shipping, let's talk.
                         </p>
-                    </motion.div>
+                    </div>
 
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden"
-                    >
+                    <div className="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
                         {/* Glow effect */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
@@ -56,7 +43,7 @@ export default function HireMe() {
 
                                 <div className="pt-4">
                                     <a
-                                        href="/resume.pdf" // Placeholder
+                                        href="/resume.pdf"
                                         className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors border-b border-zinc-700 hover:border-white pb-1"
                                     >
                                         <Download className="w-4 h-4" />
@@ -66,7 +53,7 @@ export default function HireMe() {
                             </div>
 
                             <div className="space-y-8 border-l border-zinc-800 pl-0 md:pl-12">
-                                <h3 className="text-2xl font-bold text-white">Let's Connect</h3>
+                                <h3 className="text-2xl font-bold text-white">Let&apos;s Connect</h3>
                                 <p className="text-zinc-400">
                                     Currently open to: <br />
                                     <span className="text-white font-medium">Full-time roles in Applied ML / Computer Vision</span>
@@ -92,7 +79,7 @@ export default function HireMe() {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </Section>
         </div>

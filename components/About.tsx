@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Section } from "./Section";
 import { portfolioData } from "@/data/portfolio";
 import { PersonalInfoCard } from "./PersonalInfoCard";
@@ -8,13 +5,7 @@ import { PersonalInfoCard } from "./PersonalInfoCard";
 export const About = () => {
     return (
         <Section id="about">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="space-y-12"
-            >
+            <div className="space-y-12">
                 <PersonalInfoCard
                     name={portfolioData.name}
                     role={portfolioData.title}
@@ -37,23 +28,19 @@ export const About = () => {
 
                     <div className="grid gap-4">
                         {portfolioData.about.points.map((point, index) => (
-                            <motion.div
+                            <div
                                 key={index}
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1, duration: 0.5 }}
-                                className="p-5 glass-card rounded-md hover:-translate-y-1 group"
+                                className="p-5 glass-card rounded-md hover:-translate-y-1 group transition-transform"
                             >
                                 <p className="text-zinc-300 text-sm font-mono flex items-start gap-3">
                                     <span className="text-cyan-500 mt-1">/</span>
                                     <span className="group-hover:text-white transition-colors">{point}</span>
                                 </p>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
-            </motion.div>
+            </div>
         </Section>
     );
 };

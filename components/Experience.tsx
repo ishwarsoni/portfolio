@@ -1,19 +1,10 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Section } from "./Section";
 import { portfolioData } from "@/data/portfolio";
 
 export const Experience = () => {
     return (
         <Section id="experience">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="space-y-12"
-            >
+            <div className="space-y-12">
                 <h2 className="text-2xl font-bold text-white mb-12 flex items-center gap-3">
                     <span className="w-1 h-8 bg-gradient-to-b from-cyan-500 to-blue-600 rounded-full" />
                     Experience
@@ -55,7 +46,7 @@ export const Experience = () => {
                         </div>
                     ))}
                 </div>
-            </motion.div>
+            </div>
         </Section>
     );
 };

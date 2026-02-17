@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Section } from "./Section";
 import { portfolioData } from "@/data/portfolio";
 import { Mail, Github, Linkedin } from "lucide-react";
@@ -9,13 +6,7 @@ import Link from "next/link";
 export const Contact = () => {
     return (
         <Section id="contact" className="py-32">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="max-w-2xl mx-auto text-center space-y-8"
-            >
+            <div className="max-w-2xl mx-auto text-center space-y-8">
                 <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">Ready to Ship?</h2>
                 <p className="text-zinc-400 text-lg max-w-xl mx-auto">
                     I&apos;m currently looking for early-stage AI startups and strong ML engineering teams.
@@ -45,7 +36,7 @@ export const Contact = () => {
                         <span>LinkedIn</span>
                     </Link>
                 </div>
-            </motion.div>
+            </div>
         </Section>
     );
 };

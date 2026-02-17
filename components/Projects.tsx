@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Section } from "./Section";
 import { portfolioData } from "@/data/portfolio";
 import { ArrowUpRight, Github } from "lucide-react";
@@ -9,23 +6,13 @@ import Link from "next/link";
 export const Projects = () => {
     return (
         <Section id="projects">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="space-y-12"
-            >
+            <div className="space-y-12">
                 <h2 className="text-2xl font-bold text-white">Featured Projects</h2>
 
                 <div className="grid grid-cols-1 gap-8">
                     {portfolioData.projects.map((project, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, duration: 0.5 }}
                             className="group glass-card p-6 md:p-8 rounded-xl relative overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
@@ -60,7 +47,7 @@ export const Projects = () => {
                                 {project.whyThisMatters && (
                                     <div className="bg-cyan-950/30 rounded-lg p-4 border border-cyan-500/20">
                                         <h4 className="text-xs font-bold text-cyan-400 mb-2 uppercase tracking-wider flex items-center gap-2">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                                             Why This Matters
                                         </h4>
                                         <p className="text-cyan-100/80 text-sm leading-relaxed">
@@ -91,10 +78,10 @@ export const Projects = () => {
                                     </span>
                                 ))}
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
-            </motion.div>
+            </div>
         </Section>
     );
 };

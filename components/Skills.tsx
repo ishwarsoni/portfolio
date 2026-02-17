@@ -1,19 +1,10 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Section } from "./Section";
 import { portfolioData } from "@/data/portfolio";
 
 export const Skills = () => {
     return (
         <Section id="skills">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="space-y-12"
-            >
+            <div className="space-y-12">
                 <h2 className="text-2xl font-bold text-white">Technical Skills</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -33,7 +24,7 @@ export const Skills = () => {
                         </div>
                     ))}
                 </div>
-            </motion.div>
+            </div>
         </Section>
     );
 };
