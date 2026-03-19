@@ -44,15 +44,15 @@ export const portfolioData = {
 
     projects: [
         {
-            title: "StableMotion / Motion Processing System",
-            description: "A robust system for preprocessing and stabilizing human motion data for ML training.",
-            problem: "Raw motion data from various sources (AMASS, custom captures) often has inconsistent coordinate systems, global orientation errors, and jitter.",
-            approach: "Developed a normalization pipeline that standardizes coordinate systems and applies smoothing filters.",
-            challenges: "Handling mixed coordinate systems (Y-up vs Z-up) and correcting global orientation without distorting local motion.",
-            solution: "Implemented automated coordinate detection and transformation modules, along with a custom smoothing algorithm.",
-            results: "Generated reliable, Blender-ready outputs used for training high-fidelity motion models.",
-            whyThisMatters: "Clean training data is the bottleneck for detailed motion generation models. This pipeline automated weeks of manual cleanup.",
-            stack: ["Python", "NumPy", "Blender API", "SMPL-H"],
+            title: "BVH-to-SMPLH Motion Processing Pipeline",
+            description: "End-to-end pipeline to convert and clean motion capture data (BVH → SMPL-H) with correct orientation, grounding, and batch processing.",
+            problem: "Raw BVH motion capture data suffers from orientation mismatches, floating/sliding feet, jitter artifacts, and lacks compatibility with SMPL-H based ML workflows.",
+            approach: "Built a multi-stage conversion pipeline: BVH parsing → skeleton remapping → SMPL-H parameterization, followed by stabilization and postprocessing passes.",
+            challenges: "Correcting global orientation and grounding without distorting local joint rotations, eliminating foot sliding artifacts while preserving natural motion dynamics, and handling heterogeneous BVH skeleton hierarchies across datasets.",
+            solution: "Implemented Savitzky-Golay smoothing for jitter reduction, FK-based grounding to fix floating characters, and foot-lock postprocessing to eliminate sliding artifacts. Built batch processing tools for large-scale datasets and reverse export (NPZ → BVH) for Blender/Unity-compatible workflows. Created MP4 preview generation and skeleton/frame inspector utilities for rapid validation.",
+            results: "Processed large-scale motion datasets with consistent quality, producing clean SMPL-H parameterized data ready for downstream ML training and Blender/Unity integration.",
+            whyThisMatters: "High-quality motion data is the bottleneck for training human motion generation models. This pipeline automates weeks of manual cleanup and enables reliable, reproducible dataset preparation at scale.",
+            stack: ["Python", "NumPy", "SciPy", "SMPL-H"],
             isFlagship: true,
             links: {
                 github: "",
