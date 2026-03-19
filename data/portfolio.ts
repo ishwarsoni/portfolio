@@ -138,6 +138,21 @@ export const portfolioData = {
         },
     ],
 
+    certifications: [
+        {
+            title: "Building RAG Agents with LLMs",
+            issuer: "NVIDIA",
+            date: "Nov 2025",
+            link: "https://learn.nvidia.com/certificates?id=u8dJRK5IQEe0CjntZD-S0g#",
+        },
+        {
+            title: "Develop Generative AI Apps with Azure OpenAI and Semantic Kernel",
+            issuer: "Microsoft Applied Skills",
+            date: "Feb 2026",
+            link: "https://learn.microsoft.com/en-in/users/ishwarsoni-6131/credentials/84da87053a16814a?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+        },
+    ],
+
     contact: {
         email: "ishwarsoni2917@gmail.com",
         github: "https://github.com/ishwarsoni",

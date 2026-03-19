@@ -6,6 +6,7 @@ const About = dynamic(() => import("@/components/About").then(mod => mod.About))
 const Experience = dynamic(() => import("@/components/Experience").then(mod => mod.Experience));
 const Projects = dynamic(() => import("@/components/Projects").then(mod => mod.Projects));
 const Skills = dynamic(() => import("@/components/Skills").then(mod => mod.Skills));
+const Certifications = dynamic(() => import("@/components/Certifications").then(mod => mod.Certifications));
 const Contact = dynamic(() => import("@/components/Contact").then(mod => mod.Contact));
 
 export default function Home() {
@@ -21,6 +22,8 @@ export default function Home() {
         <Projects />
         <SectionDivider />
         <Skills />
+        <SectionDivider />
+        <Certifications />
         <SectionDivider />
         <Contact />
 
