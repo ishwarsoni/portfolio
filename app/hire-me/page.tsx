@@ -44,7 +44,8 @@ export default function HireMe() {
                                 <div className="pt-4">
                                     <a
                                         href="/Ishwar_Soni_Resume.pdf"
-                                        download="Ishwar_Soni_Resume.pdf"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors border-b border-zinc-700 hover:border-white pb-1"
                                     >
                                         <Download className="w-4 h-4" />

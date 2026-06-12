@@ -95,7 +95,6 @@ export const Hero = () => {
 
                     <a
                         href="/Ishwar_Soni_Resume.pdf"
-                        download="Ishwar_Soni_Resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 px-8 py-4 bg-zinc-900 text-white font-medium rounded-full border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 transition-all active:scale-95"
