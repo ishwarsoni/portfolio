@@ -384,6 +384,16 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
                 <span className="font-mono text-ash-dim">Stack:</span>
                 <span className="text-ivory">{project.stack.slice(0, 4).join(" · ")}</span>
               </div>
+              {project.links.demo && (
+                <a
+                  href={project.links.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary px-4 py-1.5 text-xs tracking-[0.2em] uppercase font-mono"
+                >
+                  LIVE DEMO →
+                </a>
+              )}
             </div>
           </div>
 

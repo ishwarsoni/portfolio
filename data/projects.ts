@@ -126,8 +126,8 @@ export const projects: Project[] = [
     ],
     stack: ["Python", "Streamlit", "NVIDIA NIM", "Nemotron-3 Ultra", "Pydantic v2", "PyMuPDF", "python-docx", "fpdf2", "ThreadPoolExecutor"],
     links: {
-      github: "https://github.com/ishwarsoni/oncolink",
-      demo: undefined,
+      github: "https://github.com/ishwarsoni/oncolink-ai",
+      demo: "https://oncolink-ai-app.streamlit.app/",
     },
     metrics: [
       { label: "Document Formats", value: "PDF, DOCX, TXT", context: "Multi-format ingestion" },
@@ -347,7 +347,7 @@ decisions: [
     ],
     stack: ["Python", "NumPy", "SciPy", "SMPL-H", "BVH", "AMASS", "Open3D/Trimesh", "Matplotlib", "PyBullet (optional)"],
     links: {
-      github: "https://github.com/ishwarsoni",
+      github: "https://github.com/ishwarsoni/bvh-to-smplh-pipeline",
       demo: undefined,
     },
     heroVisual: "/work/motion-processing/hero.avif",

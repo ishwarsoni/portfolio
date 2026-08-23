@@ -106,7 +106,18 @@ export function ProjectCard({ project, index, Diagram }: ProjectCardProps) {
               <span className="project-card__separator">·</span>
               <span>{project.role}</span>
             </div>
-            <div className="project-card__actions">
+            <div className="project-card__actions flex-wrap gap-3">
+              {project.links.demo && (
+                <a
+                  href={project.links.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-card__link text-antique-gold hover:text-ivory"
+                  aria-label={`${project.title} Live Demo`}
+                >
+                  LIVE DEMO →
+                </a>
+              )}
               {project.links.github && (
                 <a
                   href={project.links.github}
@@ -115,7 +126,7 @@ export function ProjectCard({ project, index, Diagram }: ProjectCardProps) {
                   className="project-card__link"
                   aria-label={`${project.title} on GitHub`}
                 >
-                  GitHub →
+                  GITHUB →
                 </a>
               )}
               <Button asChild className="project-card__cta">
