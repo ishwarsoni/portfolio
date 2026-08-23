@@ -64,7 +64,7 @@ export function OncoLinkDiagram({
 
       if (!stageGroups.length) return;
 
-      gsap.set(stageGroups, { opacity: 0, y: 15, scale: 0.96 });
+      gsap.set(stageGroups, { opacity: 0 });
       if (flowPath) gsap.set(flowPath, { strokeDashoffset: 800 });
       [
         perDocFlow,
@@ -73,7 +73,7 @@ export function OncoLinkDiagram({
         clinicalSchema,
         biomarkerStructure,
       ].forEach((el) => {
-        if (el) gsap.set(el, { opacity: 0, y: 15 });
+        if (el) gsap.set(el, { opacity: 0 });
       });
 
       const tl = gsap.timeline({
@@ -83,7 +83,7 @@ export function OncoLinkDiagram({
       stageGroups.forEach((stage, i) => {
         tl.to(
           stage,
-          { opacity: 1, y: 0, scale: 1, duration: isMobile ? 0.25 : 0.4 },
+          { opacity: 1, duration: isMobile ? 0.25 : 0.4 },
           i * (isMobile ? 0.08 : 0.1)
         );
       });
@@ -115,7 +115,6 @@ export function OncoLinkDiagram({
         [perDocFlow, mergeStrategies, conflictDetection].filter(Boolean),
         {
           opacity: 1,
-          y: 0,
           duration: isMobile ? 0.3 : 0.45,
           stagger: isMobile ? 0.05 : 0.08,
         },
@@ -125,7 +124,6 @@ export function OncoLinkDiagram({
         [clinicalSchema, biomarkerStructure].filter(Boolean),
         {
           opacity: 1,
-          y: 0,
           duration: isMobile ? 0.3 : 0.45,
           stagger: isMobile ? 0.05 : 0.08,
         },
