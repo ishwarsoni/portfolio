@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/Button";
@@ -14,8 +14,9 @@ gsap.registerPlugin(ScrollTrigger);
 export function Hero() {
   const heroRef = useRef<any>(null);
   const nameRef = useRef<any>(null);
-  const statementRef = useRef<any>(null);
   const roleRef = useRef<any>(null);
+  const statementRef = useRef<any>(null);
+  const subtextRef = useRef<any>(null);
   const ctaRef = useRef<any>(null);
   const scrollIndicatorRef = useRef<any>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -32,8 +33,9 @@ export function Hero() {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       tl.from(nameRef.current, { opacity: 0, y: 40, duration: 0.9 })
-        .from(statementRef.current, { opacity: 0, y: 20, duration: 0.7 }, "-=0.4")
-        .from(roleRef.current, { opacity: 0, y: 20, duration: 0.7 }, "-=0.3")
+        .from(roleRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.5")
+        .from(statementRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.3")
+        .from(subtextRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.3")
         .from(ctaRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.2")
         .from(scrollIndicatorRef.current, { opacity: 0, scaleY: 0, duration: 0.8 }, "-=0.1");
 
@@ -66,35 +68,44 @@ export function Hero() {
       <div className="absolute inset-0 bg-vignette z-0" aria-hidden="true" />
       
       <Container size="narrow" className="relative z-10 py-16 md:py-24 text-center">
-        <Typography variant="eyebrow" className="mb-6 animate-fade-in-up">
-          AI ENGINEER
-        </Typography>
-
+        {/* Name */}
         <Typography
           ref={nameRef}
           id="hero-title"
           variant="display"
-          className="uppercase tracking-[0.04em] mb-8 animate-fade-in-up"
+          className="uppercase tracking-[0.04em] mb-2 animate-fade-in-up"
         >
           {siteData.name}
         </Typography>
 
+        {/* Title directly UNDER Name */}
+        <Typography
+          ref={roleRef}
+          variant="eyebrow"
+          className="mb-8 text-[#C6A15B] tracking-[0.25em] text-sm md:text-base font-mono font-semibold uppercase animate-fade-in-up"
+        >
+          AI ENGINEER
+        </Typography>
+
+        {/* Tagline Statement */}
         <Typography
           ref={statementRef}
           variant="lead"
-          className="mb-6 max-w-2xl mx-auto animate-fade-in-up"
+          className="mb-4 max-w-2xl mx-auto italic text-[#E8E1D2] animate-fade-in-up"
         >
-          {siteData.heroStatement}
+          "{siteData.heroStatement}"
         </Typography>
 
+        {/* Subtext Domain Statement */}
         <Typography
-          ref={roleRef}
+          ref={subtextRef}
           variant="body-lg"
-          className="text-ash mb-12 animate-fade-in-up"
+          className="text-[#85858A] mb-12 max-w-xl mx-auto animate-fade-in-up"
         >
           {siteData.heroSubtext}
         </Typography>
 
+        {/* CTA Buttons */}
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up">
           <Button asChild size="lg" className="w-full sm:w-auto">
             <a href="#work">VIEW WORK</a>
@@ -124,4 +135,4 @@ export function Hero() {
   );
 }
 
-import { useState } from "react";
+export default Hero;

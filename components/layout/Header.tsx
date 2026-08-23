@@ -42,14 +42,14 @@ export function Header() {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-6 lg:gap-10">
-            <ul className="flex items-center gap-4 lg:gap-7" role="menubar">
+          <div className="hidden md:flex items-center gap-4 lg:gap-8">
+            <ul className="flex items-center gap-3 lg:gap-6" role="menubar">
               {navigation.map((item) => (
                 <li key={item.href} role="none">
                   <Link
                     href={item.href}
                     role="menuitem"
-                    className="font-mono text-xs tracking-[0.18em] uppercase text-ash hover:text-ivory transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-0 after:bg-antique-gold after:transition-all hover:after:w-full"
+                    className="font-mono text-[11px] lg:text-xs tracking-[0.15em] uppercase text-ash hover:text-ivory transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-0 after:bg-antique-gold after:transition-all hover:after:w-full"
                   >
                     {item.label}
                   </Link>
@@ -57,7 +57,7 @@ export function Header() {
               ))}
             </ul>
 
-            <div className="flex items-center pl-4 lg:pl-6 border-l border-[#1A1A20]">
+            <div className="flex items-center pl-3 lg:pl-5 border-l border-[#1A1A20]">
               <Link
                 href={siteData.resumeUrl}
                 target="_blank"
