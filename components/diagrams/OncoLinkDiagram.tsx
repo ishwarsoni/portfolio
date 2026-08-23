@@ -3,17 +3,34 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
-interface OncoLinkDiagramProps {
+interface TechnicalDiagramProps {
   className?: string;
   "aria-label"?: string;
 }
 
+const PIPELINE_STAGES = [
+  { id: "input", label: "01. INPUT", x: 100, color: "#80633A" },
+  { id: "extraction", label: "02. EXTRACT", x: 260, color: "#2d9cdb" },
+  { id: "validation", label: "03. VALIDATE", x: 420, color: "#a51c30" },
+  { id: "normalize", label: "04. NORMALIZE", x: 580, color: "#c6a15b" },
+  { id: "harmonize", label: "05. HARMONIZE", x: 740, color: "#10b981" },
+  { id: "export", label: "06. EXPORT", x: 900, color: "#c6a15b" },
+];
+
 export function OncoLinkDiagram({
   className = "",
-  "aria-label": ariaLabel = "OncoLink AI Clinical Intelligence Platform architecture",
-}: OncoLinkDiagramProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  "aria-label": ariaLabel = "OncoLink AI Clinical Intelligence Platform architecture blueprint",
+}: TechnicalDiagramProps) {
+  const containerRef = useRef<SVGSVGElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -23,7 +40,7 @@ export function OncoLinkDiagram({
           observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.25 }
     );
     if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
@@ -33,175 +50,349 @@ export function OncoLinkDiagram({
     if (!isVisible || !containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      const cards = containerRef.current?.querySelectorAll(".oncolink-card");
-      const pulseLine = containerRef.current?.querySelector(".oncolink-pulse");
-      const badges = containerRef.current?.querySelectorAll(".oncolink-badge");
+      const svg = containerRef.current as SVGSVGElement;
+      const stageGroups = PIPELINE_STAGES.map((s) =>
+        svg.querySelector(`#stage-${s.id}`)
+      ).filter(Boolean) as SVGGElement[];
+      const flowPath = svg.querySelector("#flow-path");
+      const validationNode = svg.querySelector("#stage-validation");
+      const perDocFlow = svg.querySelector("#per-doc-flow");
+      const mergeStrategies = svg.querySelector("#merge-strategies");
+      const conflictDetection = svg.querySelector("#conflict-detection");
+      const clinicalSchema = svg.querySelector("#clinical-schema");
+      const biomarkerStructure = svg.querySelector("#biomarker-structure");
 
-      if (cards && cards.length) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 15, scale: 0.97 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.12, ease: "power2.out" }
+      if (!stageGroups.length) return;
+
+      gsap.set(stageGroups, { opacity: 0, y: 15, scale: 0.96 });
+      if (flowPath) gsap.set(flowPath, { strokeDashoffset: 800 });
+      [
+        perDocFlow,
+        mergeStrategies,
+        conflictDetection,
+        clinicalSchema,
+        biomarkerStructure,
+      ].forEach((el) => {
+        if (el) gsap.set(el, { opacity: 0, y: 15 });
+      });
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.out", duration: isMobile ? 0.4 : 0.6 },
+      });
+
+      stageGroups.forEach((stage, i) => {
+        tl.to(
+          stage,
+          { opacity: 1, y: 0, scale: 1, duration: isMobile ? 0.25 : 0.4 },
+          i * (isMobile ? 0.08 : 0.1)
+        );
+      });
+
+      if (flowPath) {
+        tl.to(
+          flowPath,
+          { strokeDashoffset: 0, duration: isMobile ? 0.7 : 1.0, ease: "power2.inOut" },
+          "-=0.2"
         );
       }
 
-      if (pulseLine) {
-        gsap.fromTo(
-          pulseLine,
-          { scaleX: 0, opacity: 0 },
-          { scaleX: 1, opacity: 1, duration: 0.8, ease: "power2.inOut", delay: 0.3 }
-        );
+      if (validationNode) {
+        const ring = validationNode.querySelector("rect");
+        if (ring) {
+          tl.to(
+            ring,
+            { strokeWidth: 3, filter: "url(#strong-glow)", duration: isMobile ? 0.15 : 0.2 },
+            "-=0.15"
+          ).to(
+            ring,
+            { strokeWidth: 2, filter: "url(#soft-glow)", duration: isMobile ? 0.25 : 0.4 },
+            "+=0.05"
+          );
+        }
       }
 
-      if (badges && badges.length) {
-        gsap.fromTo(
-          badges,
-          { opacity: 0, scale: 0.9 },
-          { opacity: 1, scale: 1, duration: 0.4, stagger: 0.08, delay: 0.6, ease: "back.out(1.4)" }
-        );
-      }
+      tl.to(
+        [perDocFlow, mergeStrategies, conflictDetection].filter(Boolean),
+        {
+          opacity: 1,
+          y: 0,
+          duration: isMobile ? 0.3 : 0.45,
+          stagger: isMobile ? 0.05 : 0.08,
+        },
+        "-=0.3"
+      );
+      tl.to(
+        [clinicalSchema, biomarkerStructure].filter(Boolean),
+        {
+          opacity: 1,
+          y: 0,
+          duration: isMobile ? 0.3 : 0.45,
+          stagger: isMobile ? 0.05 : 0.08,
+        },
+        "-=0.15"
+      );
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isVisible]);
+  }, [isVisible, isMobile]);
 
   return (
-    <div
-      ref={containerRef}
-      className={`w-full bg-[#0B0C0E]/90 border border-[#1A1A20] rounded-lg p-4 md:p-6 text-left font-mono select-none overflow-hidden ${className}`}
-      aria-label={ariaLabel}
-      role="img"
-    >
-      {/* Header Bar */}
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#1A1A20] text-xs">
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="text-[#C6A15B] font-semibold tracking-wider uppercase text-[11px]">
-            ONCOLINK RAG ENGINE
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded text-[10px] bg-[#111317] border border-[#2d9cdb]/30 text-[#2d9cdb]">
-            Nemotron-3 Ultra
-          </span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-[#111317] border border-[#C6A15B]/30 text-[#C6A15B] hidden sm:inline-block">
-            NVIDIA NIM
-          </span>
-        </div>
-      </div>
+    <figure className={`w-full overflow-hidden ${className}`} aria-label={ariaLabel} role="img">
+      <svg
+        ref={containerRef}
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="xMidYMid meet"
+        className="w-full max-w-[1000px] mx-auto select-none"
+        aria-hidden="true"
+        style={{ maxWidth: "100%", height: "auto" }}
+      >
+        <defs>
+          <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#C6A15B" />
+            <stop offset="100%" stopColor="#80633A" />
+          </linearGradient>
+          <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#1a6b9e" />
+            <stop offset="100%" stopColor="#2d9cdb" />
+          </linearGradient>
+          <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#059669" />
+            <stop offset="100%" stopColor="#10b981" />
+          </linearGradient>
+          <marker
+            id="arrow"
+            markerWidth="8"
+            markerHeight="8"
+            refX="7"
+            refY="3"
+            orient="auto"
+            markerUnits="strokeWidth"
+          >
+            <path d="M0,0 L0,6 L8,3 z" fill="#80633A" />
+          </marker>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1A1A20" strokeWidth="0.5" />
+          </pattern>
+          <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="strong-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
 
-      {/* Main 3-Step Flow Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 relative mb-4">
-        {/* Connector line overlay for desktop */}
-        <div className="hidden md:block absolute top-1/2 left-0 right-0 h-[1px] bg-gradient-to-r from-[#80633A]/20 via-[#2d9cdb]/40 to-[#10b981]/20 -translate-y-1/2 z-0 pointer-events-none oncolink-pulse" />
+        {/* Outer Frame Background */}
+        <rect width="1000" height="600" fill="#0B0C0E" rx="8" />
+        <rect width="1000" height="600" fill="url(#grid)" opacity="0.35" rx="8" />
+        <rect width="1000" height="600" fill="none" stroke="#1A1A20" strokeWidth="1" rx="8" />
 
-        {/* Card 1: Input Stream */}
-        <div className="oncolink-card relative z-10 bg-[#07080A] border border-[#80633A]/40 rounded-md p-3.5 flex flex-col justify-between shadow-lg">
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold text-[#80633A] tracking-wider uppercase">01. INPUT STREAM</span>
-              <span className="text-[9px] text-ash-dim">PDF/DOCX</span>
-            </div>
-            <div className="p-2 rounded bg-[#0D0E11] border border-[#1A1A20] mb-2 flex items-center gap-2">
-              <span className="text-sm">📄</span>
-              <div className="overflow-hidden">
-                <p className="text-[11px] text-[#E8E1D2] truncate font-sans font-medium">Pathology_Report_Pt8924.pdf</p>
-                <p className="text-[9px] text-[#85858A]">Multi-page Clinical Note</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-1.5 flex-wrap pt-1">
-            <span className="oncolink-badge px-1.5 py-0.5 rounded text-[9px] bg-[#14161A] text-[#85858A] border border-[#202228]">
-              Unstructured
-            </span>
-            <span className="oncolink-badge px-1.5 py-0.5 rounded text-[9px] bg-[#14161A] text-[#85858A] border border-[#202228]">
-              ThreadPoolExecutor
-            </span>
-          </div>
-        </div>
+        {/* Top Title Bar */}
+        <g transform="translate(40, 25)">
+          <circle cx="6" cy="6" r="4" fill="#10b981" filter="url(#soft-glow)" />
+          <text x="18" y="9" fontFamily="var(--font-mono)" fontSize="11" fontWeight="600" fill="#C6A15B" letterSpacing="0.08em">
+            ONCOLINK ARCHITECTURE · RAG CLINICAL INTELLIGENCE PIPELINE
+          </text>
+        </g>
 
-        {/* Card 2: Extraction & Validation Core */}
-        <div className="oncolink-card relative z-10 bg-[#07080A] border border-[#2d9cdb]/50 rounded-md p-3.5 flex flex-col justify-between shadow-lg shadow-[#2d9cdb]/5">
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold text-[#2d9cdb] tracking-wider uppercase">02. AI VALIDATION</span>
-              <span className="text-[9px] text-[#A51C30] font-semibold">0% Hallucination</span>
-            </div>
-            <div className="space-y-1.5 mb-2">
-              <div className="flex items-center justify-between p-1.5 rounded bg-[#0D0E11] border border-[#1A1A20] text-[10px]">
-                <span className="text-[#85858A]">LLM Extraction</span>
-                <span className="text-[#2d9cdb]">Structured JSON</span>
-              </div>
-              <div className="flex items-center justify-between p-1.5 rounded bg-[#0D0E11] border border-[#A51C30]/40 text-[10px]">
-                <span className="text-[#85858A]">Pydantic v2</span>
-                <span className="text-[#A51C30]">Schema Enforced</span>
-              </div>
-              <div className="flex items-center justify-between p-1.5 rounded bg-[#0D0E11] border border-[#1A1A20] text-[10px]">
-                <span className="text-[#85858A]">Harmonization</span>
-                <span className="text-[#C6A15B]">Conflict Resolve</span>
-              </div>
-            </div>
-          </div>
-          <div className="pt-1">
-            <span className="oncolink-badge block text-center px-2 py-0.5 rounded text-[9px] bg-[#2d9cdb]/10 text-[#2d9cdb] border border-[#2d9cdb]/30">
-              Identity & Biomarker Severity Check
-            </span>
-          </div>
-        </div>
+        {/* Pipeline flow arrows */}
+        <g stroke="#80633A" strokeWidth="1.5" fill="none" markerEnd="url(#arrow)">
+          <path
+            id="flow-path"
+            d="M160 95 L200 95 M320 95 L360 95 M480 95 L520 95 M640 95 L680 95 M800 95 L840 95"
+            strokeDasharray="800"
+            strokeDashoffset="800"
+          />
+        </g>
 
-        {/* Card 3: Harmonized Export Output */}
-        <div className="oncolink-card relative z-10 bg-[#07080A] border border-[#10b981]/50 rounded-md p-3.5 flex flex-col justify-between shadow-lg shadow-[#10b981]/5">
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold text-[#10b981] tracking-wider uppercase">03. HARMONIZED RECORD</span>
-              <span className="text-[9px] text-[#10b981]">✓ Verified</span>
-            </div>
-            <div className="p-2 rounded bg-[#0D0E11] border border-[#1A1A20] mb-2 text-[10px] space-y-1">
-              <div className="flex justify-between">
-                <span className="text-[#85858A]">Diagnosis:</span>
-                <span className="text-[#E8E1D2] font-sans font-medium">NSCLC (Stage IIIa)</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#85858A]">EGFR:</span>
-                <span className="text-[#10b981]">Exon 19 del (Positive)</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#85858A]">PD-L1:</span>
-                <span className="text-[#C6A15B]">TPS 65% (High)</span>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-between pt-1 text-[9.5px]">
-            <span className="oncolink-badge px-2 py-0.5 rounded bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/30">
-              Export PDF / JSON
-            </span>
-            <span className="text-[#85858A]">fpdf2</span>
-          </div>
-        </div>
-      </div>
+        {/* Stage 1: Input */}
+        <g id="stage-input" transform="translate(40, 45)">
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="#80633A" strokeWidth="1.5" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#E8E1D2">01. INPUT</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">PDF · DOCX · TXT</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Unstructured</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Multi-file Batch</text>
+        </g>
 
-      {/* Bottom Tech Stack Footer */}
-      <div className="pt-3 border-t border-[#1A1A20] flex flex-wrap items-center justify-between gap-2 text-[10px] text-[#85858A]">
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-[#C6A15B] font-medium">STACK:</span>
-          <span>Python 3.11+</span>
-          <span>·</span>
-          <span>Streamlit</span>
-          <span>·</span>
-          <span>NVIDIA NIM</span>
-          <span>·</span>
-          <span>Pydantic v2</span>
-          <span>·</span>
-          <span>PyMuPDF</span>
-        </div>
-        <div className="text-[9px] text-[#5C4A2E] hidden md:block">
-          AI Clinical Intelligence Platform
-        </div>
-      </div>
-    </div>
+        {/* Stage 2: Extraction */}
+        <g id="stage-extraction" transform="translate(200, 45)">
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="url(#blueGrad)" strokeWidth="1.5" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#2d9cdb">02. EXTRACTION</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Nemotron-3 Ultra</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">NVIDIA NIM API</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">JSON Output</text>
+        </g>
+
+        {/* Stage 3: Validation */}
+        <g id="stage-validation" transform="translate(360, 45)">
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="#A51C30" strokeWidth="2" filter="url(#soft-glow)" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#A51C30">03. VALIDATE</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Pydantic v2</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Schema Enforce</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Zero Hallucination</text>
+        </g>
+
+        {/* Stage 4: Normalization */}
+        <g id="stage-normalize" transform="translate(520, 45)">
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="url(#goldGrad)" strokeWidth="1.5" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">04. NORMALIZE</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Abbr Expansion</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Term Standardize</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Deduplication</text>
+        </g>
+
+        {/* Stage 5: Harmonization */}
+        <g id="stage-harmonize" transform="translate(680, 45)">
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="#059669" strokeWidth="1.5" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#10b981">05. HARMONIZE</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Multi-doc Merge</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Conflict Detect</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Unified Record</text>
+        </g>
+
+        {/* Stage 6: Export */}
+        <g id="stage-export" transform="translate(840, 45)">
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="#C6A15B" strokeWidth="1.5" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">06. EXPORT</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Patient Summary</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Harmonized JSON</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">PDF / TXT</text>
+        </g>
+
+        {/* Row 2 - Left: Per-Document Flow (y = 175) */}
+        <g id="per-doc-flow" transform="translate(40, 175)">
+          <rect x="0" y="0" width="260" height="160" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">PARALLEL EXTRACTION</text>
+
+          <g transform="translate(12, 36)">
+            <rect x="0" y="0" width="236" height="34" rx="3" fill="#0D0E11" stroke="#2d9cdb" strokeWidth="1" />
+            <text x="118" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#2d9cdb">Doc 1..N Pathology Notes</text>
+          </g>
+
+          <g transform="translate(12, 82)">
+            <rect x="0" y="0" width="112" height="34" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
+            <text x="56" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">extract_each_doc()</text>
+          </g>
+
+          <g transform="translate(136, 82)">
+            <rect x="0" y="0" width="112" height="34" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
+            <text x="56" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">ThreadPoolExecutor</text>
+          </g>
+
+          <text x="12" y="142" fontFamily="var(--font-mono)" fontSize="8" fill="#5C4A2E">Concurrent multi-file RAG processing</text>
+        </g>
+
+        {/* Row 2 - Center: Harmonization Merge Strategies (y = 175) */}
+        <g id="merge-strategies" transform="translate(320, 175)">
+          <rect x="0" y="0" width="330" height="160" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">MERGE STRATEGIES</text>
+
+          <g fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">
+            <text x="12" y="42" fill="#E8E1D2" fontWeight="600">IDENTITY:</text>
+            <text x="75" y="42">first_non_null (name, age, gender)</text>
+
+            <text x="12" y="62" fill="#E8E1D2" fontWeight="600">TEXT:</text>
+            <text x="75" y="62">prefer_longest_string (diagnosis, stage)</text>
+
+            <text x="12" y="82" fill="#E8E1D2" fontWeight="600">LIST:</text>
+            <text x="75" y="82">merge_biomarkers (unique by name)</text>
+
+            <text x="12" y="102" fill="#E8E1D2" fontWeight="600">STRING:</text>
+            <text x="75" y="102">merge_unique_strings (meds, AEs)</text>
+
+            <text x="12" y="122" fill="#E8E1D2" fontWeight="600">SINGLE:</text>
+            <text x="75" y="122">merge_numbers (ecog_score, labs)</text>
+          </g>
+        </g>
+
+        {/* Row 2 - Right: Conflict Detection (y = 175) */}
+        <g id="conflict-detection" transform="translate(670, 175)">
+          <rect x="0" y="0" width="290" height="160" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">CONFLICT DETECTION</text>
+
+          <g transform="translate(12, 36)">
+            <rect x="0" y="0" width="266" height="32" rx="3" fill="#170A0C" stroke="#A51C30" strokeWidth="1" strokeDasharray="3 2" />
+            <text x="12" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30" fontWeight="600">IDENTITY FIELDS</text>
+            <text x="254" y="20" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30">HIGH SEVERITY</text>
+          </g>
+
+          <g transform="translate(12, 76)">
+            <rect x="0" y="0" width="266" height="32" rx="3" fill="#170A0C" stroke="#A51C30" strokeWidth="1" strokeDasharray="3 2" />
+            <text x="12" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30" fontWeight="600">BIOMARKERS</text>
+            <text x="254" y="20" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30">HIGH SEVERITY</text>
+          </g>
+
+          <g transform="translate(12, 116)">
+            <rect x="0" y="0" width="266" height="30" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
+            <text x="12" y="19" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">OTHER FIELDS</text>
+            <text x="254" y="19" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">MEDIUM SEVERITY</text>
+          </g>
+        </g>
+
+        {/* Row 3 - Left: Clinical Schema (y = 365) */}
+        <g id="clinical-schema" transform="translate(40, 365)">
+          <rect x="0" y="0" width="460" height="165" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">CLINICAL SCHEMA (Pydantic v2)</text>
+
+          <g fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">
+            <text x="12" y="42">patient_name: str | None</text>
+            <text x="12" y="60">age: int | None</text>
+            <text x="12" y="78">gender: str | None</text>
+            <text x="12" y="96">diagnosis: str | None</text>
+            <text x="12" y="114">cancer_type: str | None</text>
+            <text x="12" y="132">cancer_stage: str | None</text>
+
+            <text x="240" y="42">ecog_score: int | None</text>
+            <text x="240" y="60">biomarkers: list[Biomarker]</text>
+            <text x="240" y="78">current_medication: str | None</text>
+            <text x="240" y="96">previous_treatment: str | None</text>
+            <text x="240" y="114">adverse_events: str | None</text>
+            <text x="240" y="132">follow_up_plan / next_steps</text>
+          </g>
+        </g>
+
+        {/* Row 3 - Right: Biomarker Structure (y = 365) */}
+        <g id="biomarker-structure" transform="translate(520, 365)">
+          <rect x="0" y="0" width="440" height="165" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">BIOMARKER STRUCTURE</text>
+
+          <g transform="translate(12, 36)">
+            <rect x="0" y="0" width="200" height="110" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
+            <text x="10" y="22" fontFamily="var(--font-mono)" fontSize="8" fill="#10b981">class Biomarker(BaseModel):</text>
+            <text x="20" y="42" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">name: str</text>
+            <text x="20" y="60" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">value: str</text>
+            <text x="20" y="78" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">status: str # Pos/Neg/%</text>
+          </g>
+
+          <g transform="translate(224, 36)">
+            <rect x="0" y="0" width="204" height="110" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
+            <text x="10" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#E8E1D2" fontWeight="600">VALIDATED EXAMPLES:</text>
+            <text x="10" y="40" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">EGFR: "Exon 19 del" (Positive)</text>
+            <text x="10" y="58" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">ALK: "Rearranged" (Positive)</text>
+            <text x="10" y="76" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">PD-L1: "TPS 65%" (Percent)</text>
+            <text x="10" y="94" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Ki-67: "25%" (Percent)</text>
+          </g>
+        </g>
+
+        {/* Row 4: Bottom Tech Stack & Note (y = 560) */}
+        <g transform="translate(40, 560)">
+          <text x="0" y="16" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">
+            <tspan fill="#C6A15B" fontWeight="600">STACK: </tspan>
+            Python 3.11+ · Streamlit · NVIDIA NIM (Nemotron-3 Ultra) · Pydantic v2 · PyMuPDF · python-docx · fpdf2
+          </text>
+          <text x="920" y="16" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#5C4A2E">
+            Demonstration AI clinical platform architecture.
+          </text>
+        </g>
+      </svg>
+    </figure>
   );
 }
 
