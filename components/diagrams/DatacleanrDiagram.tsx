@@ -92,12 +92,10 @@ export function DatacleanrDiagram({
 
       tl.to(signal, { opacity: 1, x: 0, duration: isMobile ? 0.2 : 0.3 });
 
-      stages.forEach((stageEl) => {
-        const rect = stageEl.getBoundingClientRect();
-        const containerRect = (containerRef.current as SVGSVGElement).getBoundingClientRect();
-        const cx = rect.left + rect.width / 2 - containerRect.left;
+      stages.forEach((stageEl, i) => {
+        const targetX = i * 150;
 
-        tl.to(signal, { x: cx - 80, duration: isMobile ? 0.25 : 0.4 }, "+=0.05")
+        tl.to(signal, { x: targetX, duration: isMobile ? 0.25 : 0.4 }, "+=0.05")
           .to(
             stageEl.querySelector(".stage-ring"),
             { r: 12, strokeWidth: 3, duration: isMobile ? 0.1 : 0.15 },

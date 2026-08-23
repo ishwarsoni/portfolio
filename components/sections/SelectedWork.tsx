@@ -73,13 +73,7 @@ export function SelectedWork() {
           ))}
         </div>
 
-        <div className="text-center mt-12 md:mt-16">
-          <Button asChild variant="ghost">
-            <a href="/work/motion-processing" className="btn-ghost px-6 py-3 text-sm tracking-[0.2em] uppercase font-mono">
-              Motion Processing Case Study →
-            </a>
-          </Button>
-        </div>
+
       </Container>
     </section>
   );

@@ -16,7 +16,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function Experience() {
   const sectionRef = useRef<any>(null);
-  const timelineRef = useRef<any>(null);
   const cardRef = useRef<any>(null);
 
   useEffect(() => {
@@ -36,24 +35,10 @@ export function Experience() {
         });
       }
 
-      if (timelineRef.current) {
-        gsap.from(timelineRef.current, {
-          scaleY: 0,
-          duration: 1.2,
-          ease: "power3.out",
-          transformOrigin: "top center",
-          scrollTrigger: {
-            trigger: timelineRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        });
-      }
-
       if (cardRef.current) {
         gsap.from(cardRef.current, {
           opacity: 0,
-          x: 40,
+          y: 30,
           duration: 0.8,
           ease: "power3.out",
           scrollTrigger: {
@@ -89,61 +74,52 @@ export function Experience() {
           <Divider variant="gold" className="mx-auto mt-8 max-w-xs" />
         </header>
 
-        <div className="grid lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-3" ref={cardRef}>
-            <Card className="h-full">
-              <CardContent className="p-6 md:p-8 space-y-6">
-                <div className="flex flex-wrap items-baseline justify-between gap-4">
-                  <div>
-                    <Typography variant="h3" className="mb-2">
-                      {experience.role}
-                    </Typography>
-                    <Typography variant="body" className="text-ash">
-                      {experience.company} · {experience.period} · {experience.location}
-                    </Typography>
-                  </div>
+        <div className="space-y-8" ref={cardRef}>
+          {/* Main Experience Overview Card */}
+          <Card className="w-full">
+            <CardContent className="p-6 md:p-8 space-y-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-4">
+                <div>
+                  <Typography variant="h3" className="mb-2">
+                    {experience.role}
+                  </Typography>
+                  <Typography variant="body" className="text-ash">
+                    {experience.company} · {experience.period} · {experience.location}
+                  </Typography>
                 </div>
-
-                <Divider variant="bronze" />
-
-                <Typography variant="body" className="text-ash-dim leading-relaxed">
-                  {experience.description}
-                </Typography>
-
-                <div className="space-y-3 pt-2">
-                  {experience.achievements.map((achievement, i) => (
-                    <div
-                      key={i}
-                      className="flex items-start gap-3 text-sm text-ash font-sans leading-relaxed"
-                    >
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-burnished-bronze shrink-0" />
-                      <span>{achievement}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <Divider variant="bronze" />
-
-                <div className="flex flex-wrap gap-2">
-                  {experience.domain.map((tag, i) => (
-                    <Badge key={i} variant="default">{tag}</Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="lg:col-span-1">
-            <div className="relative">
-              <div
-                ref={timelineRef}
-                className="absolute left-[11px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-burnished-bronze/40 to-transparent"
-                aria-hidden="true"
-              />
-              <div className="relative pl-10">
-                <SemanticLabsDiagram className="w-full h-auto" />
               </div>
-            </div>
+
+              <Divider variant="bronze" />
+
+              <Typography variant="body" className="text-ash-dim leading-relaxed">
+                {experience.description}
+              </Typography>
+
+              <div className="space-y-3 pt-2">
+                {experience.achievements.map((achievement, i) => (
+                  <div
+                    key={i}
+                    className="flex items-start gap-3 text-sm text-ash font-sans leading-relaxed"
+                  >
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-burnished-bronze shrink-0" />
+                    <span>{achievement}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Divider variant="bronze" />
+
+              <div className="flex flex-wrap gap-2">
+                {experience.domain.map((tag, i) => (
+                  <Badge key={i} variant="default">{tag}</Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Full-width Motion Processing Diagram */}
+          <div className="w-full overflow-hidden rounded-lg border border-[#1A1A20] bg-[#0B0C0E]/80 p-2 md:p-4">
+            <SemanticLabsDiagram className="w-full h-auto" />
           </div>
         </div>
 
@@ -158,3 +134,5 @@ export function Experience() {
     </section>
   );
 }
+
+export default Experience;
