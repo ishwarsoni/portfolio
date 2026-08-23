@@ -29,7 +29,6 @@ const RAW_PREVIEW = [
   [null, 52000, "master", 0],
   [42, null, "phd", 1],
   [31, 38000, "bachelor", 1],
-  [28, 41000, null, 0],
 ];
 
 const CLEAN_PREVIEW = [
@@ -37,8 +36,6 @@ const CLEAN_PREVIEW = [
   [25, 45000, "bachelor", 1],
   [31, 52000, "master", 0],
   [42, 38000, "phd", 1],
-  [31, 38000, "bachelor", 1],
-  [28, 41000, "bachelor", 0],
 ];
 
 const TECH_STACK = ["Python", "Pandas", "NumPy", "Scikit-learn", "Jupyter", "YAML"];
@@ -89,25 +86,25 @@ export function DatacleanrDiagram({ className, "aria-label": ariaLabel = "Datacl
 
       tl.to(signal, { opacity: 1, x: 0, duration: isMobile ? 0.2 : 0.3 });
 
-      stages.forEach((stageEl, i) => {
+      stages.forEach((stageEl) => {
         const rect = stageEl.getBoundingClientRect();
         const containerRect = (containerRef.current as SVGSVGElement).getBoundingClientRect();
         const cx = rect.left + rect.width / 2 - containerRect.left;
 
-        tl.to(signal, { x: cx - 100, duration: isMobile ? 0.3 : 0.5 }, "+=0.1")
-          .to(stageEl.querySelector(".stage-ring"), { r: 14, strokeWidth: 3, duration: isMobile ? 0.1 : 0.2 }, "<")
-          .to(stageEl.querySelector(".stage-ring"), { r: 10, strokeWidth: 2, duration: isMobile ? 0.2 : 0.3 }, "+=0.05");
+        tl.to(signal, { x: cx - 80, duration: isMobile ? 0.25 : 0.4 }, "+=0.05")
+          .to(stageEl.querySelector(".stage-ring"), { r: 12, strokeWidth: 3, duration: isMobile ? 0.1 : 0.15 }, "<")
+          .to(stageEl.querySelector(".stage-ring"), { r: 8, strokeWidth: 2, duration: isMobile ? 0.15 : 0.2 }, "+=0.03");
       });
 
       // Animate cleaning engine stages
       const engineStages = containerRef.current?.querySelectorAll(".engine-stage");
       if (engineStages && engineStages.length) {
-        engineStages.forEach((stage, i) => {
-          tl.fromTo(stage, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.5)" }, `-=0.3`);
+        engineStages.forEach((stage) => {
+          tl.fromTo(stage, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.4)" }, `-=0.25`);
         });
       }
 
-      tl.to(signal, { opacity: 0, duration: isMobile ? 0.15 : 0.3 });
+      tl.to(signal, { opacity: 0, duration: isMobile ? 0.15 : 0.25 });
     }, containerRef);
 
     return () => ctx.revert();
@@ -117,7 +114,7 @@ export function DatacleanrDiagram({ className, "aria-label": ariaLabel = "Datacl
     <figure className={className} aria-label={ariaLabel} role="img">
       <svg
         ref={containerRef}
-        viewBox="0 0 720 380"
+        viewBox="0 0 720 460"
         preserveAspectRatio="xMidYMid meet"
         className="w-full max-w-[720px] mx-auto"
         aria-hidden="true"
@@ -131,10 +128,6 @@ export function DatacleanrDiagram({ className, "aria-label": ariaLabel = "Datacl
           <linearGradient id="signal-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#22d3ee" />
             <stop offset="100%" stopColor="#a855f7" />
-          </linearGradient>
-          <linearGradient id="stage-active" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#22d3ee" />
-            <stop offset="100%" stopColor="#06b6d4" />
           </linearGradient>
           <linearGradient id="engine-bg" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#0d0e10" />
@@ -159,29 +152,29 @@ export function DatacleanrDiagram({ className, "aria-label": ariaLabel = "Datacl
           </pattern>
         </defs>
 
-        <rect width="720" height="520" fill="url(#bg-gradient)" rx="8" />
-        <rect width="720" height="520" fill="url(#grid-pattern)" opacity="0.3" rx="8" />
+        <rect width="720" height="460" fill="url(#bg-gradient)" rx="8" />
+        <rect width="720" height="460" fill="url(#grid-pattern)" opacity="0.3" rx="8" />
 
-        {/* TOP: Pipeline Flow */}
+        {/* TOP: Pipeline Flow (y = 35) */}
         <g className="pipeline-flow">
           <path
-            d="M 80 50 L 640 50"
+            d="M 80 35 L 640 35"
             fill="none"
             stroke="#1a1c20"
             strokeWidth="2"
-            strokeDasharray="10 8"
-            opacity="0.4"
+            strokeDasharray="8 6"
+            opacity="0.5"
           />
 
           {STAGE_LABELS.map((label, i) => {
-            const x = 100 + i * 145;
+            const x = 80 + i * 140;
             return (
-              <g key={label} className="stage-node" transform={`translate(${x}, 50)`}>
+              <g key={label} className="stage-node" transform={`translate(${x}, 35)`}>
                 <circle
                   className="stage-ring"
                   cx="0"
                   cy="0"
-                  r="10"
+                  r="8"
                   fill="#0d0e10"
                   stroke="#2a2d34"
                   strokeWidth="2"
@@ -189,10 +182,10 @@ export function DatacleanrDiagram({ className, "aria-label": ariaLabel = "Datacl
                 />
                 <text
                   x="0"
-                  y="28"
+                  y="20"
                   textAnchor="middle"
                   fontFamily="var(--font-mono)"
-                  fontSize="9"
+                  fontSize="8.5"
                   fontWeight={500}
                   fill="#6b7280"
                   letterSpacing="0.04em"
@@ -204,37 +197,38 @@ export function DatacleanrDiagram({ className, "aria-label": ariaLabel = "Datacl
           })}
 
           <g id="data-signal">
-            <circle cx="100" cy="50" r="6" fill="url(#signal-gradient)" filter="url(#glow)" />
-            <circle cx="100" cy="50" r="10" fill="none" stroke="url(#signal-gradient)" strokeWidth="1.5" opacity="0.4" />
+            <circle cx="80" cy="35" r="5" fill="url(#signal-gradient)" filter="url(#glow)" />
+            <circle cx="80" cy="35" r="8" fill="none" stroke="url(#signal-gradient)" strokeWidth="1.5" opacity="0.4" />
           </g>
         </g>
 
-        {/* LEFT: Raw DataFrame Preview */}
-        <g transform="translate(60, 90)">
-          <rect x="0" y="0" width="280" height="140" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="6" />
-          <rect x="0" y="0" width="280" height="28" fill="#111317" stroke="#1a1c20" strokeWidth="1" rx="6" />
-          <text x="12" y="19" fontFamily="var(--font-mono)" fontSize="11" fontWeight={600} fill="#e5e7eb">RAW DATAFRAME</text>
-          <text x="268" y="19" textAnchor="end" fontFamily="var(--font-mono)" fontSize="10" fill="#6b7280">5 × 4</text>
+        {/* MIDDLE ROW: Data Cleaning Core (y = 75 to 225) */}
+        {/* Left: Raw DataFrame Preview */}
+        <g transform="translate(40, 75)">
+          <rect x="0" y="0" width="300" height="150" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="6" />
+          <rect x="0" y="0" width="300" height="26" fill="#111317" stroke="#1a1c20" strokeWidth="1" rx="6" />
+          <text x="12" y="17" fontFamily="var(--font-mono)" fontSize="10" fontWeight={600} fill="#e5e7eb">RAW DATAFRAME (INPUT)</text>
+          <text x="288" y="17" textAnchor="end" fontFamily="var(--font-mono)" fontSize="9" fill="#6b7280">5 × 4</text>
 
-          <g transform="translate(8, 36)">
+          <g transform="translate(10, 34)">
             {RAW_PREVIEW.map((row, ri) =>
               row.map((cell, ci) => (
-                <g key={`${ri}-${ci}`} transform={`translate(${ci * 68}, ${ri * 22})`}>
+                <g key={`${ri}-${ci}`} transform={`translate(${ci * 70}, ${ri * 20})`}>
                   <rect
                     x="0"
                     y="0"
-                    width="64"
-                    height="18"
+                    width="66"
+                    height="16"
                     fill={ri === 0 ? "#1a1c20" : cell === null ? "#371d1d" : "#0d0e10"}
                     stroke="#1a1c20"
                     strokeWidth={0.5}
                   />
                   <text
-                    x="32"
-                    y="12"
+                    x="33"
+                    y="11"
                     textAnchor="middle"
                     fontFamily="var(--font-mono)"
-                    fontSize={ri === 0 ? "9" : "8"}
+                    fontSize={ri === 0 ? "8.5" : "8"}
                     fontWeight={ri === 0 ? 600 : 400}
                     fill={ri === 0 ? "#a855f7" : cell === null ? "#f87171" : "#9ca3af"}
                   >
@@ -245,81 +239,81 @@ export function DatacleanrDiagram({ className, "aria-label": ariaLabel = "Datacl
             )}
           </g>
 
-          <g transform="translate(8, 120)" opacity={0.6}>
-            <rect x="0" y="0" width="40" height="6" fill="#f87171" rx="3" opacity={0.3} />
-            <text x="48" y="11" fontFamily="var(--font-mono)" fontSize="8" fill="#6b7280">missingness →</text>
+          <g transform="translate(10, 134)" opacity={0.7}>
+            <rect x="0" y="0" width="30" height="4" fill="#f87171" rx="2" opacity={0.4} />
+            <text x="38" y="7" fontFamily="var(--font-mono)" fontSize="7.5" fill="#6b7280">missingness / outlier detection</text>
           </g>
         </g>
 
-        {/* CENTER: Cleaning Engine - 2x2 Grid */}
-        <g transform="translate(360, 90)">
-          <rect x="0" y="0" width="300" height="280" fill="url(#engine-bg)" stroke="#22d3ee" strokeWidth="1" rx="8" filter="url(#soft-glow)" />
-          <rect x="0" y="0" width="300" height="36" fill="#111317" stroke="#22d3ee" strokeWidth="1" rx="8" />
-          <text x="150" y="23" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="12" fontWeight={600} fill="#22d3ee">CLEANING ENGINE</text>
+        {/* Right: Cleaning Engine - 2x2 Grid */}
+        <g transform="translate(360, 75)">
+          <rect x="0" y="0" width="320" height="150" fill="url(#engine-bg)" stroke="#22d3ee" strokeWidth="1" rx="6" filter="url(#soft-glow)" />
+          <rect x="0" y="0" width="320" height="26" fill="#111317" stroke="#22d3ee" strokeWidth="1" rx="6" />
+          <text x="160" y="17" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight={600} fill="#22d3ee">CLEANING ENGINE MODULES</text>
 
-          <g transform="translate(15, 50)">
+          <g transform="translate(12, 36)">
             {CLEANING_STAGES.map((stage, i) => {
               const col = i % 2;
               const row = Math.floor(i / 2);
-              const x = col * 135;
-              const y = row * 115;
+              const x = col * 148;
+              const y = row * 52;
               return (
                 <g key={stage.label} className="engine-stage" transform={`translate(${x}, ${y})`} opacity={0}>
-                  <rect x="0" y="0" width="120" height="100" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="6" />
-                  <rect x="0" y="0" width="120" height="24" fill="#111317" stroke="#1a1c20" strokeWidth="1" rx="6" />
-                  <svg x="8" y="4" width="16" height="16" viewBox="0 0 24 24">
+                  <rect x="0" y="0" width="140" height="44" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="4" />
+                  <svg x="8" y="8" width="14" height="14" viewBox="0 0 24 24">
                     <path d={stage.icon} fill="none" stroke="#22d3ee" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <text x="30" y="15" fontFamily="var(--font-sans)" fontSize="9" fontWeight={500} fill="#e5e7eb">{stage.label}</text>
-                  <text x="60" y="55" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#6b7280">stage {i + 1}</text>
+                  <text x="28" y="18" fontFamily="var(--font-sans)" fontSize="8.5" fontWeight={500} fill="#e5e7eb">{stage.label}</text>
+                  <text x="28" y="32" fontFamily="var(--font-mono)" fontSize="7.5" fill="#6b7280">stage 0{i + 1} pipeline</text>
                 </g>
               );
             })}
           </g>
         </g>
 
-        {/* RIGHT: Clean DataFrame Preview */}
-        <g transform="translate(60, 250)">
-          <rect x="0" y="0" width="600" height="120" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="6" />
-          <rect x="0" y="0" width="600" height="28" fill="#111317" stroke="#1a1c20" strokeWidth="1" rx="6" />
-          <text x="12" y="19" fontFamily="var(--font-mono)" fontSize="11" fontWeight={600} fill="#22d3ee">VALIDATION & OUTPUT</text>
+        {/* LOWER ROW: Validation & Output Clean Data Table (y = 245 to 375) */}
+        <g transform="translate(40, 245)">
+          <rect x="0" y="0" width="640" height="130" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="6" />
+          <rect x="0" y="0" width="640" height="26" fill="#111317" stroke="#1a1c20" strokeWidth="1" rx="6" />
+          <text x="12" y="17" fontFamily="var(--font-mono)" fontSize="10" fontWeight={600} fill="#22d3ee">VALIDATION & CLEAN OUTPUT</text>
 
-          <g transform="translate(12, 40)">
-            <text x="0" y="0" fontFamily="var(--font-mono)" fontSize="9" fill="#22d3ee">✓</text>
-            <text x="16" y="0" fontFamily="var(--font-sans)" fontSize="9" fill="#9ca3af">Target dtype preserved</text>
-            <text x="0" y="20" fontFamily="var(--font-mono)" fontSize="9" fill="#22d3ee">✓</text>
-            <text x="16" y="20" fontFamily="var(--font-sans)" fontSize="9" fill="#9ca3af">Target values unchanged</text>
-            <text x="280" y="0" fontFamily="var(--font-mono)" fontSize="9" fill="#22d3ee">✓</text>
-            <text x="296" y="0" fontFamily="var(--font-sans)" fontSize="9" fill="#9ca3af">Col order maintained</text>
-            <text x="280" y="20" fontFamily="var(--font-mono)" fontSize="9" fill="#22d3ee">✓</text>
-            <text x="296" y="20" fontFamily="var(--font-sans)" fontSize="9" fill="#9ca3af">No all-NaN columns</text>
+          <g transform="translate(12, 34)">
+            <text x="0" y="10" fontFamily="var(--font-mono)" fontSize="8.5" fill="#22d3ee">✓</text>
+            <text x="14" y="10" fontFamily="var(--font-sans)" fontSize="8.5" fill="#9ca3af">Target dtype preserved</text>
+            <text x="160" y="10" fontFamily="var(--font-mono)" fontSize="8.5" fill="#22d3ee">✓</text>
+            <text x="174" y="10" fontFamily="var(--font-sans)" fontSize="8.5" fill="#9ca3af">Col order maintained</text>
+            <text x="320" y="10" fontFamily="var(--font-mono)" fontSize="8.5" fill="#22d3ee">✓</text>
+            <text x="334" y="10" fontFamily="var(--font-sans)" fontSize="8.5" fill="#9ca3af">Target values unchanged</text>
+            <text x="480" y="10" fontFamily="var(--font-mono)" fontSize="8.5" fill="#22d3ee">✓</text>
+            <text x="494" y="10" fontFamily="var(--font-sans)" fontSize="8.5" fill="#9ca3af">No all-NaN columns</text>
           </g>
 
-          <g transform="translate(12, 70)">
-            <rect x="0" y="0" width="576" height="1" fill="#1a1c20" opacity="0.3" />
+          <g transform="translate(12, 54)">
+            <line x1="0" y1="0" x2="616" y2="0" stroke="#1a1c20" strokeWidth="1" opacity="0.6" />
           </g>
 
-          <g transform="translate(8, 80)">
+          <g transform="translate(12, 64)">
             {CLEAN_PREVIEW[0].map((cell, ci) => (
-              <text
-                key={ci}
-                x={ci * 140 + 70}
-                y="0"
-                textAnchor="middle"
-                fontFamily="var(--font-mono)"
-                fontSize="8"
-                fontWeight={600}
-                fill="#a855f7"
-              >
-                {cell}
-              </text>
+              <g key={ci} transform={`translate(${ci * 150 + 75}, 0)`}>
+                <text
+                  x="0"
+                  y="10"
+                  textAnchor="middle"
+                  fontFamily="var(--font-mono)"
+                  fontSize="8"
+                  fontWeight={600}
+                  fill="#a855f7"
+                >
+                  {cell}
+                </text>
+              </g>
             ))}
             {CLEAN_PREVIEW.slice(1).map((row, ri) =>
               row.map((cell, ci) => (
                 <text
                   key={`${ri}-${ci}`}
-                  x={ci * 140 + 70}
-                  y={ri * 18 + 12}
+                  x={ci * 150 + 75}
+                  y={ri * 16 + 26}
                   textAnchor="middle"
                   fontFamily="var(--font-mono)"
                   fontSize="8"
@@ -332,47 +326,42 @@ export function DatacleanrDiagram({ className, "aria-label": ariaLabel = "Datacl
           </g>
         </g>
 
-        {/* BOTTOM: Tech Stack */}
-        <g transform="translate(60, 350)">
-          <rect x="0" y="0" width="600" height="1" fill="#1a1c20" opacity="0.2" />
-        </g>
-
-        <g transform="translate(60, 370)">
-          <text x="0" y="0" fontFamily="var(--font-mono)" fontSize="9" fontWeight={500} fill="#6b7280" letterSpacing="0.08em">STACK</text>
-          <g transform="translate(0, 20)">
+        {/* BOTTOM ROW: Stack & Metrics (y = 395 to 445) */}
+        <g transform="translate(40, 395)">
+          <text x="0" y="16" fontFamily="var(--font-mono)" fontSize="8.5" fontWeight={500} fill="#6b7280" letterSpacing="0.06em">STACK:</text>
+          <g transform="translate(50, 0)">
             {TECH_STACK.map((tech, i) => (
-              <g key={tech} transform={`translate(${i * 100}, 0)`}>
-                <rect x="0" y="-14" width="90" height="24" rx="4" fill="#111317" stroke="#2a2d34" strokeWidth="1" />
-                <text x="45" y="2" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" fill="#9ca3af">{tech}</text>
+              <g key={tech} transform={`translate(${i * 95}, 0)`}>
+                <rect x="0" y="0" width="88" height="22" rx="3" fill="#111317" stroke="#2a2d34" strokeWidth="1" />
+                <text x="44" y="14" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ca3af">{tech}</text>
               </g>
             ))}
           </g>
         </g>
 
-        {/* Metrics at bottom */}
-        <g transform="translate(60, 410)">
+        {/* Metrics at bottom right */}
+        <g transform="translate(40, 435)">
           {METRICS.map((metric, i) => (
-            <g key={metric.label} transform={`translate(${i * 200}, 0)`}>
+            <g key={metric.label} transform={`translate(${i * 210 + 90}, 0)`}>
               <text
                 x="0"
-                y="0"
+                y="14"
                 textAnchor="middle"
                 fontFamily="var(--font-mono)"
-                fontSize="20"
+                fontSize="15"
                 fontWeight={700}
                 fill="#e5e7eb"
               >
                 {metric.value}
               </text>
               <text
-                x="0"
-                y="18"
-                textAnchor="middle"
+                x="60"
+                y="13"
                 fontFamily="var(--font-sans)"
-                fontSize="9"
+                fontSize="8"
                 fontWeight={500}
                 fill="#6b7280"
-                letterSpacing="0.1em"
+                letterSpacing="0.08em"
               >
                 {metric.label}
               </text>
