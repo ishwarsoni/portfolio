@@ -31,36 +31,42 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link
             href="#main"
-            className="font-serif text-xl md:text-2xl font-medium tracking-tight text-ivory hover:text-antique-gold transition-colors duration-300"
+            className="flex flex-col justify-center leading-tight group text-left"
             aria-label="Ishwar Soni — Home"
           >
-            ISHWAR SONI
-            <span className="ml-2 text-sm font-mono text-antique-gold">AI ENGINEER</span>
+            <span className="font-serif text-lg md:text-xl font-medium tracking-tight text-ivory group-hover:text-antique-gold transition-colors duration-300">
+              ISHWAR SONI
+            </span>
+            <span className="text-[10px] md:text-[11px] font-mono tracking-[0.22em] text-antique-gold uppercase -mt-0.5">
+              AI ENGINEER
+            </span>
           </Link>
 
-          <ul className="hidden md:flex items-center gap-8" role="menubar">
-            {navigation.map((item) => (
-              <li key={item.href} role="none">
-                <Link
-                  href={item.href}
-                  role="menuitem"
-                  className="font-mono text-xs tracking-[0.2em] uppercase text-ash hover:text-ivory transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-0 after:bg-antique-gold after:transition-all hover:after:w-full"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="hidden md:flex items-center gap-6 lg:gap-10">
+            <ul className="flex items-center gap-4 lg:gap-7" role="menubar">
+              {navigation.map((item) => (
+                <li key={item.href} role="none">
+                  <Link
+                    href={item.href}
+                    role="menuitem"
+                    className="font-mono text-xs tracking-[0.18em] uppercase text-ash hover:text-ivory transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-0 after:bg-antique-gold after:transition-all hover:after:w-full"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-          <div className="hidden md:flex items-center gap-4">
-            <Link
-              href={siteData.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost px-4 py-2 text-xs tracking-[0.2em] uppercase font-mono"
-            >
-              Resume
-            </Link>
+            <div className="flex items-center pl-4 lg:pl-6 border-l border-[#1A1A20]">
+              <Link
+                href={siteData.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost px-4 py-2 text-xs tracking-[0.2em] uppercase font-mono"
+              >
+                Resume
+              </Link>
+            </div>
           </div>
 
           <button
