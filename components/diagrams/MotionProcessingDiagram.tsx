@@ -1,215 +1,179 @@
 "use client";
 
-interface TechnicalDiagramProps {
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+
+interface MotionProcessingDiagramProps {
   className?: string;
   "aria-label"?: string;
 }
 
-export function MotionProcessingDiagram({ className, "aria-label": ariaLabel = "BVH to SMPL-H motion processing pipeline" }: TechnicalDiagramProps) {
+export function MotionProcessingDiagram({
+  className = "",
+  "aria-label": ariaLabel = "BVH to SMPL-H motion processing pipeline visualization",
+}: MotionProcessingDiagramProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || !containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const cards = containerRef.current?.querySelectorAll(".motion-card");
+      if (cards && cards.length) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 15, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.12, ease: "power2.out" }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [isVisible]);
+
   return (
-    <figure className={className} aria-label={ariaLabel} role="img">
-      <svg
-        viewBox="0 0 1000 480"
-        className="w-full h-auto max-w-full"
-        preserveAspectRatio="xMidYMid meet"
-        aria-hidden="true"
-      >
-        <defs>
-          <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#C6A15B" />
-            <stop offset="100%" stopColor="#80633A" />
-          </linearGradient>
-          <linearGradient id="crimsonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#6E1725" />
-            <stop offset="100%" stopColor="#A51C30" />
-          </linearGradient>
-          <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L8,3 z" fill="#80633A" />
-          </marker>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1A1A20" strokeWidth="0.5" />
-          </pattern>
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
+    <div
+      ref={containerRef}
+      className={`w-full bg-[#0B0C0E]/90 border border-[#1A1A20] rounded-lg p-4 md:p-6 text-left font-mono select-none overflow-hidden ${className}`}
+      aria-label={ariaLabel}
+      role="img"
+    >
+      {/* Header Bar */}
+      <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#1A1A20] text-xs">
+        <div className="flex items-center gap-2">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C6A15B] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C6A15B]"></span>
+          </span>
+          <span className="text-[#C6A15B] font-semibold tracking-wider uppercase text-[11px]">
+            BVH ➔ SMPL-H KINEMATIC RECONSTRUCTION
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="px-2 py-0.5 rounded text-[10px] bg-[#111317] border border-[#C6A15B]/30 text-[#C6A15B]">
+            AMASS Dataset
+          </span>
+        </div>
+      </div>
 
-        <rect width="1000" height="480" fill="url(#grid)" opacity="0.3" />
+      {/* Grid Flow */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-4">
+        {/* Card 1: BVH Input */}
+        <div className="motion-card bg-[#07080A] border border-[#80633A]/40 rounded-md p-3.5 flex flex-col justify-between shadow-lg">
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold text-[#80633A] tracking-wider uppercase">01. BVH HIERARCHY</span>
+              <span className="text-[9px] text-[#85858A]">22 Joints</span>
+            </div>
+            <div className="p-2 rounded bg-[#0D0E11] border border-[#1A1A20] mb-2 text-[10px] space-y-1">
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Format:</span>
+                <span className="text-[#E8E1D2]">Right-Handed, CM</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Channels:</span>
+                <span className="text-[#E8E1D2]">6D Rotations</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Joint Tree:</span>
+                <span className="text-[#C6A15B]">Pelvis ➔ Spine ➔ Hips</span>
+              </div>
+            </div>
+          </div>
+          <span className="px-2 py-0.5 rounded text-[9px] bg-[#14161A] text-[#85858A] border border-[#202228] block text-center">
+            Recursive Skeleton Loader
+          </span>
+        </div>
 
-        {/* Pipeline flow arrows */}
-        <g stroke="#80633A" strokeWidth="1.5" fill="none" markerEnd="url(#arrow)">
-          <path d="M155 85 L195 85" />
-          <path d="M315 85 L355 85" />
-          <path d="M475 85 L515 85" />
-          <path d="M635 85 L675 85" />
-          <path d="M795 85 L835 85" />
-        </g>
+        {/* Card 2: Transform Core */}
+        <div className="motion-card bg-[#07080A] border border-[#A51C30]/40 rounded-md p-3.5 flex flex-col justify-between shadow-lg">
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold text-[#A51C30] tracking-wider uppercase">02. COORD TRANSFORM</span>
+              <span className="text-[9px] text-[#A51C30]">Y-Up Aligned</span>
+            </div>
+            <div className="p-2 rounded bg-[#0D0E11] border border-[#A51C30]/30 mb-2 text-[10px] space-y-1">
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Matrix:</span>
+                <span className="text-[#A51C30]">C_bvh2smpl</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Root Fix:</span>
+                <span className="text-[#E8E1D2]">Frame 0 Inverse</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Unit Scale:</span>
+                <span className="text-[#E8E1D2]">CM ➔ Meters</span>
+              </div>
+            </div>
+          </div>
+          <span className="px-2 py-0.5 rounded text-[9px] bg-[#A51C30]/10 text-[#A51C30] border border-[#A51C30]/30 block text-center">
+            Quaternion Orientation Fix
+          </span>
+        </div>
 
-        {/* Stage 1: BVH Input */}
-        <g transform="translate(35, 35)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#0B0C0E" stroke="#80633A" strokeWidth="1.5" opacity="0.9" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#E8E1D2">01. BVH INPUT</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Hierarchy Node</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">6D Rot Channels</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Frame Matrix</text>
-        </g>
+        {/* Card 3: SMPL-H Mesh Output */}
+        <div className="motion-card bg-[#07080A] border border-[#2D7D46]/50 rounded-md p-3.5 flex flex-col justify-between shadow-lg">
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold text-[#2D7D46] tracking-wider uppercase">03. SMPL-H MESH</span>
+              <span className="text-[9px] text-[#2D7D46]">✓ Stabilized</span>
+            </div>
+            <div className="p-2 rounded bg-[#0D0E11] border border-[#1A1A20] mb-2 text-[10px] space-y-1">
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Grounding:</span>
+                <span className="text-[#2D7D46]">Floor Percentile</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Foot Lock:</span>
+                <span className="text-[#2D7D46]">Translation Lock</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#85858A]">Filter:</span>
+                <span className="text-[#E8E1D2]">Savitzky-Golay</span>
+              </div>
+            </div>
+          </div>
+          <span className="px-2 py-0.5 rounded text-[9px] bg-[#2D7D46]/10 text-[#2D7D46] border border-[#2D7D46]/30 block text-center">
+            NPZ / BVH / MP4 Export
+          </span>
+        </div>
+      </div>
 
-        {/* Stage 2: Parser */}
-        <g transform="translate(195, 35)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#0B0C0E" stroke="url(#goldGrad)" strokeWidth="1.5" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">02. PARSER</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Recursive Parse</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Flatten Joints</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Channel Index</text>
-        </g>
-
-        {/* Stage 3: Joint Mapping */}
-        <g transform="translate(355, 35)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#0B0C0E" stroke="#80633A" strokeWidth="1.5" opacity="0.9" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#E8E1D2">03. JOINT MAP</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">BVH to SMPL-H</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">21 Body Joints</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Skip / Remap</text>
-        </g>
-
-        {/* Stage 4: Coordinate Transform */}
-        <g transform="translate(515, 35)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#0B0C0E" stroke="#A51C30" strokeWidth="1.5" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#A51C30">04. COORD XFORM</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">C_bvh2smpl Matrix</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">[-1,0,0; 0,0,1; ...]</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Y-Up Alignment</text>
-        </g>
-
-        {/* Stage 5: SMPL-H Output */}
-        <g transform="translate(675, 35)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#0B0C0E" stroke="#2D7D46" strokeWidth="1.5" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#2D7D46">05. SMPL-H OUT</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">global_orient</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">body_pose (63)</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">transl (meters)</text>
-        </g>
-
-        {/* Stage 6: Validation */}
-        <g transform="translate(835, 35)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#0B0C0E" stroke="#C6A15B" strokeWidth="1.5" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">06. VALIDATION</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">MPJPE Metric</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Vertex Error</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Floor Align</text>
-        </g>
-
-        {/* Technical Details Section - Skeletal Hierarchy */}
-        <g transform="translate(35, 155)">
-          <rect x="0" y="0" width="280" height="160" rx="4" fill="#0B0C0E" stroke="#1A1A20" strokeWidth="1" />
-          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">SKELETAL HIERARCHY (22 JOINTS)</text>
-          
-          <g transform="translate(20, 20)">
-            <g stroke="#80633A" strokeWidth="1.2" fill="none">
-              <line x1="120" y1="35" x2="120" y2="75" />
-              <line x1="120" y1="75" x2="70" y2="105" />
-              <line x1="120" y1="75" x2="170" y2="105" />
-              <line x1="120" y1="35" x2="80" y2="20" />
-              <line x1="120" y1="35" x2="160" y2="20" />
-            </g>
-
-            <g>
-              <circle cx="120" cy="20" r="4" fill="#C6A15B" />
-              <circle cx="120" cy="35" r="5" fill="#A51C30" />
-              <circle cx="120" cy="75" r="4" fill="#80633A" />
-              <circle cx="70" cy="105" r="3.5" fill="#85858A" />
-              <circle cx="170" cy="105" r="3.5" fill="#85858A" />
-              <circle cx="80" cy="20" r="3" fill="#85858A" />
-              <circle cx="160" cy="20" r="3" fill="#85858A" />
-            </g>
-
-            <g fontFamily="var(--font-mono)" fontSize="7.5" fill="#85858A">
-              <text x="128" y="22">ROOT</text>
-              <text x="128" y="38">HIPS</text>
-              <text x="128" y="78">SPINE</text>
-              <text x="35" y="108">L-HIP</text>
-              <text x="178" y="108">R-HIP</text>
-              <text x="45" y="22">L-SHL</text>
-              <text x="168" y="22">R-SHL</text>
-            </g>
-          </g>
-        </g>
-
-        {/* Coordinate Frame Visualization */}
-        <g transform="translate(335, 155)">
-          <rect x="0" y="0" width="320" height="160" rx="4" fill="#0B0C0E" stroke="#1A1A20" strokeWidth="1" />
-          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">COORDINATE FRAMES</text>
-          
-          <g transform="translate(40, 20)">
-            <g strokeWidth="2" fill="none" markerEnd="url(#arrow)">
-              <line x1="80" y1="70" x2="130" y2="70" stroke="#A51C30" />
-              <line x1="80" y1="70" x2="80" y2="20" stroke="#C6A15B" />
-              <line x1="80" y1="70" x2="55" y2="95" stroke="#80633A" />
-            </g>
-
-            <text x="138" y="73" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30">X (Right)</text>
-            <text x="75" y="12" fontFamily="var(--font-mono)" fontSize="8" fill="#C6A15B">Y (Up)</text>
-            <text x="40" y="105" fontFamily="var(--font-mono)" fontSize="8" fill="#80633A">Z (Fwd)</text>
-
-            <text x="180" y="45" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">BVH: Y-Up, CM</text>
-            <text x="180" y="65" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">SMPL-H: Y-Up, Meters</text>
-            <text x="180" y="85" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Alignment: Exact</text>
-          </g>
-        </g>
-
-        {/* Root Fix / Quaternion */}
-        <g transform="translate(675, 155)">
-          <rect x="0" y="0" width="280" height="160" rx="4" fill="#0B0C0E" stroke="#1A1A20" strokeWidth="1" />
-          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">ROOT FIX / ORIENTATION</text>
-          
-          <g transform="translate(12, 34)">
-            <circle cx="50" cy="50" r="35" stroke="#80633A" strokeWidth="1" strokeDasharray="4 3" fill="none" />
-            <line x1="50" y1="50" x2="85" y2="50" stroke="#A51C30" strokeWidth="1.5" markerEnd="url(#arrow)" />
-            <line x1="50" y1="50" x2="50" y2="15" stroke="#C6A15B" strokeWidth="1.5" markerEnd="url(#arrow)" />
-            
-            <text x="100" y="35" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30" fontWeight="600">AUTO ROOT FIX</text>
-            <text x="100" y="52" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Frame 0 Inv Apply</text>
-            <text x="100" y="70" fontFamily="var(--font-mono)" fontSize="7.5" fill="#85858A">R_root = R_fix @ R_bvh</text>
-          </g>
-        </g>
-
-        {/* Grounding & Stabilization Modules */}
-        <g transform="translate(35, 330)">
-          <g transform="translate(0, 0)">
-            <rect x="0" y="0" width="280" height="48" rx="4" fill="#0B0C0E" stroke="#80633A" strokeWidth="1" opacity="0.8" />
-            <text x="140" y="20" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" fontWeight="600" fill="#C6A15B">GROUNDING</text>
-            <text x="140" y="35" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Percentile Floor Detection</text>
-          </g>
-
-          <g transform="translate(300, 0)">
-            <rect x="0" y="0" width="320" height="48" rx="4" fill="#0B0C0E" stroke="#A51C30" strokeWidth="1" opacity="0.8" />
-            <text x="160" y="20" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" fontWeight="600" fill="#A51C30">FOOT LOCK STABILIZATION</text>
-            <text x="160" y="35" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Translation-Only Deterministic Lock</text>
-          </g>
-
-          <g transform="translate(640, 0)">
-            <rect x="0" y="0" width="280" height="48" rx="4" fill="#0B0C0E" stroke="#2D7D46" strokeWidth="1" opacity="0.8" />
-            <text x="140" y="20" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" fontWeight="600" fill="#2D7D46">SAVITZKY-GOLAY SMOOTHING</text>
-            <text x="140" y="35" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Window = 11, Poly = 3 Filter</text>
-          </g>
-        </g>
-
-        {/* Bottom Bar: Export Formats & Stack */}
-        <g transform="translate(35, 400)">
-          <text x="0" y="16" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">
-            <tspan fill="#C6A15B" fontWeight="600">EXPORTS: </tspan>
-            NPZ (poses, transl, joint_names) · BVH (mocap header) · MP4 (3D skeleton render)
-          </text>
-          <text x="920" y="16" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#5C4A2E">
-            Stack: Python · NumPy · SciPy · SMPL-H · BVH · AMASS · Open3D · Matplotlib
-          </text>
-        </g>
-      </svg>
-    </figure>
+      {/* Footer */}
+      <div className="pt-3 border-t border-[#1A1A20] flex flex-wrap items-center justify-between gap-2 text-[10px] text-[#85858A]">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="text-[#C6A15B] font-medium">STACK:</span>
+          <span>Python</span>
+          <span>·</span>
+          <span>NumPy</span>
+          <span>·</span>
+          <span>SciPy</span>
+          <span>·</span>
+          <span>SMPL-H</span>
+          <span>·</span>
+          <span>Open3D</span>
+        </div>
+        <div className="text-[9.5px] text-[#e5e7eb] font-bold">
+          21 <span className="text-[#6b7280] font-normal">BODY JOINTS</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
