@@ -14,6 +14,8 @@ export const siteData = {
 export const navigation = [
   { label: "WORK", href: "#work" },
   { label: "EXPERIENCE", href: "#experience" },
+  { label: "SKILLS", href: "#capabilities" },
+  { label: "CERTIFICATIONS", href: "#certifications" },
   { label: "ABOUT", href: "#about" },
   { label: "CONTACT", href: "#contact" },
 ];

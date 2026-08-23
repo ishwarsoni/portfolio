@@ -8,52 +8,21 @@ interface TechnicalDiagramProps {
   "aria-label"?: string;
 }
 
-const SKELETON_BVH = [
-  { from: [0, 0], to: [0, -45] },
-  { from: [0, -45], to: [-30, -75] },
-  { from: [0, -45], to: [30, -75] },
-  { from: [-30, -75], to: [-45, -120] },
-  { from: [30, -75], to: [45, -120] },
-  { from: [-45, -120], to: [-55, -155] },
-  { from: [45, -120], to: [55, -155] },
-  { from: [0, 0], to: [0, 45] },
-  { from: [0, 45], to: [-35, 80] },
-  { from: [0, 45], to: [35, 80] },
-  { from: [-35, 80], to: [-45, 115] },
-  { from: [35, 80], to: [45, 115] },
-];
-
-const SKELETON_SMPLH = [
-  { from: [0, 0], to: [0, -40] },
-  { from: [0, -40], to: [-25, -70] },
-  { from: [0, -40], to: [25, -70] },
-  { from: [-25, -70], to: [-40, -110] },
-  { from: [25, -70], to: [40, -110] },
-  { from: [-40, -110], to: [-50, -145] },
-  { from: [40, -110], to: [50, -145] },
-  { from: [0, 0], to: [0, 40] },
-  { from: [0, 40], to: [-30, 75] },
-  { from: [0, 40], to: [30, 75] },
-  { from: [-30, 75], to: [-40, 110] },
-  { from: [30, 75], to: [40, 110] },
-];
-
-const MATRIX_C_BVH2SMPL = [
-  [-1, 0, 0],
-  [0, 0, 1],
-  [0, 1, 0],
-];
-
-const VALIDATION_LABELS = ["FK VERIFY", "GROUNDING", "FOOT LOCK", "SMOOTHING"];
-
 const PIPELINE_STAGES = [
   "BVH INPUT",
   "PARSE",
   "JOINT MAP",
-  "COORD TRANSFORM",
+  "COORD XFORM",
   "ROOT FIX",
   "SMPL-H",
   "VALIDATE",
+];
+
+const VALIDATION_LABELS = [
+  "✓ FK VERIFICATION",
+  "✓ FLOOR GROUNDING",
+  "✓ FOOT-LOCK STABILITY",
+  "✓ SAVITZKY-GOLAY SMOOTH",
 ];
 
 export function SemanticLabsDiagram({
@@ -95,42 +64,34 @@ export function SemanticLabsDiagram({
       const stages = Array.from(stageNodes) as SVGGElement[];
       const bvhSkeleton = svg.querySelector("#bvh-skeleton");
       const smplhSkeleton = svg.querySelector("#smplh-skeleton");
-      const matrixGroups = svg.querySelectorAll("#matrix-display");
+      const matrixDisplay = svg.querySelector("#matrix-display");
 
       if (!signal || !stages.length) return;
 
       gsap.set(signal, { opacity: 0, scale: 0.5 });
-      if (bvhSkeleton) gsap.set(bvhSkeleton, { opacity: 0.3 });
+      if (bvhSkeleton) gsap.set(bvhSkeleton, { opacity: 0.4 });
       if (smplhSkeleton) gsap.set(smplhSkeleton, { opacity: 0 });
-      matrixGroups.forEach((g) => gsap.set(g, { opacity: 0 }));
+      if (matrixDisplay) gsap.set(matrixDisplay, { opacity: 0 });
 
       const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: isMobile ? 0.4 : 0.5 } });
 
       tl.to(signal, { opacity: 1, scale: 1, duration: isMobile ? 0.2 : 0.3 });
 
       stages.forEach((stageEl, i) => {
-        const rect = stageEl.getBoundingClientRect();
-        const containerRect = svg.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2 - containerRect.left;
-
+        const targetX = 80 + i * 120;
         const ring = stageEl.querySelector(".stage-ring");
+
         if (ring) {
-          tl.to(signal, { x: cx }, "+=0.05")
+          tl.to(signal, { x: targetX - 80 }, "+=0.04")
             .to(ring, { r: 10, strokeWidth: 3, duration: isMobile ? 0.1 : 0.15 }, "<")
-            .to(ring, { r: 7, strokeWidth: 2, duration: isMobile ? 0.15 : 0.2 }, "+=0.03");
+            .to(ring, { r: 7, strokeWidth: 2, duration: isMobile ? 0.15 : 0.2 }, "+=0.02");
         }
 
-        if (i === 2 && matrixGroups[0]) {
-          tl.to(matrixGroups[0], { opacity: 1, duration: isMobile ? 0.2 : 0.3 }, "<");
-        }
-        if (i === 3 && matrixGroups[1]) {
-          tl.to(matrixGroups[1], { opacity: 1, duration: isMobile ? 0.2 : 0.3 }, "<");
-        }
-        if (i === 4 && matrixGroups[2]) {
-          tl.to(matrixGroups[2], { opacity: 1, duration: isMobile ? 0.2 : 0.3 }, "<");
+        if (i === 3 && matrixDisplay) {
+          tl.to(matrixDisplay, { opacity: 1, duration: isMobile ? 0.25 : 0.35 }, "<");
         }
         if (i === 5) {
-          if (bvhSkeleton) tl.to(bvhSkeleton, { opacity: 0.15, duration: isMobile ? 0.2 : 0.3 }, "<");
+          if (bvhSkeleton) tl.to(bvhSkeleton, { opacity: 0.25, duration: isMobile ? 0.2 : 0.3 }, "<");
           if (smplhSkeleton) tl.to(smplhSkeleton, { opacity: 1, duration: isMobile ? 0.3 : 0.4 }, "<");
         }
         if (i === 6) {
@@ -151,9 +112,9 @@ export function SemanticLabsDiagram({
     <figure className={`w-full overflow-hidden ${className}`} aria-label={ariaLabel} role="img">
       <svg
         ref={containerRef}
-        viewBox="0 0 880 440"
+        viewBox="0 0 920 480"
         preserveAspectRatio="xMidYMid meet"
-        className="w-full max-w-[880px] mx-auto select-none"
+        className="w-full max-w-[920px] mx-auto select-none"
         aria-hidden="true"
         style={{ maxWidth: "100%", height: "auto" }}
       >
@@ -162,23 +123,19 @@ export function SemanticLabsDiagram({
             <stop offset="0%" stopColor="#07080a" />
             <stop offset="100%" stopColor="#0b0c0e" />
           </linearGradient>
-          <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#c6a15b" />
-            <stop offset="100%" stopColor="#80633a" />
-          </linearGradient>
           <linearGradient id="signal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#22d3ee" />
             <stop offset="100%" stopColor="#a855f7" />
           </linearGradient>
           <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
           <filter id="strong-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -190,25 +147,33 @@ export function SemanticLabsDiagram({
         </defs>
 
         {/* Frame */}
-        <rect width="880" height="440" fill="url(#bg-grad)" rx="8" />
-        <rect width="880" height="440" fill="url(#subtle-grid)" opacity="0.3" rx="8" />
-        <rect width="880" height="440" fill="none" stroke="#1a1c20" strokeWidth="1" rx="8" />
+        <rect width="920" height="480" fill="url(#bg-grad)" rx="8" />
+        <rect width="920" height="480" fill="url(#subtle-grid)" opacity="0.3" rx="8" />
+        <rect width="920" height="480" fill="none" stroke="#1a1c20" strokeWidth="1" rx="8" />
 
-        {/* Pipeline flow line */}
+        {/* Header Title */}
+        <g transform="translate(40, 25)">
+          <circle cx="6" cy="6" r="4" fill="#22d3ee" filter="url(#soft-glow)" />
+          <text x="18" y="9" fontFamily="var(--font-mono)" fontSize="11" fontWeight="600" fill="#22d3ee" letterSpacing="0.08em">
+            SEMANTIC LABS · NEURAL MOTION RECOVERY (BVH ➔ SMPL-H)
+          </text>
+        </g>
+
+        {/* Pipeline Flow Stepper Line (y = 55) */}
         <g className="pipeline-flow">
           <path
-            d="M 70 45 L 810 45"
+            d="M 60 55 L 860 55"
             fill="none"
             stroke="#1a1c20"
             strokeWidth="2"
             strokeDasharray="8 6"
-            opacity="0.4"
+            opacity="0.5"
           />
 
           {PIPELINE_STAGES.map((label, i) => {
-            const x = 90 + i * 110;
+            const x = 80 + i * 120;
             return (
-              <g key={label} className="pipe-stage" transform={`translate(${x}, 45)`}>
+              <g key={label} className="pipe-stage" transform={`translate(${x}, 55)`}>
                 <circle
                   className="stage-ring"
                   cx="0"
@@ -236,141 +201,277 @@ export function SemanticLabsDiagram({
           })}
 
           <g id="pipeline-signal">
-            <circle cx="90" cy="45" r="4" fill="url(#signal-grad)" filter="url(#strong-glow)" />
-            <circle cx="90" cy="45" r="7" fill="none" stroke="url(#signal-grad)" strokeWidth="1.5" opacity="0.4" />
+            <circle cx="80" cy="55" r="4" fill="url(#signal-grad)" filter="url(#strong-glow)" />
+            <circle cx="80" cy="55" r="7" fill="none" stroke="url(#signal-grad)" strokeWidth="1.5" opacity="0.4" />
           </g>
         </g>
 
-        {/* LEFT: BVH Skeleton */}
-        <g transform="translate(130, 220)" id="bvh-skeleton">
-          <text x="0" y="-130" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9.5" fontWeight={600} fill="#c6a15b">BVH INPUT SKELETON</text>
+        {/* LEFT: Realistic Anatomical BVH Skeleton (Center at X=170, Y=265) */}
+        <g transform="translate(170, 265)" id="bvh-skeleton">
+          <text x="0" y="-170" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#c6a15b">
+            01. BVH HIERARCHY SKELETON
+          </text>
 
-          {/* Main skeleton */}
-          <g stroke="#c6a15b" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" filter="url(#soft-glow)">
-            {SKELETON_BVH.map((bone, i) => (
-              <line key={i} x1={bone.from[0]} y1={bone.from[1]} x2={bone.to[0]} y2={bone.to[1]} />
-            ))}
+          {/* Anatomical Skull */}
+          <ellipse cx="0" cy="-168" rx="14" ry="16" fill="none" stroke="#c6a15b" strokeWidth="1.5" filter="url(#soft-glow)" />
+          <path d="M -9 -155 L -5 -144 L 5 -144 L 9 -155 Z" fill="none" stroke="#c6a15b" strokeWidth="1.2" />
+          <circle cx="-5" cy="-168" r="2.5" fill="#c6a15b" opacity="0.6" />
+          <circle cx="5" cy="-168" r="2.5" fill="#c6a15b" opacity="0.6" />
+
+          {/* Cervical & Thoracic Spine */}
+          <line x1="0" y1="-144" x2="0" y2="-130" stroke="#c6a15b" strokeWidth="2" />
+          <line x1="0" y1="-130" x2="0" y2="-78" stroke="#c6a15b" strokeWidth="2.5" />
+
+          {/* Sternum & Clavicles */}
+          <path d="M 0 -130 L 0 -85" stroke="#e8e1d2" strokeWidth="2.5" />
+          <path d="M 0 -130 Q -18 -134, -36 -126" fill="none" stroke="#c6a15b" strokeWidth="1.8" />
+          <path d="M 0 -130 Q 18 -134, 36 -126" fill="none" stroke="#c6a15b" strokeWidth="1.8" />
+
+          {/* Anatomical Ribcage (Curved Ribs) */}
+          <g stroke="#c6a15b" strokeWidth="1.2" fill="none" opacity="0.85">
+            <path d="M 0 -124 Q -18 -128, -26 -120 Q -18 -114, 0 -118" />
+            <path d="M 0 -124 Q 18 -128, 26 -120 Q 18 -114, 0 -118" />
+            <path d="M 0 -116 Q -22 -120, -30 -110 Q -20 -104, 0 -108" />
+            <path d="M 0 -116 Q 22 -120, 30 -110 Q 20 -104, 0 -108" />
+            <path d="M 0 -108 Q -24 -110, -32 -98 Q -22 -92, 0 -98" />
+            <path d="M 0 -108 Q 24 -110, 32 -98 Q 22 -92, 0 -98" />
+            <path d="M 0 -100 Q -22 -100, -28 -88 Q -18 -84, 0 -88" />
+            <path d="M 0 -100 Q 22 -100, 28 -88 Q 18 -84, 0 -88" />
           </g>
 
+          {/* Pelvic Bowl Girdle */}
+          <path
+            d="M -30 -42 C -38 -65, -12 -70, 0 -58 C 12 -70, 38 -65, 30 -42 C 22 -24, 12 -25, 0 -30 C -12 -25, -22 -24, -30 -42 Z"
+            fill="none"
+            stroke="#c6a15b"
+            strokeWidth="1.6"
+            filter="url(#soft-glow)"
+          />
+          <path d="M -14 -32 L 0 -42 L 14 -32" fill="none" stroke="#c6a15b" strokeWidth="1.2" />
+
+          {/* Left Arm (Humerus, Radius/Ulna, Hand) */}
+          <path d="M -36 -126 L -54 -74" stroke="#c6a15b" strokeWidth="2.2" />
+          <path d="M -54 -74 L -70 -22" stroke="#c6a15b" strokeWidth="1.8" />
+          <path d="M -52 -74 L -67 -22" stroke="#c6a15b" strokeWidth="1.2" opacity="0.7" />
+          {/* Hand Fingers */}
+          <path d="M -70 -22 L -78 -10 M -70 -22 L -74 -6 M -70 -22 L -68 -6" stroke="#c6a15b" strokeWidth="1" />
+
+          {/* Right Arm (Humerus, Radius/Ulna, Hand) */}
+          <path d="M 36 -126 L 54 -74" stroke="#c6a15b" strokeWidth="2.2" />
+          <path d="M 54 -74 L 70 -22" stroke="#c6a15b" strokeWidth="1.8" />
+          <path d="M 52 -74 L 67 -22" stroke="#c6a15b" strokeWidth="1.2" opacity="0.7" />
+          {/* Hand Fingers */}
+          <path d="M 70 -22 L 78 -10 M 70 -22 L 74 -6 M 70 -22 L 68 -6" stroke="#c6a15b" strokeWidth="1" />
+
+          {/* Left Leg (Femur, Patella, Tibia/Fibula, Foot) */}
+          <path d="M -22 -35 L -34 45" stroke="#c6a15b" strokeWidth="2.6" />
+          <circle cx="-34" cy="45" r="4" fill="#0d0e10" stroke="#c6a15b" strokeWidth="1.5" />
+          <path d="M -34 45 L -42 122" stroke="#c6a15b" strokeWidth="2" />
+          <path d="M -38 45 L -46 122" stroke="#c6a15b" strokeWidth="1.2" opacity="0.7" />
+          <path d="M -42 122 L -58 132 L -34 135 Z" fill="none" stroke="#c6a15b" strokeWidth="1.5" />
+
+          {/* Right Leg (Femur, Patella, Tibia/Fibula, Foot) */}
+          <path d="M 22 -35 L 34 45" stroke="#c6a15b" strokeWidth="2.6" />
+          <circle cx="34" cy="45" r="4" fill="#0d0e10" stroke="#c6a15b" strokeWidth="1.5" />
+          <path d="M 34 45 L 42 122" stroke="#c6a15b" strokeWidth="2" />
+          <path d="M 38 45 L 46 122" stroke="#c6a15b" strokeWidth="1.2" opacity="0.7" />
+          <path d="M 42 122 L 58 132 L 34 135 Z" fill="none" stroke="#c6a15b" strokeWidth="1.5" />
+
+          {/* 21 SMPL-H Glowing Joint Nodes */}
           <g fill="#c6a15b" filter="url(#soft-glow)">
-            <circle cx="0" cy="0" r="4" />
-            <circle cx="0" cy="-45" r="5" />
-            <circle cx="-30" cy="-75" r="3.5" />
-            <circle cx="30" cy="-75" r="3.5" />
-            <circle cx="-45" cy="-120" r="2.5" />
-            <circle cx="45" cy="-120" r="2.5" />
-            <circle cx="0" cy="45" r="4" />
-            <circle cx="-35" cy="80" r="3" />
-            <circle cx="35" cy="80" r="3" />
+            <circle cx="0" cy="-45" r="4" />
+            <circle cx="-22" cy="-35" r="3.5" />
+            <circle cx="22" cy="-35" r="3.5" />
+            <circle cx="0" cy="-78" r="3.5" />
+            <circle cx="0" cy="-110" r="3.5" />
+            <circle cx="0" cy="-130" r="3.5" />
+            <circle cx="0" cy="-144" r="3.5" />
+            <circle cx="0" cy="-168" r="4" fill="#e8e1d2" />
+            <circle cx="-36" cy="-126" r="3.5" />
+            <circle cx="36" cy="-126" r="3.5" />
+            <circle cx="-54" cy="-74" r="3.5" />
+            <circle cx="54" cy="-74" r="3.5" />
+            <circle cx="-70" cy="-22" r="3" />
+            <circle cx="70" cy="-22" r="3" />
+            <circle cx="-34" cy="45" r="3" />
+            <circle cx="34" cy="45" r="3" />
+            <circle cx="-42" cy="122" r="3" />
+            <circle cx="42" cy="122" r="3" />
+            <circle cx="-54" cy="132" r="2.5" />
+            <circle cx="54" cy="132" r="2.5" />
           </g>
 
-          <g fontFamily="var(--font-mono)" fontSize="7" fill="#6b7280">
-            <text x="8" y="-47">PELVIS</text>
-            <text x="8" y="43">ROOT</text>
-          </g>
+          <text x="0" y="152" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">
+            22 Joint Channels (CM)
+          </text>
         </g>
 
-        {/* CENTER: Coordinate Transform Core */}
-        <g transform="translate(440, 220)">
-          <text x="0" y="-130" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9.5" fontWeight={600} fill="#a51c30">COORD TRANSFORM CORE</text>
+        {/* CENTER: Coordinate Basis Transform Core (X=460, Y=265) */}
+        <g transform="translate(460, 265)" id="matrix-display">
+          <text x="0" y="-170" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#a51c30">
+            02. COORD BASIS TRANSFORM CORE
+          </text>
 
-          {/* Coordinate Axes */}
-          <g id="matrix-display" opacity={0}>
-            <g strokeWidth="2" fill="none" strokeLinecap="round">
-              <line x1="0" y1="-30" x2="45" y2="-30" stroke="#a51c30" />
-              <line x1="0" y1="-30" x2="0" y2="-75" stroke="#22c55e" />
-              <line x1="0" y1="-30" x2="-35" y2="5" stroke="#c6a15b" />
+          {/* 3D Basis Vectors */}
+          <g strokeWidth="2.5" fill="none" strokeLinecap="round" filter="url(#soft-glow)">
+            <line x1="0" y1="-70" x2="48" y2="-70" stroke="#a51c30" />
+            <line x1="0" y1="-70" x2="0" y2="-120" stroke="#22c55e" />
+            <line x1="0" y1="-70" x2="-38" y2="-32" stroke="#c6a15b" />
+          </g>
+          <text x="56" y="-66" fontFamily="var(--font-mono)" fontSize="9" fontWeight="700" fill="#a51c30">X (Right)</text>
+          <text x="-4" y="-126" fontFamily="var(--font-mono)" fontSize="9" fontWeight="700" fill="#22c55e">Y (Up)</text>
+          <text x="-48" y="-24" fontFamily="var(--font-mono)" fontSize="9" fontWeight="700" fill="#c6a15b">Z (Fwd)</text>
+
+          {/* Matrix Display Box */}
+          <g transform="translate(0, -10)">
+            <rect x="-85" y="-6" width="170" height="85" rx="5" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" />
+            <text x="0" y="14" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" fontWeight="600" fill="#c6a15b">
+              C_bvh2smpl Matrix
+            </text>
+
+            <g fontFamily="var(--font-mono)" fontSize="11" fill="#e5e7eb" textAnchor="middle">
+              <text x="-45" y="38" fill="#c6a15b" fontWeight="700">-1</text>
+              <text x="0" y="38" fill="#6b7280">0</text>
+              <text x="45" y="38" fill="#6b7280">0</text>
+
+              <text x="-45" y="56" fill="#6b7280">0</text>
+              <text x="0" y="56" fill="#6b7280">0</text>
+              <text x="45" y="56" fill="#22c55e" fontWeight="700">1</text>
+
+              <text x="-45" y="74" fill="#6b7280">0</text>
+              <text x="0" y="74" fill="#a51c30" fontWeight="700">1</text>
+              <text x="45" y="74" fill="#6b7280">0</text>
             </g>
-
-            <text x="52" y="-27" fontFamily="var(--font-mono)" fontSize="8" fill="#a51c30">X</text>
-            <text x="-4" y="-80" fontFamily="var(--font-mono)" fontSize="8" fill="#22c55e">Y</text>
-            <text x="-42" y="10" fontFamily="var(--font-mono)" fontSize="8" fill="#c6a15b">Z</text>
           </g>
 
-          {/* Matrix Display */}
-          <g transform="translate(0, 10)" id="matrix-display">
-            <rect x="-70" y="-8" width="140" height="75" rx="4" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" opacity="0.95" />
-            <text x="0" y="-16" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fontWeight={600} fill="#c6a15b">C_bvh2smpl Matrix</text>
-
-            <g fontFamily="var(--font-mono)" fontSize="10" fill="#e5e7eb" textAnchor="middle">
-              {MATRIX_C_BVH2SMPL.map((row, ri) =>
-                row.map((val, ci) => (
-                  <text
-                    key={`${ri}-${ci}`}
-                    x={ci * 40 - 40}
-                    y={ri * 18 + 10}
-                    fill={val !== 0 ? "#c6a15b" : "#6b7280"}
-                    fontWeight={val !== 0 ? 600 : 400}
-                  >
-                    {val === -1 ? "-1" : val === 1 ? "1" : "0"}
-                  </text>
-                ))
-              )}
-            </g>
-
-            <text x="0" y="74" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7" fill="#6b7280">[-1 0 0; 0 0 1; 0 1 0]</text>
-          </g>
-
-          {/* Root Fix Formula */}
-          <g transform="translate(0, 105)" id="matrix-display" opacity={0.9}>
-            <rect x="-95" y="-6" width="190" height="26" rx="4" fill="#0d0e10" stroke="#a51c30" strokeWidth="1" />
-            <text x="0" y="6" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#a51c30">R_root = R_fix @ R_bvh2smpl</text>
-            <text x="0" y="16" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7" fill="#6b7280">Frame-0 inverse auto apply</text>
-          </g>
-        </g>
-
-        {/* RIGHT: SMPL-H Skeleton */}
-        <g transform="translate(750, 220)" id="smplh-skeleton">
-          <text x="0" y="-130" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9.5" fontWeight={600} fill="#22c55e">SMPL-H OUTPUT</text>
-
-          <g stroke="#22c55e" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" filter="url(#soft-glow)">
-            {SKELETON_SMPLH.map((bone, i) => (
-              <line key={i} x1={bone.from[0]} y1={bone.from[1]} x2={bone.to[0]} y2={bone.to[1]} />
-            ))}
-          </g>
-
-          <g fill="#22c55e" filter="url(#soft-glow)">
-            <circle cx="0" cy="0" r="4" />
-            <circle cx="0" cy="-40" r="5" />
-            <circle cx="-25" cy="-70" r="3.5" />
-            <circle cx="25" cy="-70" r="3.5" />
-            <circle cx="-40" cy="-110" r="2.5" />
-            <circle cx="40" cy="-110" r="2.5" />
-            <circle cx="0" cy="40" r="4" />
-            <circle cx="-30" cy="75" r="3" />
-            <circle cx="30" cy="75" r="3" />
-          </g>
-
-          <g fontFamily="var(--font-mono)" fontSize="7" fill="#6b7280">
-            <text x="8" y="-42">PELVIS</text>
-            <text x="8" y="38">ROOT</text>
-          </g>
-
-          {/* Validation badges */}
+          {/* Formula Card */}
           <g transform="translate(0, 95)">
+            <rect x="-105" y="-6" width="210" height="32" rx="4" fill="#0d0e10" stroke="#a51c30" strokeWidth="1" />
+            <text x="0" y="10" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fontWeight="600" fill="#a51c30">
+              R_root = R_fix @ R_bvh2smpl
+            </text>
+            <text x="0" y="22" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7.5" fill="#85858A">
+              Frame-0 Inverse Auto Orientation
+            </text>
+          </g>
+        </g>
+
+        {/* RIGHT: Realistic Anatomical SMPL-H Mesh Skeleton (Center at X=750, Y=265) */}
+        <g transform="translate(750, 265)" id="smplh-skeleton">
+          <text x="0" y="-170" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#22c55e">
+            03. SMPL-H KINEMATIC MESH
+          </text>
+
+          {/* Anatomical Skull */}
+          <ellipse cx="0" cy="-168" rx="14" ry="16" fill="none" stroke="#22c55e" strokeWidth="1.5" filter="url(#soft-glow)" />
+          <path d="M -9 -155 L -5 -144 L 5 -144 L 9 -155 Z" fill="none" stroke="#22c55e" strokeWidth="1.2" />
+          <circle cx="-5" cy="-168" r="2.5" fill="#22c55e" opacity="0.6" />
+          <circle cx="5" cy="-168" r="2.5" fill="#22c55e" opacity="0.6" />
+
+          {/* Cervical & Thoracic Spine */}
+          <line x1="0" y1="-144" x2="0" y2="-130" stroke="#22c55e" strokeWidth="2" />
+          <line x1="0" y1="-130" x2="0" y2="-78" stroke="#22c55e" strokeWidth="2.5" />
+
+          {/* Sternum & Clavicles */}
+          <path d="M 0 -130 L 0 -85" stroke="#e8e1d2" strokeWidth="2.5" />
+          <path d="M 0 -130 Q -18 -134, -36 -126" fill="none" stroke="#22c55e" strokeWidth="1.8" />
+          <path d="M 0 -130 Q 18 -134, 36 -126" fill="none" stroke="#22c55e" strokeWidth="1.8" />
+
+          {/* Anatomical Ribcage */}
+          <g stroke="#22c55e" strokeWidth="1.2" fill="none" opacity="0.85">
+            <path d="M 0 -124 Q -18 -128, -26 -120 Q -18 -114, 0 -118" />
+            <path d="M 0 -124 Q 18 -128, 26 -120 Q 18 -114, 0 -118" />
+            <path d="M 0 -116 Q -22 -120, -30 -110 Q -20 -104, 0 -108" />
+            <path d="M 0 -116 Q 22 -120, 30 -110 Q 20 -104, 0 -108" />
+            <path d="M 0 -108 Q -24 -110, -32 -98 Q -22 -92, 0 -98" />
+            <path d="M 0 -108 Q 24 -110, 32 -98 Q 22 -92, 0 -98" />
+            <path d="M 0 -100 Q -22 -100, -28 -88 Q -18 -84, 0 -88" />
+            <path d="M 0 -100 Q 22 -100, 28 -88 Q 18 -84, 0 -88" />
+          </g>
+
+          {/* Pelvic Bowl Girdle */}
+          <path
+            d="M -30 -42 C -38 -65, -12 -70, 0 -58 C 12 -70, 38 -65, 30 -42 C 22 -24, 12 -25, 0 -30 C -12 -25, -22 -24, -30 -42 Z"
+            fill="none"
+            stroke="#22c55e"
+            strokeWidth="1.6"
+            filter="url(#soft-glow)"
+          />
+          <path d="M -14 -32 L 0 -42 L 14 -32" fill="none" stroke="#22c55e" strokeWidth="1.2" />
+
+          {/* Left Arm */}
+          <path d="M -36 -126 L -54 -74" stroke="#22c55e" strokeWidth="2.2" />
+          <path d="M -54 -74 L -70 -22" stroke="#22c55e" strokeWidth="1.8" />
+          <path d="M -52 -74 L -67 -22" stroke="#22c55e" strokeWidth="1.2" opacity="0.7" />
+          <path d="M -70 -22 L -78 -10 M -70 -22 L -74 -6 M -70 -22 L -68 -6" stroke="#22c55e" strokeWidth="1" />
+
+          {/* Right Arm */}
+          <path d="M 36 -126 L 54 -74" stroke="#22c55e" strokeWidth="2.2" />
+          <path d="M 54 -74 L 70 -22" stroke="#22c55e" strokeWidth="1.8" />
+          <path d="M 52 -74 L 67 -22" stroke="#22c55e" strokeWidth="1.2" opacity="0.7" />
+          <path d="M 70 -22 L 78 -10 M 70 -22 L 74 -6 M 70 -22 L 68 -6" stroke="#22c55e" strokeWidth="1" />
+
+          {/* Left Leg */}
+          <path d="M -22 -35 L -34 45" stroke="#22c55e" strokeWidth="2.6" />
+          <circle cx="-34" cy="45" r="4" fill="#0d0e10" stroke="#22c55e" strokeWidth="1.5" />
+          <path d="M -34 45 L -42 122" stroke="#22c55e" strokeWidth="2" />
+          <path d="M -38 45 L -46 122" stroke="#22c55e" strokeWidth="1.2" opacity="0.7" />
+          <path d="M -42 122 L -58 132 L -34 135 Z" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+
+          {/* Right Leg */}
+          <path d="M 22 -35 L 34 45" stroke="#22c55e" strokeWidth="2.6" />
+          <circle cx="34" cy="45" r="4" fill="#0d0e10" stroke="#22c55e" strokeWidth="1.5" />
+          <path d="M 34 45 L 42 122" stroke="#22c55e" strokeWidth="2" />
+          <path d="M 38 45 L 46 122" stroke="#22c55e" strokeWidth="1.2" opacity="0.7" />
+          <path d="M 42 122 L 58 132 L 34 135 Z" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+
+          {/* 21 SMPL-H Glowing Joint Nodes */}
+          <g fill="#22c55e" filter="url(#soft-glow)">
+            <circle cx="0" cy="-45" r="4" />
+            <circle cx="-22" cy="-35" r="3.5" />
+            <circle cx="22" cy="-35" r="3.5" />
+            <circle cx="0" cy="-78" r="3.5" />
+            <circle cx="0" cy="-110" r="3.5" />
+            <circle cx="0" cy="-130" r="3.5" />
+            <circle cx="0" cy="-144" r="3.5" />
+            <circle cx="0" cy="-168" r="4" fill="#e8e1d2" />
+            <circle cx="-36" cy="-126" r="3.5" />
+            <circle cx="36" cy="-126" r="3.5" />
+            <circle cx="-54" cy="-74" r="3.5" />
+            <circle cx="54" cy="-74" r="3.5" />
+            <circle cx="-70" cy="-22" r="3" />
+            <circle cx="70" cy="-22" r="3" />
+            <circle cx="-34" cy="45" r="3" />
+            <circle cx="34" cy="45" r="3" />
+            <circle cx="-42" cy="122" r="3" />
+            <circle cx="42" cy="122" r="3" />
+            <circle cx="-54" cy="132" r="2.5" />
+            <circle cx="54" cy="132" r="2.5" />
+          </g>
+
+          {/* Validation Badges Overlay */}
+          <g transform="translate(0, 142)">
             {VALIDATION_LABELS.map((label, i) => (
-              <g key={label} className="val-badge" transform={`translate(0, ${i * 18})`} opacity={0}>
-                <rect x="-48" y="-6" width="96" height="15" rx="3" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" />
-                <text x="0" y="3" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7" fontWeight={600} fill="#22c55e">{label}</text>
+              <g key={label} className="val-badge" transform={`translate(0, ${i * 18 - 25})`} opacity={0}>
+                <rect x="-65" y="-7" width="130" height="15" rx="3" fill="#0d0e10" stroke="#22c55e" strokeWidth="0.8" opacity="0.9" />
+                <text x="0" y="3" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7" fontWeight="600" fill="#22c55e">
+                  {label}
+                </text>
               </g>
             ))}
           </g>
         </g>
 
-        {/* Bottom metrics */}
-        <g transform="translate(440, 360)" textAnchor="middle">
-          <text x="-180" y="0" fontFamily="var(--font-mono)" fontSize="15" fontWeight={700} fill="#e5e7eb">LARGE-SCALE</text>
-          <text x="-180" y="14" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight={500} fill="#6b7280" letterSpacing="0.08em">AMASS DATASETS</text>
+        {/* BOTTOM METRICS BAR (Y = 445) */}
+        <g transform="translate(460, 445)" textAnchor="middle">
+          <text x="-260" y="0" fontFamily="var(--font-mono)" fontSize="13" fontWeight="700" fill="#e5e7eb">LARGE-SCALE</text>
+          <text x="-260" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#85858A" letterSpacing="0.08em">AMASS DATASETS</text>
 
-          <text x="0" y="0" fontFamily="var(--font-mono)" fontSize="15" fontWeight={700} fill="#e5e7eb">21 JOINTS</text>
-          <text x="0" y="14" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight={500} fill="#6b7280" letterSpacing="0.08em">BODY MAPPING</text>
+          <text x="0" y="0" fontFamily="var(--font-mono)" fontSize="13" fontWeight="700" fill="#e5e7eb">21 JOINTS</text>
+          <text x="0" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#85858A" letterSpacing="0.08em">BODY KINEMATIC MAPPING</text>
 
-          <text x="180" y="0" fontFamily="var(--font-mono)" fontSize="18" fontWeight={700} fill="#e5e7eb">3 EXPORTS</text>
-          <text x="180" y="14" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight={500} fill="#6b7280" letterSpacing="0.08em">NPZ · BVH · MP4</text>
-        </g>
-
-        <g transform="translate(440, 400)" textAnchor="middle">
-          <text x="0" y="0" fontFamily="var(--font-mono)" fontSize="7.5" fill="#3f3f46">Semantic Labs · Python · NumPy · SciPy · SMPL-H · BVH · AMASS</text>
+          <text x="260" y="0" fontFamily="var(--font-mono)" fontSize="13" fontWeight="700" fill="#e5e7eb">3 EXPORT FORMATS</text>
+          <text x="260" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#85858A" letterSpacing="0.08em">NPZ · BVH · MP4</text>
         </g>
       </svg>
     </figure>
