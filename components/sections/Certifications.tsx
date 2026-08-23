@@ -1,72 +1,26 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { certifications } from "@/data/certifications";
 import { Container } from "@/components/ui/Container";
 import { Typography } from "@/components/ui/Typography";
 import { Divider } from "@/components/ui/Divider";
-import { Card, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export function Certifications() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const headerEl = sectionRef.current?.querySelector(".section-header");
-      if (headerEl) {
-        gsap.from(headerEl, {
-          opacity: 0,
-          y: 30,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        });
-      }
-
-      const cards = sectionRef.current?.querySelectorAll(".cert-card");
-      if (cards && cards.length > 0) {
-        gsap.from(Array.from(cards), {
-          opacity: 0,
-          y: 30,
-          duration: 0.6,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
       id="certifications"
       className="py-20 md:py-32"
       aria-labelledby="certifications-heading"
     >
       <Container size="standard">
-        <header className="text-center max-w-3xl mx-auto mb-12 md:mb-16 section-header">
+        <header className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <Typography variant="eyebrow" className="mb-4">
-            Certifications
+            Certifications & Credentials
           </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]">
-            Verified Credentials
+          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="certifications-heading">
+            Verified Certifications
           </Typography>
           <Typography variant="body-lg" className="text-ash">
             Industry-recognized certifications in RAG architectures and generative AI applications.
@@ -78,7 +32,7 @@ export function Certifications() {
           {certifications.map((cert, index) => (
             <article
               key={cert.title}
-              className="card-base cert-card p-6"
+              className="card-base cert-card p-6 border border-[#1A1A20] hover:border-[#C6A15B]/50 transition-all duration-300 bg-[#0B0C0E]"
             >
               <div className="flex items-center gap-3 mb-4">
                 <Badge variant={index === 0 ? "gold" : "crimson"}>
@@ -123,3 +77,5 @@ export function Certifications() {
     </section>
   );
 }
+
+export default Certifications;

@@ -1,70 +1,24 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { capabilities } from "@/data/capabilities";
 import { Container } from "@/components/ui/Container";
 import { Typography } from "@/components/ui/Typography";
 import { Divider } from "@/components/ui/Divider";
-import { Card, CardContent } from "@/components/ui/Card";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function Capabilities() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const headerEl = sectionRef.current?.querySelector(".section-header");
-      if (headerEl) {
-        gsap.from(headerEl, {
-          opacity: 0,
-          y: 30,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        });
-      }
-
-      const cards = sectionRef.current?.querySelectorAll(".capability-card");
-      if (cards && cards.length > 0) {
-        gsap.from(Array.from(cards), {
-          opacity: 0,
-          y: 30,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
       id="capabilities"
       className="py-20 md:py-32"
       aria-labelledby="capabilities-heading"
     >
       <Container size="standard">
-        <header className="text-center max-w-3xl mx-auto mb-12 md:mb-16 section-header">
+        <header className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <Typography variant="eyebrow" className="mb-4">
-            Capabilities
+            Skills & Capabilities
           </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]">
-            Systems & Domains
+          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="capabilities-heading">
+            Technical Skills & Domains
           </Typography>
           <Typography variant="body-lg" className="text-ash">
             Organized by outcome, not language. Each domain represents a class of problems I solve.
@@ -75,15 +29,15 @@ export function Capabilities() {
         <div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           role="list"
-          aria-label="Capability domains"
+          aria-label="Skill categories"
         >
-          {capabilities.map((category, index) => (
+          {capabilities.map((category) => (
             <article
               key={category.title}
-              className="card-base capability-card group p-6"
+              className="card-base capability-card group p-6 border border-[#1A1A20] hover:border-[#C6A15B]/50 transition-all duration-300 bg-[#0B0C0E]"
               role="listitem"
             >
-              <Typography variant="h3" className="mb-4 group-hover:text-antique-gold transition-colors duration-300">
+              <Typography variant="h3" className="mb-4 group-hover:text-antique-gold transition-colors duration-300 text-[#E8E1D2]">
                 {category.title}
               </Typography>
               <Divider variant="bronze" className="mb-4 group-hover:w-full transition-all duration-300" style={{ width: "40%" }} />
@@ -101,3 +55,5 @@ export function Capabilities() {
     </section>
   );
 }
+
+export default Capabilities;
