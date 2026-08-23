@@ -60,7 +60,7 @@ export const portfolioData = {
             title: "VisionFX – Real-Time AR/VFX Engine",
             description: "Interactive Computer Vision system for real-time gesture-controlled visual effects.",
             problem: "Creating stable and responsive AR effects that accurately follow hand movements in real time while maintaining smooth visual rendering and low latency.",
-            solution: "Implemented MediaPipe-based hand tracking and a modular rendering pipeline to generate gesture-controlled Rasengan and Chidori-inspired visual effects synchronized with user movements.",
+            solution: "Implemented MediaPipe-based hand tracking and a modular rendering pipeline to generate gesture-controlled visual effects synchronized with user movements.",
             whyThisMatters: "Demonstrates real-time computer vision, gesture recognition, and AR/VFX engineering through an interactive hand-tracking experience.",
             stack: ["Python", "OpenCV", "MediaPipe", "NumPy", "ModernGL"],
             links: {
@@ -98,18 +98,23 @@ export const portfolioData = {
                 "Pandas",
                 "Scikit-learn",
                 "Model Evaluation",
-                "Data Engineering"
+                "Data Engineering",
             ]
         },
         {
-            category: "Programming & Tools",
+            category: "Backend & Systems",
             items: [
                 "Python",
+                "FastAPI",
+                "Docker",
+            ]
+        },
+        {
+            category: "Tools & Workflow",
+            items: [
                 "Git",
                 "GitHub",
                 "Jupyter Notebook",
-                "Docker",
-                "FastAPI"
             ]
         },
     ],

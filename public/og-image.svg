@@ -1,0 +1,30 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0B0C0E" />
+      <stop offset="100%" stop-color="#08090B" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C6A15B" />
+      <stop offset="100%" stop-color="#80633A" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+  
+  <rect x="100" y="100" width="1000" height="430" fill="none" stroke="url(#goldGrad)" stroke-width="1" rx="4" opacity="0.3" />
+  
+  <text x="600" y="260" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="72" font-weight="500" fill="#E8E1D2" letter-spacing="0.04em">
+    ISHWAR SONI
+  </text>
+  
+  <text x="600" y="330" text-anchor="middle" font-family="Inter, sans-serif" font-size="24" font-weight="400" fill="#C6A15B" letter-spacing="0.3em" text-transform="uppercase">
+    AI ENGINEER
+  </text>
+  
+  <line x1="400" y1="360" x2="800" y2="360" stroke="url(#goldGrad)" stroke-width="2" />
+  
+  <text x="600" y="400" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" fill="#85858A" letter-spacing="0.15em" text-transform="uppercase">
+    Computer Vision · Motion Systems · Applied AI
+  </text>
+</svg>
