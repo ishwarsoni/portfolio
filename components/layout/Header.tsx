@@ -96,58 +96,59 @@ export function Header() {
           role="navigation"
           aria-label="Mobile navigation"
           className={cn(
-            "lg:hidden overflow-hidden bg-midnight/95 backdrop-blur-xl border-b border-border-subtle transition-all duration-300",
-            mobileOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            "md:hidden overflow-y-auto bg-midnight/95 backdrop-blur-xl border-b border-border-subtle transition-all duration-300 ease-in-out",
+            mobileOpen ? "max-h-[calc(100vh-5rem)] opacity-100 py-2" : "max-h-0 opacity-0 py-0"
           )}
         >
-          <ul className="flex flex-col gap-2 py-6 px-2">
+          <ul className="flex flex-col gap-1 py-4 px-2">
             {navigation.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-3 py-3 font-serif text-base tracking-[0.15em] uppercase transition-colors text-ash hover:text-ivory"
+                  className="flex items-center gap-3 px-3 py-2.5 font-serif text-base tracking-[0.15em] uppercase transition-colors text-ash hover:text-ivory"
                 >
                   <span className="font-mono text-xs text-ash-dim">{navigation.indexOf(item) + 1}.</span>
                   {item.label}
                 </Link>
               </li>
             ))}
-            <li className="pt-4 px-3 border-t border-border-subtle">
+            <li className="pt-3 px-3 border-t border-border-subtle">
               <Link
                 href={siteData.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-ghost w-full justify-center px-4 py-3 text-xs tracking-[0.2em] uppercase font-mono"
+                onClick={() => setMobileOpen(false)}
+                className="btn-ghost w-full justify-center px-4 py-2.5 text-xs tracking-[0.2em] uppercase font-mono"
               >
                 Resume
               </Link>
             </li>
-            <li className="pt-4 px-3 flex flex-wrap gap-3">
+            <li className="pt-3 px-3 pb-2 flex flex-wrap items-center justify-between gap-3 border-t border-border-subtle/50">
               <a
                 href={siteData.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ash hover:text-ivory transition-colors font-mono text-sm"
+                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider"
                 aria-label="GitHub"
               >
-                GitHub
+                GitHub ↗
               </a>
               <a
                 href={siteData.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ash hover:text-ivory transition-colors font-mono text-sm"
+                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider"
                 aria-label="LinkedIn"
               >
-                LinkedIn
+                LinkedIn ↗
               </a>
               <a
                 href={`mailto:${siteData.email}`}
-                className="text-ash hover:text-ivory transition-colors font-mono text-sm"
+                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider"
                 aria-label="Email"
               >
-                Email
+                Email ↗
               </a>
             </li>
           </ul>
