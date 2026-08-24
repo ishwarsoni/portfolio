@@ -9,11 +9,11 @@ export function Capabilities() {
   return (
     <section
       id="capabilities"
-      className="py-20 md:py-32"
+      className="py-12 md:py-32 scroll-mt-20 md:scroll-mt-24"
       aria-labelledby="capabilities-heading"
     >
       <Container size="standard">
-        <header className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <header className="text-center max-w-3xl mx-auto mb-8 md:mb-16">
           <Typography variant="eyebrow" className="mb-4">
             Skills & Capabilities
           </Typography>
@@ -23,11 +23,11 @@ export function Capabilities() {
           <Typography variant="body-lg" className="text-ash">
             Organized by outcome, not language. Each domain represents a class of problems I solve.
           </Typography>
-          <Divider variant="gold" className="mx-auto mt-8 max-w-xs" />
+          <Divider variant="gold" className="mx-auto mt-6 md:mt-8 max-w-xs" />
         </header>
 
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           role="list"
           aria-label="Skill categories"
         >

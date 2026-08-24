@@ -54,18 +54,18 @@ export function Education() {
     <section
       ref={sectionRef}
       id="education"
-      className="py-20 md:py-32"
+      className="py-12 md:py-32 scroll-mt-20 md:scroll-mt-24"
       aria-labelledby="education-heading"
     >
       <Container size="narrow">
-        <header className="text-center max-w-3xl mx-auto mb-12 md:mb-16 section-header">
+        <header className="text-center max-w-3xl mx-auto mb-8 md:mb-16 section-header">
           <Typography variant="eyebrow" className="mb-4">
             Education
           </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]">
+          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="education-heading">
             Academic Background
           </Typography>
-          <Divider variant="gold" className="mx-auto mt-8 max-w-xs" />
+          <Divider variant="gold" className="mx-auto mt-6 md:mt-8 max-w-xs" />
         </header>
 
         <Card ref={cardRef} className="max-w-xl mx-auto">

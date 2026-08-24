@@ -62,12 +62,12 @@ export function Hero() {
     <section
       ref={heroRef}
       id="top"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden scroll-mt-20 md:scroll-mt-24"
       aria-labelledby="hero-title"
     >
       <div className="absolute inset-0 bg-vignette z-0" aria-hidden="true" />
       
-      <Container size="narrow" className="relative z-10 py-16 md:py-24 text-center">
+      <Container size="narrow" className="relative z-10 py-12 md:py-24 text-center">
         {/* Name */}
         <Typography
           ref={nameRef}
@@ -82,7 +82,7 @@ export function Hero() {
         <Typography
           ref={roleRef}
           variant="eyebrow"
-          className="mb-8 text-[#C6A15B] tracking-[0.25em] text-sm md:text-base font-mono font-semibold uppercase animate-fade-in-up"
+          className="mb-6 md:mb-8 text-[#C6A15B] tracking-[0.25em] text-sm md:text-base font-mono font-semibold uppercase animate-fade-in-up"
         >
           AI ENGINEER
         </Typography>
@@ -91,7 +91,7 @@ export function Hero() {
         <Typography
           ref={statementRef}
           variant="lead"
-          className="mb-4 max-w-2xl mx-auto italic text-[#E8E1D2] animate-fade-in-up"
+          className="mb-3 md:mb-4 max-w-2xl mx-auto italic text-[#E8E1D2] animate-fade-in-up text-base md:text-xl"
         >
           "{siteData.heroStatement}"
         </Typography>
@@ -100,13 +100,13 @@ export function Hero() {
         <Typography
           ref={subtextRef}
           variant="body-lg"
-          className="text-[#85858A] mb-12 max-w-xl mx-auto animate-fade-in-up"
+          className="text-[#85858A] mb-8 md:mb-12 max-w-xl mx-auto animate-fade-in-up text-xs md:text-base"
         >
           {siteData.heroSubtext}
         </Typography>
 
         {/* CTA Buttons */}
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up">
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-in-up">
           <Button asChild size="lg" className="w-full sm:w-auto">
             <a href="#work">VIEW WORK</a>
           </Button>
@@ -115,7 +115,7 @@ export function Hero() {
           </Button>
         </div>
 
-        <Divider variant="gold-thick" className="mx-auto mt-12 md:mt-16 max-w-xs" />
+        <Divider variant="gold-thick" className="mx-auto mt-8 md:mt-16 max-w-xs" />
 
         <div
           ref={scrollIndicatorRef}

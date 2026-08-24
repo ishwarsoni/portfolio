@@ -17,6 +17,20 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    setMobileOpen(false);
+    if (href.startsWith("#")) {
+      const targetId = href.replace("#", "");
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        e.preventDefault();
+        setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: "smooth" });
+        }, 50);
+      }
+    }
+  };
+
   return (
     <header
       className={cn(
@@ -30,8 +44,9 @@ export function Header() {
       <nav className="container-standard" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link
-            href="#main"
-            className="flex flex-col justify-center leading-tight group text-left"
+            href="#top"
+            onClick={(e) => handleNavClick(e, "#top")}
+            className="flex flex-col justify-center leading-tight group text-left touch-manipulation"
             aria-label="Ishwar Soni — Home"
           >
             <span className="font-serif text-lg md:text-xl font-medium tracking-tight text-ivory group-hover:text-antique-gold transition-colors duration-300">
@@ -70,7 +85,7 @@ export function Header() {
           </div>
 
           <button
-            className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 text-ivory"
+            className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 text-ivory touch-manipulation cursor-pointer"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={mobileOpen}
@@ -97,7 +112,9 @@ export function Header() {
           aria-label="Mobile navigation"
           className={cn(
             "md:hidden overflow-y-auto bg-midnight/95 backdrop-blur-xl border-b border-border-subtle transition-all duration-300 ease-in-out",
-            mobileOpen ? "max-h-[calc(100vh-5rem)] opacity-100 py-2" : "max-h-0 opacity-0 py-0"
+            mobileOpen
+              ? "max-h-[calc(100vh-5rem)] opacity-100 py-2 pointer-events-auto visible"
+              : "max-h-0 opacity-0 py-0 pointer-events-none invisible"
           )}
         >
           <ul className="flex flex-col gap-1 py-4 px-2">
@@ -105,8 +122,8 @@ export function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 font-serif text-base tracking-[0.15em] uppercase transition-colors text-ash hover:text-ivory"
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="flex items-center gap-3 px-3 py-2.5 font-serif text-base tracking-[0.15em] uppercase transition-colors text-ash hover:text-ivory touch-manipulation"
                 >
                   <span className="font-mono text-xs text-ash-dim">{navigation.indexOf(item) + 1}.</span>
                   {item.label}
@@ -119,7 +136,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
-                className="btn-ghost w-full justify-center px-4 py-2.5 text-xs tracking-[0.2em] uppercase font-mono"
+                className="btn-ghost w-full justify-center px-4 py-2.5 text-xs tracking-[0.2em] uppercase font-mono touch-manipulation"
               >
                 Resume
               </Link>
@@ -129,7 +146,7 @@ export function Header() {
                 href={siteData.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider"
+                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider touch-manipulation"
                 aria-label="GitHub"
               >
                 GitHub ↗
@@ -138,14 +155,14 @@ export function Header() {
                 href={siteData.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider"
+                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider touch-manipulation"
                 aria-label="LinkedIn"
               >
                 LinkedIn ↗
               </a>
               <a
                 href={`mailto:${siteData.email}`}
-                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider"
+                className="text-ash hover:text-ivory transition-colors font-mono text-xs tracking-wider touch-manipulation"
                 aria-label="Email"
               >
                 Email ↗

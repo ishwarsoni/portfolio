@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
+import React, { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
 type ButtonVariant = "primary" | "ghost";
@@ -10,18 +10,19 @@ interface BaseButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   asChild?: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
+  href?: string;
+  target?: string;
+  rel?: string;
 }
 
-interface ButtonProps extends BaseButtonProps {
-  href?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
-}
+export type ButtonProps = BaseButtonProps &
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseButtonProps>;
 
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
-  ({ className, variant = "primary", size = "default", asChild = false, children, href, ...props }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center gap-2 rounded-none font-medium transition-all duration-300 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson focus-visible:ring-offset-2 focus-visible:ring-offset-void";
+  ({ className, variant = "primary", size = "default", asChild = false, children, href, target, rel, ...props }, ref) => {
+    const baseStyles = "inline-flex items-center justify-center gap-2 rounded-none font-medium transition-all duration-300 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson focus-visible:ring-offset-2 focus-visible:ring-offset-void touch-manipulation cursor-pointer";
 
     const variants: Record<ButtonVariant, string> = {
       primary: "btn-primary",
@@ -34,24 +35,41 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
       lg: "px-8 py-4 text-base tracking-[0.15em] uppercase",
     };
 
-    const isLink = asChild && href;
-    const Comp = isLink ? "a" : "button";
+    const combinedClassName = cn(baseStyles, variants[variant], sizes[size], className);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const buttonProps: any = {
-      ref,
-      className: cn(baseStyles, variants[variant], sizes[size], className),
-      ...props,
-    };
+    if (asChild && React.isValidElement(children)) {
+      const child = children as React.ReactElement<any>;
+      return React.cloneElement(child, {
+        ...props,
+        ...child.props,
+        className: cn(combinedClassName, child.props.className),
+        ref,
+      });
+    }
 
-    if (isLink) {
-      buttonProps.href = href;
+    if (href) {
+      return (
+        <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          href={href}
+          target={target}
+          rel={rel}
+          className={combinedClassName}
+          {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+        >
+          {children}
+        </a>
+      );
     }
 
     return (
-      <Comp {...buttonProps}>
+      <button
+        ref={ref as React.Ref<HTMLButtonElement>}
+        className={combinedClassName}
+        {...props}
+      >
         {children}
-      </Comp>
+      </button>
     );
   }
 );
