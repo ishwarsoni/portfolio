@@ -9,11 +9,11 @@ export function Capabilities() {
   return (
     <section
       id="capabilities"
-      className="py-12 md:py-32 scroll-mt-20 md:scroll-mt-24"
+      className="py-16 md:py-32 scroll-mt-20 md:scroll-mt-24"
       aria-labelledby="capabilities-heading"
     >
       <Container size="standard">
-        <header className="text-center max-w-3xl mx-auto mb-8 md:mb-16">
+        <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
           <Typography variant="eyebrow" className="mb-4">
             Skills & Capabilities
           </Typography>

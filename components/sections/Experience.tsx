@@ -57,11 +57,11 @@ export function Experience() {
     <section
       ref={sectionRef}
       id="experience"
-      className="py-12 md:py-32 scroll-mt-20 md:scroll-mt-24"
+      className="py-16 md:py-32 scroll-mt-20 md:scroll-mt-24"
       aria-labelledby="experience-heading"
     >
       <Container size="wide">
-        <header className="text-center max-w-3xl mx-auto mb-8 md:mb-16 section-header">
+        <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16 section-header">
           <Typography variant="eyebrow" className="mb-4">
             Technical Experience
           </Typography>

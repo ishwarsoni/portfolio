@@ -67,7 +67,7 @@ export function Hero() {
     >
       <div className="absolute inset-0 bg-vignette z-0" aria-hidden="true" />
       
-      <Container size="narrow" className="relative z-10 py-12 md:py-24 text-center">
+      <Container size="narrow" className="relative z-10 py-16 md:py-24 text-center">
         {/* Name */}
         <Typography
           ref={nameRef}
@@ -100,7 +100,7 @@ export function Hero() {
         <Typography
           ref={subtextRef}
           variant="body-lg"
-          className="text-[#85858A] mb-8 md:mb-12 max-w-xl mx-auto animate-fade-in-up text-xs md:text-base"
+          className="text-[#85858A] mb-10 md:mb-12 max-w-xl mx-auto animate-fade-in-up text-xs md:text-base"
         >
           {siteData.heroSubtext}
         </Typography>
@@ -115,7 +115,7 @@ export function Hero() {
           </Button>
         </div>
 
-        <Divider variant="gold-thick" className="mx-auto mt-8 md:mt-16 max-w-xs" />
+        <Divider variant="gold-thick" className="mx-auto mt-10 md:mt-16 max-w-xs" />
 
         <div
           ref={scrollIndicatorRef}
