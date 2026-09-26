@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { certifications } from "@/data/certifications";
 import { Container } from "@/components/ui/Container";
@@ -29,7 +27,7 @@ export function Certifications() {
           {certifications.map((cert, index) => (
             <article
               key={cert.title}
-              className="card-base cert-card p-6 border border-charcoal hover:border-antique-gold/50 transition-all duration-300 bg-obsidian"
+              className="card-base cert-card p-6 border border-charcoal hover:border-antique-gold/50 transition-all duration-300 bg-obsidian backdrop-blur-none"
             >
               <div className="flex items-center gap-3 mb-4">
                 <Badge variant={index === 0 ? "gold" : "crimson"}>
@@ -41,12 +39,12 @@ export function Certifications() {
                 {cert.title}
               </Typography>
 
-              <Typography variant="body" className="text-ash mb-4">
+              <Typography variant="body" className="text-stone mb-4">
                 {cert.issuer} · {cert.date}
               </Typography>
 
               {cert.description && (
-                <Typography variant="small" className="text-ash-dim mb-4 leading-relaxed">
+                <Typography variant="small" className="text-ash mb-4 leading-relaxed">
                   {cert.description}
                 </Typography>
               )}
@@ -57,7 +55,7 @@ export function Certifications() {
                 href={cert.verifyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-mono tracking-wider uppercase text-ash hover:text-antique-gold transition-colors duration-300 inline-flex items-center gap-1"
+                className="text-sm font-mono tracking-wider uppercase text-stone hover:text-antique-gold transition-colors duration-300 inline-flex items-center gap-1"
                 aria-label={`Verify ${cert.title} certification`}
               >
                 VERIFY CREDENTIAL

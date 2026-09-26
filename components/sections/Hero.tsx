@@ -4,10 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/Button";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { siteData } from "@/data/site";
 import { Container } from "@/components/ui/Container";
 import { Typography } from "@/components/ui/Typography";
 import { Divider } from "@/components/ui/Divider";
+import { AmbientBackground } from "@/components/layout/AmbientBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,6 +31,10 @@ export function Hero() {
   }, []);
 
   useEffect(() => {
+    // Prevents ScrollTrigger from re-calculating on the mobile browser
+    // address-bar show/hide resize — the main source of scroll jank on phones.
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -65,6 +71,7 @@ export function Hero() {
       className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden scroll-mt-20 md:scroll-mt-24"
       aria-labelledby="hero-title"
     >
+      <AmbientBackground />
       <div className="absolute inset-0 bg-vignette z-0" aria-hidden="true" />
       
       <Container size="narrow" className="relative z-10 py-16 md:py-24 text-center">
@@ -107,12 +114,16 @@ export function Hero() {
 
         {/* CTA Buttons */}
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-in-up">
-          <Button asChild size="lg" className="w-full sm:w-auto">
-            <a href="#work">VIEW WORK</a>
-          </Button>
-          <Button asChild variant="ghost" size="lg" className="w-full sm:w-auto">
-            <a href="#about">ABOUT ME</a>
-          </Button>
+          <Magnetic className="w-full sm:w-auto">
+            <Button asChild size="lg" className="w-full sm:w-auto">
+              <a href="#work">VIEW WORK</a>
+            </Button>
+          </Magnetic>
+          <Magnetic className="w-full sm:w-auto">
+            <Button asChild variant="ghost" size="lg" className="w-full sm:w-auto">
+              <a href="#about">ABOUT ME</a>
+            </Button>
+          </Magnetic>
         </div>
 
         <Divider variant="gold-thick" className="mx-auto mt-10 md:mt-16 max-w-xs" />

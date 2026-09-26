@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { Vignette } from "@/components/layout/Vignette";
+import { IntroLoader } from "@/components/layout/IntroLoader";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
@@ -95,6 +96,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://linkedin.com" />
       </head>
       <body className="min-h-screen bg-void text-ivory antialiased">
+        <IntroLoader />
         <a href="#main" className="skip-link">
           Skip to main content
         </a>

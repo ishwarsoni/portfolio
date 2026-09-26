@@ -1,5 +1,3 @@
-"use client";
-
 import { capabilities } from "@/data/capabilities";
 import { Container } from "@/components/ui/Container";
 import { Typography } from "@/components/ui/Typography";
@@ -31,7 +29,7 @@ export function Capabilities() {
           {capabilities.map((category) => (
             <article
               key={category.title}
-              className="card-base capability-card group p-6 border border-charcoal hover:border-antique-gold/50 transition-all duration-300 bg-obsidian"
+              className="card-base capability-card group p-6 border border-charcoal hover:border-antique-gold/50 transition-all duration-300 bg-obsidian backdrop-blur-none"
               role="listitem"
             >
               <Typography variant="h3" className="mb-4 group-hover:text-antique-gold transition-colors duration-300 text-ivory">
