@@ -77,10 +77,7 @@ export function About() {
     >
       <Container size="narrow">
         <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16 section-header">
-          <Typography variant="eyebrow" className="mb-4">
-            About
-          </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="about-heading">
+          <Typography variant="h1" className="mb-4" id="about-heading">
             Engineering Philosophy
           </Typography>
           <Divider variant="gold" className="mx-auto mt-6 md:mt-8 max-w-xs" />

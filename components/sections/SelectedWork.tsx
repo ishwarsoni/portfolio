@@ -46,11 +46,8 @@ export function SelectedWork() {
     >
       <Container size="wide">
         <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16 section-header">
-          <Typography variant="eyebrow" className="mb-4">
+          <Typography variant="h1" className="mb-4" id="work-heading">
             Selected Work
-          </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="work-heading">
-            Artifacts
           </Typography>
           <Typography variant="body-lg" className="text-ash">
             Production systems engineered for motion processing, computer vision, and applied AI.

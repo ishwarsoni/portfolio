@@ -82,7 +82,7 @@ export function Hero() {
         <Typography
           ref={roleRef}
           variant="eyebrow"
-          className="mb-6 md:mb-8 text-[#C6A15B] tracking-[0.25em] text-sm md:text-base font-mono font-semibold uppercase animate-fade-in-up"
+          className="mb-6 md:mb-8 text-antique-gold tracking-[0.25em] text-sm md:text-base font-mono font-semibold uppercase animate-fade-in-up"
         >
           AI ENGINEER
         </Typography>
@@ -91,16 +91,16 @@ export function Hero() {
         <Typography
           ref={statementRef}
           variant="lead"
-          className="mb-3 md:mb-4 max-w-2xl mx-auto italic text-[#E8E1D2] animate-fade-in-up text-base md:text-xl"
+          className="mb-3 md:mb-4 max-w-2xl mx-auto text-ivory animate-fade-in-up text-base md:text-xl"
         >
-          "{siteData.heroStatement}"
+          {siteData.heroStatement}
         </Typography>
 
         {/* Subtext Domain Statement */}
         <Typography
           ref={subtextRef}
           variant="body-lg"
-          className="text-[#85858A] mb-10 md:mb-12 max-w-xl mx-auto animate-fade-in-up text-xs md:text-base"
+          className="text-ash mb-10 md:mb-12 max-w-xl mx-auto animate-fade-in-up text-xs md:text-base"
         >
           {siteData.heroSubtext}
         </Typography>

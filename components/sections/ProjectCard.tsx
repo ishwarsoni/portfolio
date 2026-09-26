@@ -112,10 +112,10 @@ export function ProjectCard({ project, index, Diagram }: ProjectCardProps) {
                   href={project.links.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="project-card__link text-antique-gold hover:text-ivory"
-                  aria-label={`${project.title} Live Demo`}
+                  className="project-card__link text-antique-gold"
+                  aria-label={`${project.title} live demo (opens in new tab)`}
                 >
-                  LIVE DEMO →
+                  Live demo
                 </a>
               )}
               {project.links.github && (
@@ -124,9 +124,9 @@ export function ProjectCard({ project, index, Diagram }: ProjectCardProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="project-card__link"
-                  aria-label={`${project.title} on GitHub`}
+                  aria-label={`${project.title} on GitHub (opens in new tab)`}
                 >
-                  GITHUB →
+                  GitHub
                 </a>
               )}
               <Button asChild className="project-card__cta">

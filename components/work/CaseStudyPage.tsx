@@ -391,7 +391,7 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
                   rel="noopener noreferrer"
                   className="btn-primary px-4 py-1.5 text-xs tracking-[0.2em] uppercase font-mono"
                 >
-                  LIVE DEMO →
+                  LIVE DEMO
                 </a>
               )}
             </div>

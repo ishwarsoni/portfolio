@@ -72,7 +72,7 @@ export function Header() {
               ))}
             </ul>
 
-            <div className="flex items-center pl-3 lg:pl-5 border-l border-[#1A1A20]">
+            <div className="flex items-center pl-3 lg:pl-5 border-l border-charcoal">
               <Link
                 href={siteData.resumeUrl}
                 target="_blank"

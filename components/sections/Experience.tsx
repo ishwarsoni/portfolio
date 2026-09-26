@@ -62,10 +62,7 @@ export function Experience() {
     >
       <Container size="wide">
         <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16 section-header">
-          <Typography variant="eyebrow" className="mb-4">
-            Technical Experience
-          </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="experience-heading">
+          <Typography variant="h1" className="mb-4" id="experience-heading">
             Semantic Labs
           </Typography>
           <Typography variant="body-lg" className="text-ash">
@@ -118,7 +115,7 @@ export function Experience() {
           </Card>
 
           {/* Full-width Motion Processing Diagram */}
-          <div className="w-full overflow-hidden rounded-lg border border-[#1A1A20] bg-[#0B0C0E]/80 p-2 md:p-4">
+          <div className="w-full overflow-hidden rounded-lg border border-charcoal bg-obsidian/80 p-2 md:p-4">
             <SemanticLabsDiagram className="w-full h-auto" />
           </div>
         </div>

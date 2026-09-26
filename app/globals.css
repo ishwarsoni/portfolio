@@ -164,6 +164,30 @@
     @apply font-mono text-antique-gold text-sm tracking-wider;
   }
 
+  /* Inline text link with an animated gold underline — replaces arrow-glyph affordances */
+  .link-underline {
+    @apply relative inline-flex items-center font-mono text-xs tracking-[0.2em] uppercase text-ash transition-colors duration-300;
+    padding-bottom: 3px;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-antique-gold);
+    transition: width 0.3s ease;
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    color: var(--color-antique-gold);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    width: 100%;
+  }
+
   .tech-tag {
     @apply px-2.5 py-1 rounded-sm border border-graphite bg-void/50 text-ash text-xs font-mono transition-all duration-200 hover:text-ivory hover:border-burnished-bronze/40;
   }
@@ -523,14 +547,31 @@
   color: var(--color-ash);
   transition: color 0.3s ease;
   text-align: center;
+  position: relative;
+  padding-bottom: 3px;
+}
+.project-card__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-antique-gold);
+  transition: width 0.3s ease;
 }
 @media (min-width: 640px) {
   .project-card__link {
     text-align: left;
   }
 }
-.project-card__link:hover {
+.project-card__link:hover,
+.project-card__link:focus-visible {
   color: var(--color-antique-gold);
+}
+.project-card__link:hover::after,
+.project-card__link:focus-visible::after {
+  width: 100%;
 }
 
 .project-card__cta {

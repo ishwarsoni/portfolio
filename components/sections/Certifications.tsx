@@ -16,11 +16,8 @@ export function Certifications() {
     >
       <Container size="standard">
         <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
-          <Typography variant="eyebrow" className="mb-4">
-            Certifications & Credentials
-          </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="certifications-heading">
-            Verified Certifications
+          <Typography variant="h1" className="mb-4" id="certifications-heading">
+            Certifications
           </Typography>
           <Typography variant="body-lg" className="text-ash">
             Industry-recognized certifications in RAG architectures and generative AI applications.
@@ -32,7 +29,7 @@ export function Certifications() {
           {certifications.map((cert, index) => (
             <article
               key={cert.title}
-              className="card-base cert-card p-6 border border-[#1A1A20] hover:border-[#C6A15B]/50 transition-all duration-300 bg-[#0B0C0E]"
+              className="card-base cert-card p-6 border border-charcoal hover:border-antique-gold/50 transition-all duration-300 bg-obsidian"
             >
               <div className="flex items-center gap-3 mb-4">
                 <Badge variant={index === 0 ? "gold" : "crimson"}>

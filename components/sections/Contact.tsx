@@ -78,10 +78,7 @@ export function Contact() {
     >
       <Container size="narrow">
         <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16 section-header">
-          <Typography variant="eyebrow" className="mb-4">
-            Contact
-          </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="contact-heading">
+          <Typography variant="h1" className="mb-4" id="contact-heading">
             Direct Inquiry
           </Typography>
           <Typography variant="lead" className="text-antique-gold max-w-xl mx-auto text-base md:text-xl">

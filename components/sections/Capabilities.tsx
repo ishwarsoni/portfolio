@@ -14,11 +14,8 @@ export function Capabilities() {
     >
       <Container size="standard">
         <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
-          <Typography variant="eyebrow" className="mb-4">
-            Skills & Capabilities
-          </Typography>
-          <Typography variant="h1" className="mb-4 uppercase tracking-[0.05em]" id="capabilities-heading">
-            Technical Skills & Domains
+          <Typography variant="h1" className="mb-4" id="capabilities-heading">
+            Skills & Domains
           </Typography>
           <Typography variant="body-lg" className="text-ash">
             Organized by outcome, not language. Each domain represents a class of problems I solve.
@@ -34,10 +31,10 @@ export function Capabilities() {
           {capabilities.map((category) => (
             <article
               key={category.title}
-              className="card-base capability-card group p-6 border border-[#1A1A20] hover:border-[#C6A15B]/50 transition-all duration-300 bg-[#0B0C0E]"
+              className="card-base capability-card group p-6 border border-charcoal hover:border-antique-gold/50 transition-all duration-300 bg-obsidian"
               role="listitem"
             >
-              <Typography variant="h3" className="mb-4 group-hover:text-antique-gold transition-colors duration-300 text-[#E8E1D2]">
+              <Typography variant="h3" className="mb-4 group-hover:text-antique-gold transition-colors duration-300 text-ivory">
                 {category.title}
               </Typography>
               <Divider variant="bronze" className="mb-4 group-hover:w-full transition-all duration-300" style={{ width: "40%" }} />
