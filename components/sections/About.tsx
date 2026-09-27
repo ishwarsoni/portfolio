@@ -76,12 +76,26 @@ export function About() {
       aria-labelledby="about-heading"
     >
       <Container size="narrow">
-        <header className="text-center max-w-3xl mx-auto mb-10 md:mb-16 section-header">
+        <header className="text-center max-w-3xl mx-auto mb-8 md:mb-12 section-header">
           <Typography variant="h1" className="mb-4" id="about-heading">
-            Engineering Philosophy
+            About
           </Typography>
           <Divider variant="gold" className="mx-auto mt-6 md:mt-8 max-w-xs" />
         </header>
+
+        <Typography
+          variant="body-lg"
+          className="text-ivory-dim max-w-2xl mx-auto text-center leading-relaxed mb-12 md:mb-16"
+        >
+          {aboutData.intro}
+        </Typography>
+
+        <Typography
+          variant="eyebrow"
+          className="block text-center text-ash mb-6 md:mb-8"
+        >
+          Engineering Philosophy
+        </Typography>
 
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-start">
           <blockquote ref={quoteRef} className="relative pl-6 md:pl-8 border-l-2 border-burnished-bronze/30">

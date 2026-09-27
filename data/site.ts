@@ -1,9 +1,9 @@
 export const siteData = {
   name: "Ishwar Soni",
   title: "AI Engineer",
-  tagline: "Computer Vision · Motion Systems · Applied AI",
-  heroStatement: "I build systems that make machines understand motion.",
-  heroSubtext: "From motion processing and computer vision to applied AI systems.",
+  tagline: "Applied AI · LLMs · RAG · Machine Learning",
+  heroStatement: "I build practical AI systems that turn complex data into useful intelligence.",
+  heroSubtext: "Building applied AI systems with LLMs, RAG, machine learning, and production-focused engineering, with hands-on experience in computer vision and motion processing.",
   location: "Udaipur, India",
   email: "ishwarsoni2917@gmail.com",
   github: "https://github.com/ishwarsoni",

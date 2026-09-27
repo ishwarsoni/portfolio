@@ -32,17 +32,20 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ishwar Soni — AI Engineer | Computer Vision · Motion Systems · Applied AI",
-  description: "AI Engineer specializing in human motion processing (SMPL/SMPL-H), computer vision, and applied AI systems. Building reliable ML pipelines and RAG architectures.",
+  title: "Ishwar Soni — AI Engineer | Applied AI, LLMs & RAG",
+  description: "Ishwar Soni is an AI Engineer building practical AI systems with LLMs, RAG, machine learning and data-focused engineering, with professional experience in computer vision and motion processing.",
   keywords: [
     "AI Engineer",
+    "Applied AI",
+    "LLM",
+    "RAG",
+    "Machine Learning",
+    "ML Engineering",
+    "Data Engineering",
     "Computer Vision",
     "Motion Processing",
     "SMPL",
     "SMPL-H",
-    "RAG",
-    "Machine Learning",
-    "Applied AI",
   ],
   authors: [{ name: "Ishwar Soni" }],
   creator: "Ishwar Soni",
@@ -53,8 +56,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://ishwarsoni.dev",
     siteName: "Ishwar Soni — AI Engineer",
-    title: "Ishwar Soni — AI Engineer | Computer Vision · Motion Systems · Applied AI",
-    description: "AI Engineer specializing in human motion processing (SMPL/SMPL-H), computer vision, and applied AI systems.",
+    title: "Ishwar Soni — AI Engineer | Applied AI, LLMs & RAG",
+    description: "AI Engineer building practical AI systems with LLMs, RAG, machine learning and data-focused engineering, with professional experience in computer vision and motion processing.",
     images: [
       {
         url: "/og-image.svg",
@@ -67,7 +70,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ishwar Soni — AI Engineer",
-    description: "AI Engineer specializing in human motion processing (SMPL/SMPL-H), computer vision, and applied AI systems.",
+    description: "AI Engineer building practical AI systems with LLMs, RAG, and machine learning, with professional experience in computer vision and motion processing.",
     images: ["/og-image.svg"],
   },
   verification: {

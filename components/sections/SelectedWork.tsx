@@ -50,7 +50,7 @@ export function SelectedWork() {
             Selected Work
           </Typography>
           <Typography variant="body-lg" className="text-ash">
-            Production systems engineered for motion processing, computer vision, and applied AI.
+            Applied AI, LLM, and machine-learning systems built for real-world reliability — with computer vision and motion processing.
           </Typography>
           <Divider variant="gold" className="mx-auto mt-6 md:mt-8 max-w-xs" />
         </header>

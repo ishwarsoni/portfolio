@@ -5,27 +5,23 @@ export interface CapabilityCategory {
 
 export const capabilities: CapabilityCategory[] = [
   {
-    title: "Motion Intelligence",
-    tags: ["BVH Parsing", "SMPL-H", "AMASS", "Coordinate Systems", "Joint Mapping", "Forward Kinematics", "Grounding", "Foot-lock Stabilization", "Savitzky-Golay Smoothing"],
-  },
-  {
-    title: "Applied AI & RAG",
-    tags: ["NVIDIA NIM", "Nemotron-3 Ultra", "Pydantic v2", "ThreadPoolExecutor", "Schema Validation", "Value Normalization", "Multi-doc Harmonization", "Conflict Detection"],
+    title: "Applied AI & LLM Systems",
+    tags: ["RAG", "NVIDIA NIM", "Nemotron-3 Ultra", "Pydantic v2", "Schema Validation", "Semantic Search", "Multi-document Processing", "Value Normalization", "Multi-document Harmonization", "Conflict Detection", "ThreadPoolExecutor"],
   },
   {
     title: "ML & Data Engineering",
-    tags: ["Pandas", "NumPy", "Scikit-learn", "Defensive Pipeline", "Target-Safe Cleaning", "Correlation Reduction", "Skewness Correction", "Outlier Handling", "Structured Reporting", "50-Dataset Validation"],
+    tags: ["Python", "Pandas", "NumPy", "Scikit-learn", "Model Evaluation", "Data Preprocessing", "Defensive Pipelines", "Target-Safe Cleaning", "Correlation Reduction", "Skewness Correction", "Outlier Handling", "Structured Reporting"],
   },
   {
-    title: "Computer Vision",
-    tags: ["Motion Processing", "3D Skeleton Rendering", "Coordinate Transforms", "Orientation Correction", "Scale Normalization", "Batch Visualization"],
+    title: "Computer Vision & Motion Processing",
+    tags: ["SMPL", "SMPL-H", "AMASS", "BVH Parsing", "Motion Processing", "3D Skeleton Rendering", "Coordinate Transforms", "Orientation Correction", "Scale Normalization", "Batch Visualization", "Joint Mapping", "Forward Kinematics"],
   },
   {
-    title: "Languages",
-    tags: ["Python", "C++"],
+    title: "Engineering & Tools",
+    tags: ["Git", "GitHub", "Jupyter", "Streamlit", "Matplotlib", "PyBullet", "Open3D/Trimesh"],
   },
   {
-    title: "Tools & Fundamentals",
-    tags: ["Git", "GitHub", "Jupyter", "Streamlit", "Matplotlib", "PyBullet", "Open3D/Trimesh", "DSA", "OOP"],
+    title: "Programming & Fundamentals",
+    tags: ["Python", "C++", "DSA", "OOP"],
   },
 ];

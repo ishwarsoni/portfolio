@@ -9,8 +9,8 @@ import { Education } from "@/components/sections/Education";
 import { Contact } from "@/components/sections/Contact";
 
 export const metadata: Metadata = {
-  title: "Ishwar Soni — AI Engineer | Computer Vision · Motion Systems · Applied AI",
-  description: "AI Engineer specializing in human motion processing (SMPL/SMPL-H), computer vision, and applied AI systems. Building reliable ML pipelines and RAG architectures.",
+  title: "Ishwar Soni — AI Engineer | Applied AI, LLMs & RAG",
+  description: "Ishwar Soni is an AI Engineer building practical AI systems with LLMs, RAG, machine learning and data-focused engineering, with professional experience in computer vision and motion processing.",
 };
 
 export default function Home() {
