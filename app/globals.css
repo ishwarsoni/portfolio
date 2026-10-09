@@ -757,3 +757,140 @@
   min-width: 3ch;
   text-align: right;
 }
+
+/* =====================================================================
+   SERIES — "The Series" cinematic experience (Aurora theme)
+   Added alongside the original tokens so legacy pages keep compiling.
+   New presentation layer (components/series/*) uses these tokens.
+   ===================================================================== */
+@theme {
+  --color-ink: #06070b;
+  --color-ink-2: #0b0d13;
+  --color-ink-3: #12141d;
+  --color-cyan: #38cfe8;
+  --color-cyan-2: #6fe9f2;
+  --color-violet: #8b7cf6;
+  --color-violet-2: #b3a6ff;
+  --color-amber: #ffb547;
+  --color-emerald: #46e3a8;
+  --color-skyblue: #5aa6ff;
+  --color-bone: #eceef4;
+  --color-mist: #9ba0ad;
+  --color-smoke: #6b707d;
+  --font-display: "Bebas Neue", "Oswald", Impact, sans-serif;
+  --ease-cine: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --gutter: clamp(16px, 4vw, 56px);
+}
+
+.gutter {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* Film grain — single fixed layer, cheap and subtle */
+.series-grain {
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 90;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: series-grain 1.2s steps(6) infinite;
+}
+@keyframes series-grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* SERIES-APPEND-MARKER */
+
+/* Horizontal rails: scrollable but no visible scrollbar */
+.rail {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom cursor: hide native cursor only when ours is active */
+.has-custom-cursor,
+.has-custom-cursor a,
+.has-custom-cursor button,
+.has-custom-cursor [role="button"] {
+  cursor: none;
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(236, 238, 244, 0.26);
+}
+
+.series-glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.series-focus:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Lenis smooth-scroll hooks */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.light-streak {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(111, 233, 242, 0.9), transparent);
+  filter: blur(0.4px);
+  animation: series-streak 7s var(--ease-cine) infinite;
+  opacity: 0;
+}
+@keyframes series-streak {
+  0% { transform: translateX(-40%) scaleX(0.4); opacity: 0; }
+  15% { opacity: 0.9; }
+  45% { transform: translateX(40%) scaleX(1); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes series-shimmer {
+  to { background-position: 200% center; }
+}
+.shimmer-text {
+  background: linear-gradient(90deg, #eceef4 0%, #eceef4 40%, #6fe9f2 50%, #eceef4 60%, #eceef4 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: series-shimmer 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .series-grain,
+  .light-streak,
+  .shimmer-text {
+    animation: none !important;
+  }
+  .light-streak { display: none; }
+}

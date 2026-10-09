@@ -1,11 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
+import { Bebas_Neue, Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { ScrollProgress } from "@/components/layout/ScrollProgress";
-import { Vignette } from "@/components/layout/Vignette";
-import { IntroLoader } from "@/components/layout/IntroLoader";
+
+const bebas = Bebas_Neue({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  preload: true,
+});
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
@@ -79,7 +82,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08090B",
+  themeColor: "#06070B",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -91,25 +94,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} dark`}>
+    <html lang="en" className={`${bebas.variable} ${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} dark`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://github.com" />
         <link rel="dns-prefetch" href="https://linkedin.com" />
       </head>
-      <body className="min-h-screen bg-void text-ivory antialiased">
-        <IntroLoader />
+      <body className="min-h-screen bg-ink text-bone antialiased">
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <Vignette />
-        <ScrollProgress />
-        <Header />
         <main id="main" className="relative z-10">
           {children}
         </main>
-        <Footer />
       </body>
     </html>
   );
