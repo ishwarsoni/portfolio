@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { seriesProfile } from "@/data/series";
 import { useReducedMotionPref } from "./hooks/useMedia";
 import { EASE, Magnetic } from "./fx";
-import PortraitPoster from "./Poster";
 
 /**
  * The signature moment:
@@ -85,12 +84,18 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
 
       {/* PORTRAIT-MARKER */}
       <motion.div
-        className="absolute inset-x-0 bottom-0 z-0 mx-auto h-[72vh] w-full max-w-[560px]"
+        className="absolute left-1/2 top-1/2 z-0 w-[64vw] max-w-[290px] -translate-x-1/2 -translate-y-1/2 sm:max-w-[330px]"
         initial={{ opacity: 0, scale: 1.1, filter: "blur(18px)" }}
         animate={beat >= 4 ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
         transition={{ duration: 1.4, ease: EASE }}
       >
-        <PortraitPoster className="h-full w-full" />
+        <div
+          className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/12"
+          style={{ boxShadow: "0 34px 80px -26px rgba(0,0,0,0.8), 0 0 64px -26px rgba(56,207,232,0.4)" }}
+        >
+          <img src={seriesProfile.portrait.src} alt={seriesProfile.portrait.alt} className="h-full w-full object-cover object-top [filter:contrast(1.02)]" />
+          <div aria-hidden className="pointer-events-none absolute inset-0 rounded-2xl" style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)" }} />
+        </div>
       </motion.div>
       <div aria-hidden className="absolute inset-0 z-[1] bg-[radial-gradient(72%_62%_at_50%_44%,transparent_42%,rgba(3,4,7,0.82)_100%)]" />
 
