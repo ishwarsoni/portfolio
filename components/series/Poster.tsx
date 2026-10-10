@@ -30,9 +30,9 @@ export default function PortraitPoster({
         style={{ background: "linear-gradient(150deg, rgba(56,207,232,0.35), transparent 45%, rgba(139,124,246,0.35))" }}
       />
       {/* bottom fade into ink */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%]" style={{ background: `linear-gradient(to top, ${ink}, ${ink}cc 22%, transparent)` }} />
-      {/* top fade */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[22%]" style={{ background: `linear-gradient(to bottom, ${ink}, transparent)` }} />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%]" style={{ background: `linear-gradient(to top, ${ink}, ${ink}bb 30%, transparent)` }} />
+      {/* top fade (subtle — keeps the hair/face bright) */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[12%]" style={{ background: `linear-gradient(to bottom, ${ink}, transparent)` }} />
       {edges === "all" && (
         <>
           <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-[28%]" style={{ background: `linear-gradient(to right, ${ink}, transparent)` }} />

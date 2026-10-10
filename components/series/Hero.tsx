@@ -11,34 +11,36 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotionPref();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const portraitY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
   const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
 
   return (
-    <section ref={ref} className="relative flex min-h-[100svh] items-center overflow-hidden">
+    <section ref={ref} className="relative overflow-hidden">
       {/* aurora backdrop */}
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(55%_50%_at_30%_35%,rgba(56,207,232,0.14),transparent_70%),radial-gradient(45%_45%_at_85%_75%,rgba(139,124,246,0.14),transparent_70%)]" />
-      {!reduced && <Particles count={36} className="z-0" />}
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(55%_50%_at_28%_38%,rgba(56,207,232,0.14),transparent_70%),radial-gradient(45%_45%_at_88%_72%,rgba(139,124,246,0.14),transparent_70%)]" />
+      {!reduced && <Particles count={34} className="z-0" />}
       {!reduced && (
         <>
-          <span className="light-streak left-[6%] top-[26%] w-[32%]" />
-          <span className="light-streak left-[44%] top-[70%] w-[26%]" style={{ animationDelay: "2.6s" }} />
+          <span className="light-streak left-[6%] top-[24%] w-[30%]" />
+          <span className="light-streak left-[46%] top-[72%] w-[24%]" style={{ animationDelay: "2.6s" }} />
         </>
       )}
 
-      {/* cinematic portrait billboard — bleeds from the right into the ink */}
-      <motion.div style={{ y: reduced ? 0 : portraitY }} className="absolute inset-y-0 right-0 z-0 w-full sm:w-[74%] lg:w-[58%]">
-        <PortraitPoster edges="bottom" className="h-full w-full" />
-        {/* fade toward the text column */}
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-transparent sm:via-ink/55 lg:via-ink/25" />
-      </motion.div>
-      {/* overall legibility scrim (stronger on mobile) */}
-      <div aria-hidden className="absolute inset-0 z-0 bg-gradient-to-t from-ink via-ink/40 to-ink/30 sm:via-transparent sm:to-transparent" />
+      <div className="gutter relative z-10 mx-auto grid min-h-[100svh] max-w-[1500px] items-center gap-2 pt-20 pb-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pt-16">
+        {/* portrait — full face, bleeds into the ink (no frame) */}
+        <motion.div
+          style={{ y: reduced ? 0 : portraitY }}
+          className="relative order-1 mx-auto h-[42vh] w-full max-w-[380px] self-center sm:h-[48vh] sm:max-w-[440px] lg:order-2 lg:h-[90vh] lg:max-w-none"
+          initial={reduced ? false : { opacity: 0, scale: 0.96, filter: "blur(14px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.1, delay: 0.1, ease: EASE }}
+        >
+          <PortraitPoster edges="all" className="absolute inset-0" />
+        </motion.div>
 
-      {/* copy */}
-      <div className="gutter relative z-10 w-full">
-        <motion.div style={{ y: reduced ? 0 : textY, opacity: reduced ? 1 : fade }} className="max-w-xl pt-24 sm:pt-16">
+        {/* copy */}
+        <motion.div style={{ y: reduced ? 0 : textY, opacity: reduced ? 1 : fade }} className="relative order-2 lg:order-1">
           <motion.div
             className="mb-4 flex items-center gap-3 font-sans text-[11px] font-semibold uppercase tracking-[0.34em] text-cyan-2"
             initial={reduced ? false : { opacity: 0, x: -16 }}
@@ -50,7 +52,7 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
           </motion.div>
 
           <motion.h1
-            className="font-display leading-[0.84] text-bone [text-shadow:0_6px_40px_rgba(3,4,7,0.7)]"
+            className="font-display leading-[0.84] text-bone"
             style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
             initial={reduced ? false : { opacity: 0, y: 24, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -60,7 +62,7 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
           </motion.h1>
 
           <motion.p
-            className="mt-5 max-w-md font-sans text-base leading-relaxed text-mist [text-shadow:0_2px_20px_rgba(3,4,7,0.8)] sm:text-lg"
+            className="mt-5 max-w-md font-sans text-base leading-relaxed text-mist sm:text-lg"
             initial={reduced ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
@@ -102,7 +104,7 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
                 type="button"
                 data-cursor="link"
                 onClick={onResume}
-                className="rounded-full border border-white/25 bg-ink/30 px-7 py-3.5 font-sans text-sm font-semibold tracking-wide text-bone backdrop-blur-sm transition hover:border-cyan/70 hover:text-cyan-2"
+                className="rounded-full border border-white/25 px-7 py-3.5 font-sans text-sm font-semibold tracking-wide text-bone transition hover:border-cyan/70 hover:text-cyan-2"
               >
                 VIEW RÉSUMÉ
               </button>
@@ -111,7 +113,7 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
         </motion.div>
       </div>
 
-      <div aria-hidden className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-smoke sm:flex">
+      <div aria-hidden className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-smoke lg:flex">
         <span className="font-sans text-[10px] uppercase tracking-[0.3em]">Scroll</span>
         <span className="h-10 w-px bg-gradient-to-b from-cyan/50 to-transparent" />
       </div>
