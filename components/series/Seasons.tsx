@@ -50,7 +50,7 @@ export default function Seasons() {
                 <div className="relative mb-7 overflow-hidden">
                   <span
                     aria-hidden
-                    className="text-outline pointer-events-none absolute -top-10 right-0 select-none font-display leading-none opacity-50 text-[clamp(5rem,15vw,12rem)]"
+                    className="text-outline pointer-events-none absolute -top-10 right-0 hidden select-none font-display leading-none opacity-50 text-[clamp(5rem,15vw,12rem)] md:block"
                   >
                     {String(s.number).padStart(2, "0")}
                   </span>

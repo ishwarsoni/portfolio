@@ -91,7 +91,12 @@ export function RevealText({ text, className = "", delay = 0, as = "span" }: { t
       aria-label={text}
     >
       {words.map((w, i) => (
-        <span key={i} aria-hidden className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+        <span
+          key={i}
+          aria-hidden
+          className="inline-block overflow-hidden pb-[0.08em] align-bottom"
+          style={{ marginRight: i < words.length - 1 ? "0.26em" : undefined }}
+        >
           <motion.span
             className="inline-block"
             variants={{
@@ -100,7 +105,6 @@ export function RevealText({ text, className = "", delay = 0, as = "span" }: { t
             }}
           >
             {w}
-            {i < words.length - 1 ? " " : ""}
           </motion.span>
         </span>
       ))}

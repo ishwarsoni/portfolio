@@ -67,7 +67,7 @@ export default function ResumeViewer({ onView }: { onView: () => void }) {
 
           <p className="relative font-sans text-sm leading-relaxed text-mist">{summary}</p>
 
-          <div className="relative grid gap-x-10 md:grid-cols-[1.35fr_1fr]">
+          <div className="relative mt-7 grid gap-x-10 md:grid-cols-[1.35fr_1fr]">
             <div>
               <Rule>Experience</Rule>
               <div className="flex flex-wrap items-baseline justify-between gap-x-3">
