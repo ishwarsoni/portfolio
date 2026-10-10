@@ -8,6 +8,10 @@ import { useDesktop, useReducedMotionPref } from "./hooks/useMedia";
 import { EASE, RevealText } from "./fx";
 import ProjectCard from "./ProjectCard";
 
+/**
+ * ORIGINALS — on desktop the section pins and scrolls sideways like a title sequence.
+ * On touch / small screens / reduced motion it becomes a native swipe rail.
+ */
 export default function Originals({ onOpen }: { onOpen: (p: Project) => void }) {
   const desktop = useDesktop();
   const reduced = useReducedMotionPref();
@@ -36,9 +40,13 @@ function Outro() {
       target="_blank"
       rel="noreferrer"
       data-cursor="link"
-      className="group flex aspect-[3/4] w-[70vw] shrink-0 snap-start flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/15 text-center transition hover:border-cyan/60 sm:w-[44vw] lg:aspect-auto lg:h-[66vh] lg:w-[24vw]"
+      className="group series-focus flex aspect-[3/4] w-[70vw] shrink-0 snap-start flex-col items-center justify-center gap-4 rounded-[1.4rem] border border-dashed border-white/15 text-center transition hover:border-cyan/60 sm:w-[44vw] lg:aspect-auto lg:h-[66vh] lg:w-[24vw]"
     >
-      <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 text-2xl text-bone transition group-hover:scale-110 group-hover:border-cyan group-hover:text-cyan">↗</span>
+      <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 text-bone transition group-hover:scale-110 group-hover:border-cyan group-hover:text-cyan">
+        <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6">
+          <path d="M7 17L17 7M9 7h8v8" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      </span>
       <span className="font-display text-3xl tracking-wide text-bone">More on GitHub</span>
       <span className="text-xs text-mist">{seriesProfile.links.github.replace("https://", "")}</span>
     </a>
@@ -69,25 +77,26 @@ function PinnedOriginals({ onOpen }: { onOpen: (p: Project) => void }) {
   }, [distMV]);
 
   const { scrollYProgress } = useScroll({ target: wrap, offset: ["start start", "end end"] });
-  const raw = useTransform([scrollYProgress, distMV], ([p, d]: number[]) => -p * d);
+  const raw = useTransform([scrollYProgress, distMV], ([pr, d]: number[]) => -pr * d);
   const x = useSpring(raw, { stiffness: 120, damping: 30, mass: 0.4 });
   const bar = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <div ref={wrap} style={{ height: `calc(100vh + ${dist}px)` }} className="relative">
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
-        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(50%_60%_at_70%_50%,rgba(56,207,232,0.10),transparent_70%)]" />
+        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(50%_60%_at_72%_42%,rgba(56,207,232,0.12),transparent_70%)]" />
+        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(42%_52%_at_18%_78%,rgba(139,124,246,0.10),transparent_72%)]" />
         <motion.div ref={track} style={{ x }} className="gutter relative flex items-center gap-8 pr-[12vw]" data-cursor="drag">
           <Intro />
-          {projects.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} index={i} onOpen={() => onOpen(p)} />
+          {projects.map((pr, i) => (
+            <ProjectCard key={pr.slug} project={pr} index={i} onOpen={() => onOpen(pr)} />
           ))}
           <Outro />
         </motion.div>
         <div className="gutter absolute inset-x-0 bottom-8 flex items-center gap-4">
           <span className="text-[10px] font-bold tracking-[0.3em] text-smoke">ORIGINALS</span>
           <div className="h-[2px] flex-1 overflow-hidden rounded bg-white/10">
-            <motion.div className="h-full origin-left bg-cyan" style={{ scaleX: bar }} />
+            <motion.div className="h-full origin-left bg-gradient-to-r from-cyan to-violet" style={{ scaleX: bar }} />
           </div>
         </div>
       </div>
@@ -97,7 +106,8 @@ function PinnedOriginals({ onOpen }: { onOpen: (p: Project) => void }) {
 
 function RailOriginals({ onOpen }: { onOpen: (p: Project) => void }) {
   return (
-    <div className="py-10">
+    <div className="relative py-10">
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_0%,rgba(56,207,232,0.08),transparent_70%)]" />
       <div className="gutter mb-6">
         <Intro />
       </div>
@@ -108,8 +118,8 @@ function RailOriginals({ onOpen }: { onOpen: (p: Project) => void }) {
         viewport={{ once: true }}
         transition={{ duration: 0.9, ease: EASE }}
       >
-        {projects.map((p, i) => (
-          <ProjectCard key={p.slug} project={p} index={i} onOpen={() => onOpen(p)} />
+        {projects.map((pr, i) => (
+          <ProjectCard key={pr.slug} project={pr} index={i} onOpen={() => onOpen(pr)} />
         ))}
         <Outro />
       </motion.div>

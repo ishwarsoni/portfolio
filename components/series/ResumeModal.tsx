@@ -29,10 +29,11 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3, ease: EASE }}
       role="dialog"
+      aria-modal="true"
       aria-label="Résumé"
     >
-      <div className="gutter flex h-16 shrink-0 items-center justify-between">
-        <span className="font-display text-2xl text-bone">
+      <div className="gutter flex h-16 shrink-0 items-center justify-between pt-[env(safe-area-inset-top)]">
+        <span className="font-display text-2xl tracking-wide text-bone">
           Résumé <span className="text-cyan">/ {seriesProfile.firstName}</span>
         </span>
         <div className="flex items-center gap-3">
@@ -48,16 +49,24 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
             type="button"
             onClick={onClose}
             data-cursor="link"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-bone transition hover:border-white/60"
-            aria-label="Close"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-bone transition hover:border-white/60 hover:text-cyan-2"
+            aria-label="Close résumé"
           >
-            ✕
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
           </button>
         </div>
       </div>
-      <div className="mx-auto w-full max-w-4xl flex-1 overflow-hidden px-4 pb-6">
-        <iframe title="Résumé PDF" src={seriesProfile.resumePdf} className="h-full w-full rounded-xl border border-white/10 bg-white" />
-      </div>
+      <motion.div
+        className="mx-auto w-full max-w-4xl flex-1 overflow-hidden px-4 pb-6"
+        initial={{ opacity: 0, y: 32, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 20, scale: 0.98 }}
+        transition={{ duration: 0.5, ease: EASE }}
+      >
+        <iframe title="Résumé" src={seriesProfile.resumePdf} className="h-full w-full rounded-xl border border-white/10 bg-white" />
+      </motion.div>
     </motion.div>
   );
 }

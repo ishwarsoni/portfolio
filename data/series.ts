@@ -242,4 +242,123 @@ export const sectionMeta: Record<SectionId, { nav: string; card: string; meta: s
   story: { nav: "Resume", card: "The Full Story", meta: "Resume • View & download", palette: palettes.amber },
 };
 
+/* ---- Skills as periodic-style element tiles (symbol + name) ---- */
+export type Skill = { name: string; mono: string; note?: string };
+export type SkillCategory = { id: string; title: string; subtitle: string; palette: Palette; skills: Skill[] };
+
+export const skillCategories: SkillCategory[] = [
+  {
+    id: "ai",
+    title: "Applied AI & LLMs",
+    subtitle: "RAG · extraction · validation",
+    palette: palettes.cyan,
+    skills: [
+      { name: "RAG", mono: "Rg", note: "Primary" },
+      { name: "NVIDIA NIM", mono: "Ni" },
+      { name: "Nemotron", mono: "Nm" },
+      { name: "Pydantic v2", mono: "Pv" },
+      { name: "Semantic Search", mono: "Ss" },
+      { name: "Harmonization", mono: "Hz" },
+      { name: "Conflict Detection", mono: "Cd" },
+    ],
+  },
+  {
+    id: "ml",
+    title: "ML & Data Engineering",
+    subtitle: "Defensive, target-safe pipelines",
+    palette: palettes.emerald,
+    skills: [
+      { name: "Python", mono: "Py", note: "Primary" },
+      { name: "Pandas", mono: "Pd" },
+      { name: "NumPy", mono: "Np" },
+      { name: "Scikit-learn", mono: "Sk" },
+      { name: "Preprocessing", mono: "Pp" },
+      { name: "Outlier Handling", mono: "Ou" },
+      { name: "Skewness", mono: "Sw" },
+    ],
+  },
+  {
+    id: "cv",
+    title: "Computer Vision & Motion",
+    subtitle: "SMPL-H reconstruction",
+    palette: palettes.violet,
+    skills: [
+      { name: "SMPL-H", mono: "Sh" },
+      { name: "AMASS", mono: "Am" },
+      { name: "BVH", mono: "Bv" },
+      { name: "Forward Kinematics", mono: "Fk" },
+      { name: "Coordinate Transforms", mono: "Ct" },
+      { name: "Joint Mapping", mono: "Jm" },
+      { name: "3D Rendering", mono: "3d" },
+    ],
+  },
+  {
+    id: "tools",
+    title: "Engineering & Tools",
+    subtitle: "Shipping & debugging",
+    palette: palettes.blue,
+    skills: [
+      { name: "Git", mono: "Gt" },
+      { name: "GitHub", mono: "Gh" },
+      { name: "Jupyter", mono: "Jp" },
+      { name: "Streamlit", mono: "St" },
+      { name: "Matplotlib", mono: "Mp" },
+      { name: "PyBullet", mono: "Pb" },
+      { name: "Open3D", mono: "O3" },
+    ],
+  },
+  {
+    id: "cs",
+    title: "Fundamentals",
+    subtitle: "The foundations",
+    palette: palettes.amber,
+    skills: [
+      { name: "C++", mono: "C+" },
+      { name: "DSA", mono: "Ds" },
+      { name: "OOP", mono: "Oo" },
+      { name: "Python", mono: "Py" },
+    ],
+  },
+];
+
+/** Where a skill actually shows up in the projects / certifications / experience. */
+export const skillEvidence: Record<string, string[]> = {
+  RAG: ["OncoLink", "NVIDIA — RAG Agents with LLMs"],
+  "NVIDIA NIM": ["OncoLink"],
+  Nemotron: ["OncoLink"],
+  "Pydantic v2": ["OncoLink"],
+  "Semantic Search": ["OncoLink"],
+  Harmonization: ["OncoLink"],
+  "Conflict Detection": ["OncoLink"],
+  Python: ["OncoLink", "Datacleanr", "Motion Processing"],
+  Pandas: ["Datacleanr"],
+  NumPy: ["Datacleanr", "Motion Processing"],
+  "Scikit-learn": ["Datacleanr"],
+  Preprocessing: ["Datacleanr"],
+  "Outlier Handling": ["Datacleanr"],
+  Skewness: ["Datacleanr"],
+  "SMPL-H": ["Motion Processing", "Semantic Labs internship"],
+  AMASS: ["Motion Processing"],
+  BVH: ["Motion Processing"],
+  "Forward Kinematics": ["Motion Processing"],
+  "Coordinate Transforms": ["Motion Processing"],
+  "Joint Mapping": ["Motion Processing"],
+  "3D Rendering": ["Motion Processing"],
+  Git: ["All projects"],
+  GitHub: ["All projects"],
+  Streamlit: ["OncoLink"],
+  Matplotlib: ["Motion Processing"],
+  PyBullet: ["Motion Processing"],
+  Open3D: ["Motion Processing"],
+};
+
+/** Standout "moments" framed as laurels (factual, drawn from project metrics / roles). */
+export type Moment = { kicker: string; title: string; detail: string; palette: Palette };
+export const momentHighlights: Moment[] = [
+  { kicker: "Internship", title: "Semantic Labs", detail: "Computer Vision / Motion Processing — BVH→SMPL-H pipeline", palette: palettes.violet },
+  { kicker: "Reliability", title: "0 failures", detail: "Zero target corruption across 50 validated datasets (Datacleanr)", palette: palettes.emerald },
+  { kicker: "AI platform", title: "12+ fields", detail: "Schema-validated clinical extraction in OncoLink", palette: palettes.cyan },
+  { kicker: "Motion systems", title: "21 joints", detail: "BVH→SMPL-H reconstruction, 3 export formats", palette: palettes.blue },
+];
+
 
