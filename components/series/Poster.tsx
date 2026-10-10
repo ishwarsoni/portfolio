@@ -3,29 +3,42 @@
 import { seriesProfile } from "@/data/series";
 
 /**
- * Portrait as a clean, cinematic "key art" poster. The studio-grey background
- * reads as intentional inside a framed card, so no fragile cut-out is needed.
- * Swap public/portrait.png for a transparent cut-out later and it still works.
+ * Cinematic portrait that bleeds into the dark UI — like a streaming billboard
+ * still, not a framed card. The subject's own dark studio background melts into
+ * the ink via gradient scrims; a faint aurora tint keeps it on-brand.
+ * The caller sizes/positions the container; `edges` picks which sides fade out.
  */
-export default function PortraitPoster({ className = "" }: { className?: string }) {
+export default function PortraitPoster({
+  className = "",
+  edges = "bottom",
+}: {
+  className?: string;
+  edges?: "bottom" | "all";
+}) {
+  const ink = "#06070b";
   return (
-    <div
-      className={`relative overflow-hidden rounded-[22px] border border-white/12 ${className}`}
-      style={{ boxShadow: "0 40px 90px -25px rgba(0,0,0,0.85), 0 0 70px -24px rgba(56,207,232,0.45)" }}
-    >
+    <div className={`relative overflow-hidden ${className}`}>
       <img
         src={seriesProfile.portrait.src}
         alt={seriesProfile.portrait.alt}
-        className="h-full w-full object-cover object-top [filter:contrast(1.07)_saturate(0.9)_brightness(0.97)]"
+        className="h-full w-full object-cover object-top [filter:contrast(1.04)_saturate(1.02)]"
       />
-      {/* aurora light from the top */}
-      <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(85% 55% at 50% -5%, rgba(56,207,232,0.22), transparent 60%)" }} />
-      {/* violet counter-light from the lower right */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 mix-blend-screen" style={{ background: "radial-gradient(60% 50% at 100% 100%, rgba(139,124,246,0.28), transparent 60%)" }} />
-      {/* bottom ink scrim so overlaid text / captions stay legible */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5" style={{ background: "linear-gradient(to top, rgba(6,7,11,0.92), transparent)" }} />
-      {/* inner hairline ring */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 rounded-[22px]" style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)" }} />
+      {/* aurora grade */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 mix-blend-soft-light"
+        style={{ background: "linear-gradient(150deg, rgba(56,207,232,0.35), transparent 45%, rgba(139,124,246,0.35))" }}
+      />
+      {/* bottom fade into ink */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%]" style={{ background: `linear-gradient(to top, ${ink}, ${ink}cc 22%, transparent)` }} />
+      {/* top fade */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[22%]" style={{ background: `linear-gradient(to bottom, ${ink}, transparent)` }} />
+      {edges === "all" && (
+        <>
+          <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-[28%]" style={{ background: `linear-gradient(to right, ${ink}, transparent)` }} />
+          <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-[28%]" style={{ background: `linear-gradient(to left, ${ink}, transparent)` }} />
+        </>
+      )}
     </div>
   );
 }

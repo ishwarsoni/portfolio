@@ -11,28 +11,37 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotionPref();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const posterY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
   const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
 
   return (
-    <section ref={ref} className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-16 sm:pt-16">
+    <section ref={ref} className="relative flex min-h-[100svh] items-center overflow-hidden">
       {/* aurora backdrop */}
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(55%_50%_at_72%_40%,rgba(56,207,232,0.14),transparent_70%),radial-gradient(45%_45%_at_15%_78%,rgba(139,124,246,0.12),transparent_70%)]" />
-      {!reduced && <Particles count={38} className="z-0" />}
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(55%_50%_at_30%_35%,rgba(56,207,232,0.14),transparent_70%),radial-gradient(45%_45%_at_85%_75%,rgba(139,124,246,0.14),transparent_70%)]" />
+      {!reduced && <Particles count={36} className="z-0" />}
       {!reduced && (
         <>
-          <span className="light-streak left-[6%] top-[28%] w-[34%]" />
-          <span className="light-streak left-[50%] top-[66%] w-[28%]" style={{ animationDelay: "2.6s" }} />
+          <span className="light-streak left-[6%] top-[26%] w-[32%]" />
+          <span className="light-streak left-[44%] top-[70%] w-[26%]" style={{ animationDelay: "2.6s" }} />
         </>
       )}
 
-      <div className="gutter relative z-10 grid w-full items-center gap-10 lg:grid-cols-[1.08fr_0.92fr]">
-        {/* copy */}
-        <motion.div style={{ y: textY, opacity: fade }} className="order-2 lg:order-1">
+      {/* cinematic portrait billboard — bleeds from the right into the ink */}
+      <motion.div style={{ y: reduced ? 0 : portraitY }} className="absolute inset-y-0 right-0 z-0 w-full sm:w-[74%] lg:w-[58%]">
+        <PortraitPoster edges="bottom" className="h-full w-full" />
+        {/* fade toward the text column */}
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-transparent sm:via-ink/55 lg:via-ink/25" />
+      </motion.div>
+      {/* overall legibility scrim (stronger on mobile) */}
+      <div aria-hidden className="absolute inset-0 z-0 bg-gradient-to-t from-ink via-ink/40 to-ink/30 sm:via-transparent sm:to-transparent" />
+
+      {/* copy */}
+      <div className="gutter relative z-10 w-full">
+        <motion.div style={{ y: reduced ? 0 : textY, opacity: reduced ? 1 : fade }} className="max-w-xl pt-24 sm:pt-16">
           <motion.div
             className="mb-4 flex items-center gap-3 font-sans text-[11px] font-semibold uppercase tracking-[0.34em] text-cyan-2"
-            initial={{ opacity: 0, x: -16 }}
+            initial={reduced ? false : { opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: EASE }}
           >
@@ -41,9 +50,9 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
           </motion.div>
 
           <motion.h1
-            className="font-display leading-[0.84] text-bone"
-            style={{ fontSize: "clamp(2.8rem, 8.5vw, 7rem)" }}
-            initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+            className="font-display leading-[0.84] text-bone [text-shadow:0_6px_40px_rgba(3,4,7,0.7)]"
+            style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
+            initial={reduced ? false : { opacity: 0, y: 24, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, ease: EASE }}
           >
@@ -51,8 +60,8 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
           </motion.h1>
 
           <motion.p
-            className="mt-5 max-w-xl font-sans text-base leading-relaxed text-mist sm:text-lg"
-            initial={{ opacity: 0, y: 16 }}
+            className="mt-5 max-w-md font-sans text-base leading-relaxed text-mist [text-shadow:0_2px_20px_rgba(3,4,7,0.8)] sm:text-lg"
+            initial={reduced ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
           >
@@ -61,7 +70,7 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
 
           <motion.div
             className="mt-5 flex flex-wrap gap-2"
-            initial={{ opacity: 0, y: 12 }}
+            initial={reduced ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
           >
@@ -74,7 +83,7 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
 
           <motion.div
             className="mt-8 flex flex-wrap items-center gap-4"
-            initial={{ opacity: 0, y: 12 }}
+            initial={reduced ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
           >
@@ -93,23 +102,12 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
                 type="button"
                 data-cursor="link"
                 onClick={onResume}
-                className="rounded-full border border-white/20 px-7 py-3.5 font-sans text-sm font-semibold tracking-wide text-bone transition hover:border-cyan/70 hover:text-cyan-2"
+                className="rounded-full border border-white/25 bg-ink/30 px-7 py-3.5 font-sans text-sm font-semibold tracking-wide text-bone backdrop-blur-sm transition hover:border-cyan/70 hover:text-cyan-2"
               >
                 VIEW RÉSUMÉ
               </button>
             </Magnetic>
           </motion.div>
-        </motion.div>
-
-        {/* portrait poster */}
-        <motion.div
-          style={{ y: posterY }}
-          className="order-1 mx-auto w-full max-w-[300px] sm:max-w-[360px] lg:order-2 lg:mx-0 lg:ml-auto lg:max-w-[440px]"
-          initial={{ opacity: 0, scale: 0.94, filter: "blur(14px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.1, delay: 0.1, ease: EASE }}
-        >
-          <PortraitPoster className="aspect-[4/5] w-full" />
         </motion.div>
       </div>
 
