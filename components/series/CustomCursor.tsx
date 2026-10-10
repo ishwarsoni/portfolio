@@ -1,14 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { useFinePointer, useReducedMotionPref } from "./hooks/useMedia";
 
 type CursorKind = "default" | "link" | "play" | "drag";
 
+/** Visual recipe per state. Fills use rgba of cyan (#38cfe8) / violet (#8b7cf6). */
+const RING: Record<
+  CursorKind,
+  { size: number; border: string; fill: string; glyph: string }
+> = {
+  default: { size: 36, border: "rgba(56,207,232,0.45)", fill: "rgba(56,207,232,0)", glyph: "" },
+  link: { size: 58, border: "rgba(56,207,232,0.85)", fill: "rgba(56,207,232,0.10)", glyph: "" },
+  play: { size: 78, border: "rgba(139,124,246,0.90)", fill: "rgba(139,124,246,0.16)", glyph: "▶" },
+  drag: { size: 66, border: "rgba(56,207,232,0.90)", fill: "rgba(56,207,232,0.14)", glyph: "⇆" },
+};
+
 /**
- * A soft follower cursor shown only with a mouse/trackpad. Elements can set
- * `data-cursor="link|play|drag"` to change its shape/label on hover.
+ * Premium follower cursor for fine-pointer, non-reduced-motion devices: a crisp
+ * dot that tracks the pointer and a larger ring that trails with a soft spring.
+ * Elements can set `data-cursor="link|play|drag"` (or simply be a/button/[role=button])
+ * to reshape the ring and surface a glyph on hover.
  */
 export default function CustomCursor() {
   const fine = useFinePointer();
@@ -17,10 +30,16 @@ export default function CustomCursor() {
 
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.3 });
-  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.3 });
+  // Dot: snappy, sits right on the real pointer.
+  const dotX = useSpring(x, { stiffness: 1300, damping: 55, mass: 0.22 });
+  const dotY = useSpring(y, { stiffness: 1300, damping: 55, mass: 0.22 });
+  // Ring: softer, lags behind for the trailing feel.
+  const ringX = useSpring(x, { stiffness: 240, damping: 24, mass: 0.55 });
+  const ringY = useSpring(y, { stiffness: 240, damping: 24, mass: 0.55 });
+
   const [kind, setKind] = useState<CursorKind>("default");
   const [down, setDown] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (!active) return;
@@ -29,49 +48,88 @@ export default function CustomCursor() {
     const move = (e: PointerEvent) => {
       x.set(e.clientX);
       y.set(e.clientY);
-      const el = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-cursor],a,button,[role='button']");
+      setVisible(true);
+      const el = (e.target as HTMLElement | null)?.closest<HTMLElement>(
+        "[data-cursor],a,button,[role='button']",
+      );
       const c = el?.getAttribute("data-cursor");
       if (c === "play" || c === "link" || c === "drag") setKind(c);
       else if (el) setKind("link");
       else setKind("default");
     };
-    const d = () => setDown(true);
-    const u = () => setDown(false);
+    const leave = () => setVisible(false);
+    const press = () => setDown(true);
+    const release = () => setDown(false);
+
     window.addEventListener("pointermove", move, { passive: true });
-    window.addEventListener("pointerdown", d);
-    window.addEventListener("pointerup", u);
+    document.addEventListener("pointerleave", leave);
+    window.addEventListener("pointerdown", press);
+    window.addEventListener("pointerup", release);
     return () => {
       document.body.classList.remove("has-custom-cursor");
       window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerdown", d);
-      window.removeEventListener("pointerup", u);
+      document.removeEventListener("pointerleave", leave);
+      window.removeEventListener("pointerdown", press);
+      window.removeEventListener("pointerup", release);
     };
   }, [active, x, y]);
 
   if (!active) return null;
 
-  const size = kind === "play" ? 72 : kind === "drag" ? 64 : kind === "link" ? 44 : 18;
-  const label = kind === "play" ? "▶" : kind === "drag" ? "⇆" : "";
+  const ring = RING[kind];
+  const dotSize = kind === "default" ? 7 : 5;
 
   return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[200]"
-      style={{ x: sx, y: sy }}
-    >
+    <>
+      {/* Trailing ring */}
       <motion.div
-        className="flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-ink"
-        style={{
-          width: size,
-          height: size,
-          background: kind === "default" ? "rgba(111,233,242,0.9)" : "rgba(236,238,244,0.95)",
-          mixBlendMode: kind === "default" ? "difference" : "normal",
-        }}
-        animate={{ scale: down ? 0.85 : 1 }}
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[200]"
+        style={{ x: ringX, y: ringY }}
+        animate={{ scale: down ? 0.82 : 1, opacity: visible ? 1 : 0 }}
+        transition={{ type: "spring", stiffness: 420, damping: 28 }}
+      >
+        <motion.div
+          className="flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border font-sans text-sm font-bold text-bone"
+          animate={{
+            width: ring.size,
+            height: ring.size,
+            borderColor: ring.border,
+            backgroundColor: ring.fill,
+          }}
+          transition={{ type: "spring", stiffness: 360, damping: 30 }}
+        >
+          <AnimatePresence mode="wait">
+            {ring.glyph && (
+              <motion.span
+                key={ring.glyph}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.14 }}
+              >
+                {ring.glyph}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </motion.div>
+
+      {/* Precise dot */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[200]"
+        style={{ x: dotX, y: dotY }}
+        animate={{ scale: down ? 0.65 : 1, opacity: visible ? (kind === "default" ? 1 : 0.5) : 0 }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       >
-        {label && <span className="font-sans text-base font-bold">{label}</span>}
+        <motion.div
+          className="-translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{ backgroundColor: "rgba(56,207,232,0.95)", mixBlendMode: "difference" }}
+          animate={{ width: dotSize, height: dotSize }}
+          transition={{ type: "spring", stiffness: 400, damping: 28 }}
+        />
       </motion.div>
-    </motion.div>
+    </>
   );
 }

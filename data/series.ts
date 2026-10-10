@@ -34,7 +34,7 @@ export const seriesProfile = {
   email: siteData.email,
   links: { github: siteData.github, linkedin: siteData.linkedin },
   resumePdf: siteData.resumeUrl,
-  portrait: { src: "/portrait.png", alt: "Portrait of Ishwar Soni" },
+  portrait: { src: "/ishwar.png", alt: "Portrait of Ishwar Soni" },
 };
 
 /** Per-project display metadata keyed by the existing project slug. */
