@@ -85,12 +85,12 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
 
       {/* PORTRAIT-MARKER */}
       <motion.div
-        className="absolute left-1/2 top-1/2 z-0 w-[66vw] max-w-[300px] -translate-x-1/2 -translate-y-1/2 sm:max-w-[340px]"
+        className="absolute inset-x-0 bottom-0 z-0 mx-auto h-[72vh] w-full max-w-[560px]"
         initial={{ opacity: 0, scale: 1.1, filter: "blur(18px)" }}
         animate={beat >= 4 ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
         transition={{ duration: 1.4, ease: EASE }}
       >
-        <PortraitPoster className="aspect-[4/5] w-full" />
+        <PortraitPoster className="h-full w-full" />
       </motion.div>
       <div aria-hidden className="absolute inset-0 z-[1] bg-[radial-gradient(72%_62%_at_50%_44%,transparent_42%,rgba(3,4,7,0.82)_100%)]" />
 

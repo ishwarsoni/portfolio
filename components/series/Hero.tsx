@@ -28,15 +28,15 @@ export default function Hero({ onPlay, onResume }: { onPlay: () => void; onResum
       )}
 
       <div className="gutter relative z-10 mx-auto grid min-h-[100svh] max-w-[1500px] items-center gap-2 pt-20 pb-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pt-16">
-        {/* portrait — natural framed headshot, full face */}
+        {/* portrait — cinematic bleed, full face */}
         <motion.div
           style={{ y: reduced ? 0 : portraitY }}
-          className="relative order-1 mx-auto w-full max-w-[290px] self-center sm:max-w-[350px] lg:order-2 lg:max-w-[460px]"
-          initial={reduced ? false : { opacity: 0, scale: 0.96, filter: "blur(14px)" }}
+          className="relative order-1 mx-auto h-[44vh] w-full max-w-[460px] self-center sm:h-[52vh] sm:max-w-[520px] lg:order-2 lg:h-[88vh] lg:max-w-none"
+          initial={reduced ? false : { opacity: 0, scale: 0.97, filter: "blur(14px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.1, delay: 0.1, ease: EASE }}
         >
-          <PortraitPoster className="aspect-[4/5] w-full" />
+          <PortraitPoster className="absolute inset-0" />
         </motion.div>
 
         {/* copy */}
