@@ -118,7 +118,7 @@ export default function Moments() {
       </div>
 
       {/* Highlights rail — palette-driven cards with big outlined numerals */}
-      <div className="gutter grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="gutter grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {momentHighlights.map((m, i) => {
           const numeral = m.title.match(/\d+\+?/)?.[0] ?? null;
           return (

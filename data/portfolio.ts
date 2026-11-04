@@ -27,6 +27,22 @@ export const portfolioData = {
 
     experience: [
         {
+            company: "Cosmos Consultant AI",
+            location: "Jaipur, Rajasthan, India — Hybrid",
+            role: "AI Engineer Intern",
+            period: "May 2026 – November 2026",
+            description: "Working as an AI Engineer Intern at Cosmos Consultant AI, contributing to the development and integration of AI-powered applications.",
+            achievements: [
+                "Integrating AI-powered features such as email drafting, rewriting, and context-aware reply generation into applications.",
+                "Implementing and integrating REST API endpoints to connect frontend applications with existing backend services.",
+                "Developing prompt engineering strategies and structured output handling to improve the reliability and consistency of LLM responses.",
+                "Building robust API request/response handling with authentication, timeout management, and error handling.",
+                "Implementing defensive AI response parsing and validation to handle inconsistent LLM outputs.",
+                "Debugging, testing, and improving the reliability of AI-powered application features.",
+                "Writing and maintaining automated tests for API integrations and AI-related functionality.",
+            ],
+        },
+        {
             company: "Semantic Labs",
             location: "Remote — Dubai",
             role: "Computer Vision / Motion Processing Intern",

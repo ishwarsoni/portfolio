@@ -36,11 +36,14 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Ishwar Soni — AI Engineer | Applied AI, LLMs & RAG",
-  description: "Ishwar Soni is an AI Engineer building practical AI systems with LLMs, RAG, machine learning and data-focused engineering, with professional experience in computer vision and motion processing.",
+  description: "Ishwar Soni is an AI Engineer building practical AI systems with LLMs, RAG, machine learning and data-focused engineering, currently interning at Cosmos Consultant AI with prior experience in computer vision and motion processing.",
   keywords: [
     "AI Engineer",
     "Applied AI",
     "LLM",
+    "LLM Integration",
+    "Prompt Engineering",
+    "REST APIs",
     "RAG",
     "Machine Learning",
     "ML Engineering",
@@ -60,7 +63,7 @@ export const metadata: Metadata = {
     url: "https://ishwarsoni.dev",
     siteName: "Ishwar Soni — AI Engineer",
     title: "Ishwar Soni — AI Engineer | Applied AI, LLMs & RAG",
-    description: "AI Engineer building practical AI systems with LLMs, RAG, machine learning and data-focused engineering, with professional experience in computer vision and motion processing.",
+    description: "AI Engineer building practical AI systems with LLMs, RAG, machine learning and data-focused engineering, currently interning at Cosmos Consultant AI with prior experience in computer vision and motion processing.",
     images: [
       {
         url: "/og-image.svg",
@@ -73,7 +76,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ishwar Soni — AI Engineer",
-    description: "AI Engineer building practical AI systems with LLMs, RAG, and machine learning, with professional experience in computer vision and motion processing.",
+    description: "AI Engineer building practical AI systems with LLMs, RAG, and machine learning, currently interning at Cosmos Consultant AI with prior experience in computer vision and motion processing.",
     images: ["/og-image.svg"],
   },
   verification: {

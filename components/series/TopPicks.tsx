@@ -12,7 +12,7 @@ export default function TopPicks() {
 
   return (
     <div>
-      <SectionHeading kicker="Top 10" title="Top Picks" />
+      <SectionHeading kicker="Highlights" title="Top Picks" />
       <div className="rail gutter flex snap-x snap-mandatory gap-6 overflow-x-auto pb-8 sm:gap-8">
         {topPicks.map((pick, i) => {
           const isActive = active === i;

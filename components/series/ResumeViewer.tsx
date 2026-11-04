@@ -5,7 +5,7 @@ import {
   seriesProfile,
   aboutData,
   education,
-  experience,
+  experiences,
   projects,
   capabilities,
   certifications,
@@ -70,21 +70,29 @@ export default function ResumeViewer({ onView }: { onView: () => void }) {
           <div className="relative mt-7 grid gap-x-10 md:grid-cols-[1.35fr_1fr]">
             <div>
               <Rule>Experience</Rule>
-              <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-                <p className="font-sans text-sm font-semibold text-bone">
-                  {experience.company} — {experience.role}
-                </p>
-                <p className="font-mono text-[11px] text-smoke">{experience.period}</p>
-              </div>
-              <p className="mt-0.5 font-mono text-[11px] text-smoke">{experience.location}</p>
-              <ul className="mt-2.5 space-y-1.5">
-                {experience.achievements.slice(0, 4).map((a) => (
-                  <li key={a} className="flex gap-2 font-sans text-xs leading-relaxed text-mist">
-                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-cyan" />
-                    {a}
-                  </li>
+              <div className="divide-y divide-white/5">
+                {experiences.map((item) => (
+                  <div key={`${item.company}-${item.role}`} className="group py-5 first:pt-0 last:pb-0">
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-3">
+                      <p className="font-sans text-sm font-semibold text-bone">
+                        {item.company} — {item.role}
+                      </p>
+                      <p className="font-mono text-[11px] text-smoke">{item.period}</p>
+                    </div>
+                    <p className="mt-0.5 font-mono text-[11px] text-smoke">
+                      {item.location} · {item.employmentType}
+                    </p>
+                    <ul className="mt-2.5 space-y-1.5">
+                      {item.achievements.slice(0, 4).map((a) => (
+                        <li key={a} className="flex gap-2 font-sans text-xs leading-relaxed text-mist">
+                          <span aria-hidden className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-cyan transition-colors duration-300 group-hover:bg-cyan-2" />
+                          {a}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
 
               <Rule>Selected Projects</Rule>
               <div className="space-y-4">
@@ -149,7 +157,7 @@ export default function ResumeViewer({ onView }: { onView: () => void }) {
         <div className="lg:sticky lg:top-28 lg:self-start">
           <p className="font-display text-3xl leading-none text-bone">Every episode, on one page.</p>
           <p className="mt-3 font-sans text-sm leading-relaxed text-mist">
-            The internship, the three Originals, skills and {certifications.length} certifications — read it inline or take a copy with you.
+            The internships, the four Originals, skills and {certifications.length} certifications — read it inline or take a copy with you.
           </p>
           <div className="mt-6 flex flex-col gap-3">
             <Magnetic className="w-full">
