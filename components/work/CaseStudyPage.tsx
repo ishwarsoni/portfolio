@@ -9,8 +9,7 @@ import { Container } from "@/components/ui/Container";
 import { Typography } from "@/components/ui/Typography";
 import { Divider } from "@/components/ui/Divider";
 import { Badge } from "@/components/ui/Badge";
-import { Card, CardContent } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { OncoLinkDiagram, DatacleanrDiagram, MotionProcessingDiagram } from "@/components/diagrams";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -248,7 +247,7 @@ function getDiagramComponent(slug: string) {
     case "motion-processing":
       return MotionProcessingDiagram;
     default:
-      return OncoLinkDiagram;
+      return undefined;
   }
 }
 
@@ -269,6 +268,7 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
   const heroRef = useRef<HTMLDivElement>(null);
   const sectionsRef = useRef<HTMLDivElement>(null);
   const DiagramComponent = getDiagramComponent(project.slug);
+  const hasDiagram = DiagramComponent !== undefined;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -397,12 +397,14 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
             </div>
           </div>
 
-          <div className="mt-12 relative h-[300px] md:h-[400px] overflow-hidden rounded-sm border border-border-subtle">
-            <DiagramComponent 
-              className="w-full h-full" 
-              aria-label={getDiagramAriaLabel(project.slug)}
-            />
-          </div>
+          {hasDiagram && DiagramComponent && (
+            <div className="mt-12 relative h-[300px] md:h-[400px] overflow-hidden rounded-sm border border-border-subtle">
+              <DiagramComponent
+                className="w-full h-full"
+                aria-label={getDiagramAriaLabel(project.slug)}
+              />
+            </div>
+          )}
         </Container>
       </header>
 

@@ -43,7 +43,7 @@ export const projectMeta: Record<string, { palette: Palette; motif: Motif }> = {
   oncolink: { palette: palettes.cyan, motif: "neural" },
   datacleanr: { palette: palettes.emerald, motif: "flow" },
   "motion-processing": { palette: palettes.violet, motif: "grid" },
-  "ai-email-assistant": { palette: palettes.amber, motif: "neural" },
+  tunemyemail: { palette: palettes.amber, motif: "neural" },
 };
 
 export { projects, certifications, capabilities, aboutData, experience, experiences, education };
@@ -215,7 +215,7 @@ export const introSlides: IntroSlide[] = [
       "OncoLink — AI clinical intelligence (RAG)",
       "Datacleanr — defensive ML data cleaning",
       "Motion Processing — BVH→SMPL-H reconstruction",
-      "AI Email Assistant — LLM drafting & replies",
+      "TuneMyEmail — AI-assisted email client (Expo, React Native)",
     ],
   },
   {
@@ -324,6 +324,9 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Git", mono: "Gt" },
       { name: "GitHub", mono: "Gh" },
+      { name: "TypeScript", mono: "Ts" },
+      { name: "React Native", mono: "Rn" },
+      { name: "Expo", mono: "Ex" },
       { name: "Jupyter", mono: "Jp" },
       { name: "Streamlit", mono: "St" },
       { name: "Matplotlib", mono: "Mp" },
@@ -337,8 +340,6 @@ export const skillCategories: SkillCategory[] = [
     subtitle: "The foundations",
     palette: palettes.amber,
     skills: [
-      { name: "C++", mono: "C+" },
-      { name: "DSA", mono: "Ds" },
       { name: "OOP", mono: "Oo" },
       { name: "Python", mono: "Py" },
     ],
@@ -370,6 +371,9 @@ export const skillEvidence: Record<string, string[]> = {
   "3D Rendering": ["Motion Processing"],
   Git: ["All projects"],
   GitHub: ["All projects"],
+  TypeScript: ["TuneMyEmail"],
+  "React Native": ["TuneMyEmail"],
+  Expo: ["TuneMyEmail"],
   Streamlit: ["OncoLink"],
   Matplotlib: ["Motion Processing"],
   PyBullet: ["Motion Processing"],

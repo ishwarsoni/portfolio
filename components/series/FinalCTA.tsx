@@ -6,6 +6,7 @@ import { EASE, Magnetic } from "./fx";
 
 export default function FinalCTA({ onReplay }: { onReplay: () => void }) {
   const links = [
+    { label: "Download Résumé", href: seriesProfile.resumePdf },
     { label: "Email", href: `mailto:${seriesProfile.email}` },
     { label: "GitHub", href: seriesProfile.links.github },
     { label: "LinkedIn", href: seriesProfile.links.linkedin },

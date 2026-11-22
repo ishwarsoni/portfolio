@@ -372,10 +372,10 @@ export function OncoLinkDiagram({
           <g transform="translate(224, 36)">
             <rect x="0" y="0" width="204" height="110" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
             <text x="10" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#E8E1D2" fontWeight="600">VALIDATED EXAMPLES:</text>
-            <text x="10" y="40" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">EGFR: "Exon 19 del" (Positive)</text>
-            <text x="10" y="58" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">ALK: "Rearranged" (Positive)</text>
-            <text x="10" y="76" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">PD-L1: "TPS 65%" (Percent)</text>
-            <text x="10" y="94" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Ki-67: "25%" (Percent)</text>
+            <text x="10" y="40" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">EGFR: &quot;Exon 19 del&quot; (Positive)</text>
+            <text x="10" y="58" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">ALK: &quot;Rearranged&quot; (Positive)</text>
+            <text x="10" y="76" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">PD-L1: &quot;TPS 65%&quot; (Percent)</text>
+            <text x="10" y="94" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Ki-67: &quot;25%&quot; (Percent)</text>
           </g>
         </g>
 

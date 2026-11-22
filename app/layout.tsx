@@ -56,17 +56,18 @@ export const metadata: Metadata = {
   authors: [{ name: "Ishwar Soni" }],
   creator: "Ishwar Soni",
   publisher: "Ishwar Soni",
+  metadataBase: new URL("https://ishwarsoni.me"),
   robots: "index, follow",
   openGraph: {
     type: "profile",
     locale: "en_US",
-    url: "https://ishwarsoni.dev",
+    url: "https://ishwarsoni.me",
     siteName: "Ishwar Soni — AI Engineer",
     title: "Ishwar Soni — AI Engineer | Applied AI, LLMs & RAG",
     description: "AI Engineer building practical AI systems with LLMs, RAG, machine learning and data-focused engineering, currently interning at Cosmos Consultant AI with prior experience in computer vision and motion processing.",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Ishwar Soni — AI Engineer",
@@ -77,10 +78,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ishwar Soni — AI Engineer",
     description: "AI Engineer building practical AI systems with LLMs, RAG, and machine learning, currently interning at Cosmos Consultant AI with prior experience in computer vision and motion processing.",
-    images: ["/og-image.svg"],
-  },
-  verification: {
-    google: "google-site-verification-code",
+    images: ["/og-image.png"],
   },
 };
 

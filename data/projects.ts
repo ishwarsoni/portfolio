@@ -15,8 +15,8 @@ export interface Project {
     demo?: string;
   };
   metrics: Metric[];
-  heroVisual: string;
-  gallery: string[];
+  heroVisual?: string;
+  gallery?: string[];
 }
 
 export interface ProcessStep {
@@ -135,12 +135,6 @@ export const projects: Project[] = [
       { label: "Merge Strategies", value: "6 types", context: "Identity, text, list, string, single, plan" },
       { label: "Conflict Severity", value: "HIGH/MEDIUM", context: "Identity & biomarkers = HIGH" },
     ],
-    heroVisual: "/work/oncolink/hero.avif",
-    gallery: [
-      "/work/oncolink/architecture.avif",
-      "/work/oncolink/extraction.avif",
-      "/work/oncolink/validation.avif",
-    ],
   },
   {
     slug: "datacleanr",
@@ -254,12 +248,6 @@ export const projects: Project[] = [
       { label: "Pipeline Stages", value: "10", context: "Analyze → Missing → Text → Dupes → Types → Corr → ColSel → Outliers → Skew → Guard" },
       { label: "Safety", value: "Per-step rollback", context: "30% row/col loss threshold with warnings" },
     ],
-    heroVisual: "/work/datacleanr/hero.avif",
-    gallery: [
-      "/work/datacleanr/pipeline.avif",
-      "/work/datacleanr/profiling.avif",
-      "/work/datacleanr/validation.avif",
-    ],
   },
   {
     slug: "motion-processing",
@@ -350,100 +338,92 @@ decisions: [
       github: "https://github.com/ishwarsoni/bvh-to-smplh-pipeline",
       demo: undefined,
     },
-    heroVisual: "/work/motion-processing/hero.avif",
-    gallery: [
-      "/work/motion-processing/coord-frames.avif",
-      "/work/motion-processing/joint-mapping.avif",
-      "/work/motion-processing/reconstruction.avif",
-    ],
   },
   {
-    slug: "ai-email-assistant",
-    title: "AI Email Assistant",
-    subtitle: "LLM Drafting, Rewriting & Context-Aware Replies",
-    category: "Applied AI / LLM Integration",
-    period: "May 2026 – Nov 2026",
-    role: "AI Engineer Intern — Cosmos Consultant AI",
-    challenge: "Email drafting, rewriting and context-aware reply generation had to live inside an existing application, connected to backend services through REST endpoints. LLM output is inconsistent by nature, and network calls fail, time out or return unexpected shapes — so the features needed structure and failure handling before they could be trusted in the UI.",
-    strategy: "Feature scoping → Prompt engineering → Structured output contracts → REST API integration → Authenticated request/response handling with timeouts → Defensive response parsing and validation → Automated tests and debugging passes.",
+    slug: "tunemyemail",
+    title: "TuneMyEmail",
+    subtitle: "AI-Assisted Email Client — Web, Android & iOS",
+    category: "Applied AI / Mobile & Web",
+    period: "2026",
+    role: "Solo Developer",
+    challenge: "An AI-assisted email client for Web, Android and iOS: Gmail/Outlook accounts, multiple mailboxes, compose and AI help — with one hard requirement: a slow or stale response must never corrupt the user's session, inbox, or sent mail. Production auth, OAuth, mailbox sync, email delivery, AI generation and payments depend on a configured remote backend, and the registration-OTP and custom IMAP/SMTP setup flows are simulated in the frontend until that backend exists.",
+    strategy: "Expo Router screens → feature hooks → domain services → apiClient → remote backend. Session ownership is captured before every token read, mailbox responses are validated as business envelopes (not just HTTP 200), and explicit account selections are never silently replaced by another account.",
     process: [
       {
         step: 1,
-        title: "Feature Scoping",
-        detail: "Broke the work into three user-facing capabilities — email drafting, rewriting and context-aware reply generation — so each could be built, tested and shipped without blocking the others.",
-        visual: "feature-scope"
+        title: "App Shell & Navigation",
+        detail: "Expo Router with typed routes, providers and an authentication route guard. Tabs for Inbox, Compose, AI and Settings, plus Sent, Drafts and Trash folder routes.",
+        visual: "app-shell"
       },
       {
         step: 2,
-        title: "Prompt Engineering",
-        detail: "Wrote and iterated prompt strategies per feature, carrying the user's intent, tone and reply context into the request so responses stayed consistent across lengths and scenarios.",
-        visual: "prompt-design"
+        title: "Mailbox & Folders",
+        detail: "Inbox loading with focus/throttle/request ownership, Sent/Drafts/Trash lists, search and account filtering, refresh gestures, and provider failure shown as failure — never as an empty inbox.",
+        visual: "mailbox-folders"
       },
       {
         step: 3,
-        title: "Structured Output Handling",
-        detail: "Constrained model responses into predictable shapes instead of free-form prose, then parsed them before anything reached the UI — making rendering deterministic.",
-        visual: "structured-output"
+        title: "Compose & AI Assistant",
+        detail: "Compose, reply, reply-all and forward with draft lifecycle, attachments and signatures, plus a standalone AI generation and feedback feature for drafting help.",
+        visual: "compose-ai"
       },
       {
         step: 4,
-        title: "REST API Integration",
-        detail: "Implemented and integrated REST endpoints connecting the frontend to existing backend services, including request payloads, authentication headers and response mapping.",
-        visual: "rest-integration"
+        title: "Session Ownership",
+        detail: "apiClient captures the session owner before reading the token and serializes cleanup through owned writes. A late 401/403 from an old session cannot clear or redirect a replacement login, and required persistence failures propagate instead of looking like success.",
+        visual: "session-ownership"
       },
       {
         step: 5,
-        title: "Request/Response Reliability",
-        detail: "Added authentication handling, timeout management and error handling around every AI call so failures surfaced as recoverable states instead of broken screens or infinite loaders.",
-        visual: "reliability"
+        title: "Envelope & Account Isolation",
+        detail: "Mailbox service rejects failure or malformed business envelopes before extraction. Explicitly selected disconnected accounts and senders are rejected; only an unspecified identity may use documented connected-provider defaults.",
+        visual: "account-isolation"
       },
       {
         step: 6,
-        title: "Defensive Parsing & Testing",
-        detail: "Built defensive parsing and validation for inconsistent LLM output, then covered API integrations and AI functionality with automated tests and repeated debugging passes.",
-        visual: "validation-tests"
+        title: "Verification",
+        detail: "110 Jest suites / 1,400 tests passing with 0 skipped, TypeScript strict mode with 0 errors, whole-source ESLint with 0 errors / 0 warnings. Web, Android and iOS exports pass; Android Debug and unsigned Release APKs compile.",
+        visual: "verification"
       },
     ],
     decisions: [
       {
-        decision: "Structured Output Over Free Text",
-        context: "LLM responses vary in format between calls",
-        options: ["Free-form text", "Structured output contract", "Post-hoc regex cleanup"],
-        chosen: "Structured output contract",
-        rationale: "A predictable shape makes parsing, validation and UI rendering deterministic."
+        decision: "Session-Owned apiClient",
+        context: "An awaited 401/403 can arrive after the user has logged in again",
+        options: ["Global cleanup on any 401/403", "Session-owned cleanup"],
+        chosen: "Session-owned cleanup",
+        rationale: "A slow old response must never log out a new login; only the current session's expiry may clear it."
       },
       {
-        decision: "Server-Side API Calls",
-        context: "AI requests need credentials and must not be exposed to the browser",
-        options: ["Direct client calls", "Server-side REST integration", "Third-party SDK in the client"],
-        chosen: "Server-side REST integration",
-        rationale: "Keeps authentication server-side and centralises timeout and error handling."
+        decision: "Strict Business-Envelope Validation",
+        context: "A mailbox call can return HTTP 200 with a business failure inside",
+        options: ["Trust HTTP 200", "Validate the business envelope"],
+        chosen: "Validate the business envelope",
+        rationale: "HTTP 200 with a failure inside must surface as a failure, not as an empty inbox."
       },
       {
-        decision: "Explicit Timeouts",
-        context: "Model calls can be slow or hang",
-        options: ["No timeout", "Fixed timeout per request", "Unbounded retry"],
-        chosen: "Fixed timeout with error states",
-        rationale: "Users get a recoverable message instead of an indefinitely loading UI."
+        decision: "Explicit Account Isolation",
+        context: "A user can explicitly pick an account that is disconnected",
+        options: ["Fall back to any connected account", "Reject the explicit disconnected selection"],
+        chosen: "Reject the explicit disconnected selection",
+        rationale: "Sending or reading as the wrong account is worse than a clear error."
       },
       {
-        decision: "Defensive Response Parsing",
-        context: "Model output can be malformed or partially structured",
-        options: ["Trust the response", "Validate and fall back", "Drop the response"],
-        chosen: "Validate with graceful fallback",
-        rationale: "Keeps the feature usable while surfacing a clear error when output cannot be trusted."
+        decision: "Remote Backend, Documented Simulations",
+        context: "Auth, OAuth, sync, delivery, AI generation and payments are backend-owned",
+        options: ["Mock backend inside the app", "Depend on a configured remote backend"],
+        chosen: "Depend on a configured remote backend",
+        rationale: "The frontend stays honest about its boundary: OTP and IMAP/SMTP setup stay documented simulations until a backend exists."
       },
     ],
     metrics: [
-      { label: "AI FEATURES", value: "3", context: "Draft · Rewrite · Reply" },
-      { label: "OUTPUT HANDLING", value: "Structured", context: "Parsed and validated LLM responses" },
-      { label: "API RELIABILITY", value: "Auth + Timeouts", context: "Defensive request/response handling" },
-      { label: "QUALITY GATE", value: "Automated tests", context: "API integrations & AI features" },
+      { label: "Tests", value: "1,400 passing", context: "110 Jest suites, 0 skipped" },
+      { label: "TypeScript", value: "0 errors", context: "Strict mode" },
+      { label: "Lint", value: "0 errors", context: "ESLint, max-warnings 0" },
+      { label: "Platforms", value: "Web · Android · iOS", context: "Expo SDK 54, React Native 0.81" },
     ],
-    stack: ["LLM APIs", "Prompt Engineering", "Structured Outputs", "REST APIs", "Authentication", "Error Handling", "Response Validation", "Automated Testing"],
+    stack: ["TypeScript", "Expo", "React Native", "React 19", "Expo Router", "Jest", "ESLint"],
     links: {},
-    heroVisual: "/work/ai-email-assistant/hero.avif",
-    gallery: [],
   },
 ];
 

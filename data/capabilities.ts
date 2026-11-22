@@ -22,6 +22,6 @@ export const capabilities: CapabilityCategory[] = [
   },
   {
     title: "Programming & Fundamentals",
-    tags: ["Python", "C++", "DSA", "OOP"],
+    tags: ["Python", "OOP"],
   },
 ];

@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ishwar Soni — AI Engineer Portfolio
 
-## Getting Started
+Live: **https://ishwarsoni.me**
 
-First, run the development server:
+A cinematic, streaming-style portfolio ("The Series"). Visitors pick a viewer
+profile — Ishwar, Recruiter, Developer or Researcher — and the sections
+reorder themselves for that audience. The Recruiter profile leads with the
+résumé, highlights and skills.
+
+## Featured work
+
+- **OncoLink** — AI-assisted oncology document intelligence: LLM extraction,
+  Pydantic v2 schema validation, multi-document harmonization, conflict
+  detection, and evidence-grounded RAG Q&A. Educational/demo software only.
+- **Datacleanr** — ML-safe data-cleaning library: target column never modified
+  in `clean()`, per-step rollback, validated on 50 datasets with 0 failures.
+- **Motion Processing Pipeline** — BVH → SMPL-H reconstruction from AMASS
+  data: coordinate basis transforms, grounding, foot-lock stabilization.
+- **TuneMyEmail** — AI-assisted email client for Web, Android and iOS
+  (Expo / React Native / TypeScript): 110 Jest suites, 1,400 tests passing.
+  Backend-dependent features need a configured remote backend; OTP and
+  IMAP/SMTP setup flows are documented simulations in the frontend.
+
+## Tech
+
+Next.js 16 (App Router) + React 19 + TypeScript, Tailwind CSS 4, GSAP,
+Framer Motion, Lenis. No backend — static content in `data/*.ts`.
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # production build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `app/` — layout, home page, `/work/[slug]` case-study pages
+- `components/series/` — the Series experience (hero, seasons, originals,
+  skills, résumé viewer, final CTA)
+- `components/work/` — case-study page renderer
+- `components/diagrams/` — SVG architecture diagrams for the case studies
+- `components/ui/` — shared primitives
+- `data/` — all site content: `site.ts`, `projects.ts`, `series.ts`,
+  `experience.ts`, `capabilities.ts`, `certifications.ts`, `about.ts`,
+  `education.ts`
+- `public/` — portrait, résumé PDF, OG image, `robots.txt`, `sitemap.xml`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Content edits are data edits: change a project in `data/projects.ts` or a
+section in `data/series.ts` — no component changes needed for copy updates.
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Push to `main` on GitHub (`ishwarsoni/portfolio`); Vercel deploys
+`ishwarsoni.me` from there. For outreach, share
+`https://ishwarsoni.me/?view=home` — it skips the opening sequence and
+profile selector and lands straight on the work.
