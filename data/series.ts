@@ -67,7 +67,7 @@ export type Season = {
 };
 
 const cosmosExperience =
-  experiences.find((item) => item.company === "Cosmos Consultant AI") ?? experiences[0];
+  experiences.find((item) => item.company === "Cosmos Consultant") ?? experiences[0];
 const semanticLabsExperience =
   experiences.find((item) => item.company === "Semantic Labs") ?? experiences[experiences.length - 1];
 
@@ -133,7 +133,7 @@ export const seasons: Season[] = [
     title: "The Internships",
     period: "Nov 2025 – Nov 2026",
     synopsis:
-      "Applied AI engineering at Cosmos Consultant AI, following computer-vision motion processing at Semantic Labs.",
+      "Applied AI engineering at Cosmos Consultant, following computer-vision motion processing at Semantic Labs.",
     episodes: [
       {
         code: "S04 E01",
@@ -176,7 +176,7 @@ export const seasons: Season[] = [
 export type TopPick = { label: string; title: string; detail: string; palette: Palette };
 export const topPicks: TopPick[] = [
   { label: "The role", title: "AI Engineer", detail: "Applied AI · LLMs · RAG · ML", palette: palettes.cyan },
-  { label: "Now interning", title: "Cosmos Consultant AI", detail: "AI Engineer Intern · LLM integration · REST APIs", palette: palettes.cyan },
+  { label: "Now interning", title: "Cosmos Consultant", detail: "AI Engineer Intern · LLM integration · REST APIs", palette: palettes.cyan },
   { label: "The AI Original", title: "OncoLink", detail: "LLM extraction · 12+ clinical fields · Pydantic validation", palette: palettes.violet },
   { label: "The internship", title: "Semantic Labs", detail: "Computer Vision / Motion Processing", palette: palettes.blue },
   { label: "The framework", title: "Datacleanr", detail: "50 datasets · 0 target corruption", palette: palettes.emerald },
@@ -383,7 +383,7 @@ export const skillEvidence: Record<string, string[]> = {
 /** Standout "moments" framed as laurels (factual, drawn from project metrics / roles). */
 export type Moment = { kicker: string; title: string; detail: string; palette: Palette };
 export const momentHighlights: Moment[] = [
-  { kicker: "Current internship", title: "Cosmos Consultant AI", detail: "AI Engineer Intern — LLM features, REST APIs and reliable AI integrations", palette: palettes.cyan },
+  { kicker: "Current internship", title: "Cosmos Consultant", detail: "AI Engineer Intern — LLM features, REST APIs and reliable AI integrations", palette: palettes.cyan },
   { kicker: "Internship", title: "Semantic Labs", detail: "Computer Vision / Motion Processing — BVH→SMPL-H pipeline", palette: palettes.violet },
   { kicker: "Reliability", title: "0 failures", detail: "Zero target corruption across 50 validated datasets (Datacleanr)", palette: palettes.emerald },
   { kicker: "AI platform", title: "12+ fields", detail: "Schema-validated clinical extraction in OncoLink", palette: palettes.cyan },

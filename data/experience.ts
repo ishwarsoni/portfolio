@@ -11,13 +11,13 @@ export interface Experience {
 
 export const experiences: Experience[] = [
   {
-    company: "Cosmos Consultant AI",
+    company: "Cosmos Consultant",
     role: "AI Engineer Intern",
     employmentType: "Internship",
     period: "May 2026 – November 2026",
     location: "Jaipur, Rajasthan, India · Hybrid",
     description:
-      "Working as an AI Engineer Intern at Cosmos Consultant AI, contributing to the development and integration of AI-powered applications.",
+      "Working as an AI Engineer Intern at Cosmos Consultant, contributing to the development and integration of AI-powered applications.",
     achievements: [
       "Integrating AI-powered features such as email drafting, rewriting, and context-aware reply generation into applications.",
       "Implementing and integrating REST API endpoints to connect frontend applications with existing backend services.",
