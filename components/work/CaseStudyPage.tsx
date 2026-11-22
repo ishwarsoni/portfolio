@@ -85,47 +85,47 @@ function MotionProcessingDecisions() {
     <div className="space-y-6">
       {MOTION_DECISIONS.map((decision, index) => (
         <Card key={index} className="decision-card relative overflow-hidden border-border-subtle">
-          <div className="absolute inset-0 bg-gradient-to-r from-antique-gold/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
           <div className="relative p-6 md:p-8">
             <div className="grid md:grid-cols-[140px_1fr] gap-8 md:gap-12 items-start">
               <div className="flex-shrink-0 w-full md:w-[140px] flex flex-col items-center md:items-end justify-center text-center md:text-right pt-2 md:pt-0">
-                <Typography variant="eyebrow" className="text-antique-gold mb-1 whitespace-nowrap">
+                <Typography variant="eyebrow" className="text-cyan mb-1 whitespace-nowrap">
                   Decision
                 </Typography>
-                <Typography variant="display" className="text-ivory font-mono tracking-tight whitespace-nowrap">
+                <Typography variant="display" className="text-bone font-mono tracking-tight whitespace-nowrap">
                   {decision.number}
                 </Typography>
               </div>
               <div className="flex-1 min-w-0">
-                <Typography variant="h3" className="text-ivory mb-3">
+                <Typography variant="h3" className="text-bone mb-3">
                   {decision.title}
                 </Typography>
-                <Typography variant="body" className="text-ash-dim mb-4 leading-relaxed">
+                <Typography variant="body" className="text-smoke mb-4 leading-relaxed">
                   {decision.context}
                 </Typography>
                 <div className="space-y-3 mb-4">
                   <div className="flex items-start gap-3">
-                    <span className="font-mono text-crimson shrink-0">Chosen:</span>
-                    <Typography variant="body" className="text-ivory font-medium leading-relaxed">
+                    <span className="font-mono text-cyan shrink-0">Chosen:</span>
+                    <Typography variant="body" className="text-bone font-medium leading-relaxed">
                       {decision.chosen}
                     </Typography>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="font-mono text-antique-gold shrink-0">Reason:</span>
-                    <Typography variant="small" className="text-ash leading-relaxed">
+                    <span className="font-mono text-cyan shrink-0">Reason:</span>
+                    <Typography variant="small" className="text-mist leading-relaxed">
                       {decision.reason}
                     </Typography>
                   </div>
                 </div>
                 {decision.matrix && (
-                  <div className="font-mono text-sm text-antique-gold bg-obsidian/50 p-3 rounded-sm border border-charcoal mt-3">
+                  <div className="font-mono text-sm text-cyan bg-ink-2/50 p-3 rounded-sm border border-ink-3 mt-3">
                     {decision.matrix.split('\n').map((line: string, i: number) => (
                       <div key={i} className="whitespace-pre">{line}</div>
                     ))}
                   </div>
                 )}
                 {decision.formula && (
-                  <div className="font-mono text-sm text-antique-gold bg-obsidian/50 p-3 rounded-sm border border-charcoal mt-3">
+                  <div className="font-mono text-sm text-cyan bg-ink-2/50 p-3 rounded-sm border border-ink-3 mt-3">
                     {decision.formula}
                   </div>
                 )}
@@ -153,7 +153,7 @@ function MotionProcessingResults() {
     fontFamily: 'var(--font-mono)',
     fontSize: 'clamp(3.5rem, 6vw, 4.5rem)',
     fontWeight: 700,
-    color: '#C6A15B',
+    color: '#38cfe8',
     lineHeight: 1,
     marginBottom: '16px',
   };
@@ -162,7 +162,7 @@ function MotionProcessingResults() {
     fontFamily: 'var(--font-serif)',
     fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
     fontWeight: 400,
-    color: '#E8E1D2',
+    color: '#eceef4',
     lineHeight: 1.2,
     marginBottom: '16px',
   };
@@ -171,7 +171,7 @@ function MotionProcessingResults() {
     fontFamily: 'var(--font-mono)',
     fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
     fontWeight: 600,
-    color: '#C6A15B',
+    color: '#38cfe8',
     lineHeight: 1.1,
     marginBottom: '16px',
   };
@@ -180,7 +180,7 @@ function MotionProcessingResults() {
     fontFamily: 'var(--font-serif)',
     fontSize: 'clamp(1.25rem, 2vw, 1.75rem)',
     fontWeight: 400,
-    color: '#E8E1D2',
+    color: '#eceef4',
     lineHeight: 1.3,
     marginBottom: '16px',
   };
@@ -188,7 +188,7 @@ function MotionProcessingResults() {
   const descriptionStyle: React.CSSProperties = {
     fontFamily: 'var(--font-sans)',
     fontSize: '0.875rem',
-    color: '#85858A',
+    color: '#9ba0ad',
     lineHeight: 1.6,
   };
 
@@ -197,7 +197,7 @@ function MotionProcessingResults() {
     fontSize: '11px',
     letterSpacing: '0.35em',
     textTransform: 'uppercase',
-    color: '#C6A15B',
+    color: '#38cfe8',
     marginBottom: '16px',
   };
 
@@ -207,7 +207,7 @@ function MotionProcessingResults() {
         {MOTION_RESULTS.slice(0, 3).map((result, index) => (
           <Card
             key={index}
-            className="metric-card relative border-border-subtle bg-obsidian/50"
+            className="metric-card relative border-border-subtle bg-ink-2/50"
             style={cardStyle}
           >
             <div style={metricValueStyle}>{result.mainValue}</div>
@@ -220,7 +220,7 @@ function MotionProcessingResults() {
         {MOTION_RESULTS.slice(3).map((result, index) => (
           <Card
             key={index + 3}
-            className="metric-card relative border-border-subtle bg-obsidian/50"
+            className="metric-card relative border-border-subtle bg-ink-2/50"
             style={cardStyle}
           >
             {result.smallLabel && <div style={eyebrowStyle}>{result.smallLabel}</div>}
@@ -353,7 +353,7 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
         <Container size="wide" className="relative z-10 py-20">
           <div className="max-w-5xl mx-auto">
             <div className="flex items-center gap-3 mb-6">
-              <span className="font-mono text-2xl text-ash/50">
+              <span className="font-mono text-2xl text-mist/50">
                 {project.category.split(" / ")[0].toUpperCase()}
               </span>
               <Badge variant="flagship">
@@ -362,27 +362,27 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
             </div>
 
             <h1 id="case-study-title" className="mb-4">
-              <Typography variant="display" className="uppercase tracking-[0.04em] text-ivory">
+              <Typography variant="display" className="uppercase tracking-[0.04em] text-bone">
                 {project.title}
               </Typography>
             </h1>
 
-            <Typography variant="body-lg" className="text-ash mb-8 max-w-2xl">
+            <Typography variant="body-lg" className="text-mist mb-8 max-w-2xl">
               {project.subtitle}
             </Typography>
 
             <div className="flex flex-wrap items-center gap-6 text-sm">
-              <div className="flex items-center gap-2 text-ash">
-                <span className="font-mono text-ash-dim">Role:</span>
-                <span className="text-ivory">{project.role}</span>
+              <div className="flex items-center gap-2 text-mist">
+                <span className="font-mono text-smoke">Role:</span>
+                <span className="text-bone">{project.role}</span>
               </div>
-              <div className="flex items-center gap-2 text-ash">
-                <span className="font-mono text-ash-dim">Period:</span>
-                <span className="text-ivory">{project.period}</span>
+              <div className="flex items-center gap-2 text-mist">
+                <span className="font-mono text-smoke">Period:</span>
+                <span className="text-bone">{project.period}</span>
               </div>
-              <div className="flex items-center gap-2 text-ash">
-                <span className="font-mono text-ash-dim">Stack:</span>
-                <span className="text-ivory">{project.stack.slice(0, 4).join(" · ")}</span>
+              <div className="flex items-center gap-2 text-mist">
+                <span className="font-mono text-smoke">Stack:</span>
+                <span className="text-bone">{project.stack.slice(0, 4).join(" · ")}</span>
               </div>
               {project.links.demo && (
                 <a
@@ -408,62 +408,62 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
         </Container>
       </header>
 
-      <div ref={sectionsRef} className="relative z-10 bg-void">
+      <div ref={sectionsRef} className="relative z-10 bg-ink">
         <Container size="wide" className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto space-y-16">
             <section className="case-study-section" aria-labelledby="challenge-heading">
               <div className="flex items-center gap-3 mb-6">
-                <Divider variant="gold" className="flex-1" />
-                <Typography variant="eyebrow" className="text-antique-gold">
+                <Divider variant="accent" className="flex-1" />
+                <Typography variant="eyebrow" className="text-cyan">
                   Challenge
                 </Typography>
-                <Divider variant="gold" className="flex-1" />
+                <Divider variant="accent" className="flex-1" />
               </div>
-              <Typography variant="body-lg" className="text-ivory-dim leading-relaxed">
+              <Typography variant="body-lg" className="text-mist leading-relaxed">
                 {project.challenge}
               </Typography>
             </section>
 
             <section className="case-study-section" aria-labelledby="strategy-heading">
               <div className="flex items-center gap-3 mb-6">
-                <Divider variant="gold" className="flex-1" />
-                <Typography variant="eyebrow" className="text-antique-gold">
+                <Divider variant="accent" className="flex-1" />
+                <Typography variant="eyebrow" className="text-cyan">
                   Strategy
                 </Typography>
-                <Divider variant="gold" className="flex-1" />
+                <Divider variant="accent" className="flex-1" />
               </div>
-              <Typography variant="body-lg" className="text-ivory-dim leading-relaxed">
+              <Typography variant="body-lg" className="text-mist leading-relaxed">
                 {project.strategy}
               </Typography>
             </section>
 
             <section className="case-study-section" aria-labelledby="process-heading">
               <div className="flex items-center gap-3 mb-8">
-                <Divider variant="gold" className="flex-1" />
-                <Typography variant="eyebrow" className="text-antique-gold">
+                <Divider variant="accent" className="flex-1" />
+                <Typography variant="eyebrow" className="text-cyan">
                   Process
                 </Typography>
-                <Divider variant="gold" className="flex-1" />
+                <Divider variant="accent" className="flex-1" />
               </div>
 
               <div className="space-y-8">
                 {project.process.map((step) => (
                   <div key={step.step} className="flex gap-6">
                     <div className="flex-shrink-0 w-16 text-right pt-1">
-                      <Typography variant="eyebrow" className="text-antique-gold">
+                      <Typography variant="eyebrow" className="text-cyan">
                         {String(step.step).padStart(2, "0")}
                       </Typography>
                     </div>
                     <div className="flex-1">
                       <div className="flex items-baseline justify-between gap-4 mb-2">
-                        <Typography variant="h3" className="text-ivory">
+                        <Typography variant="h3" className="text-bone">
                           {step.title}
                         </Typography>
-                        <Typography variant="micro" className="text-ash-dim uppercase tracking-wider">
+                        <Typography variant="micro" className="text-smoke uppercase tracking-wider">
                           {step.visual}
                         </Typography>
                       </div>
-                      <Typography variant="body" className="text-ash leading-relaxed">
+                      <Typography variant="body" className="text-mist leading-relaxed">
                         {step.detail}
                       </Typography>
                     </div>
@@ -474,11 +474,11 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
 
             <section className="case-study-section" aria-labelledby="decisions-heading">
               <div className="flex items-center gap-3 mb-8">
-                <Divider variant="gold" className="flex-1" />
-                <Typography variant="eyebrow" className="text-antique-gold">
+                <Divider variant="accent" className="flex-1" />
+                <Typography variant="eyebrow" className="text-cyan">
                   Key Decisions
                 </Typography>
-                <Divider variant="gold" className="flex-1" />
+                <Divider variant="accent" className="flex-1" />
               </div>
 
               {project.slug === "motion-processing" ? (
@@ -491,46 +491,46 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
                     <Card key={index} className="decision-card p-6">
                       <div className="grid md:grid-cols-5 gap-4">
                         <div className="md:col-span-1">
-                          <Typography variant="eyebrow" className="text-antique-gold mb-2">
+                          <Typography variant="eyebrow" className="text-cyan mb-2">
                             Decision
                           </Typography>
-                          <Typography variant="h3" className="text-ivory">
+                          <Typography variant="h3" className="text-bone">
                             {decision.decision}
                           </Typography>
                         </div>
                         <div className="md:col-span-1">
-                          <Typography variant="eyebrow" className="text-ash mb-2">
+                          <Typography variant="eyebrow" className="text-mist mb-2">
                             Context
                           </Typography>
-                          <Typography variant="small" className="text-ash-dim">
+                          <Typography variant="small" className="text-smoke">
                             {decision.context}
                           </Typography>
                         </div>
                         <div className="md:col-span-1">
-                          <Typography variant="eyebrow" className="text-ash mb-2">
+                          <Typography variant="eyebrow" className="text-mist mb-2">
                             Options
                           </Typography>
                           <ul className="space-y-1">
                             {decision.options.map((opt, i) => (
-                              <li key={i} className="text-sm text-ash-dim font-mono">
+                              <li key={i} className="text-sm text-smoke font-mono">
                                 {opt}
                               </li>
                             ))}
                           </ul>
                         </div>
                         <div className="md:col-span-1">
-                          <Typography variant="eyebrow" className="text-crimson mb-2">
+                          <Typography variant="eyebrow" className="text-cyan mb-2">
                             Chosen
                           </Typography>
-                          <Typography variant="body" className="text-ivory font-medium">
+                          <Typography variant="body" className="text-bone font-medium">
                             {decision.chosen}
                           </Typography>
                         </div>
                         <div className="md:col-span-1">
-                          <Typography variant="eyebrow" className="text-ash mb-2">
+                          <Typography variant="eyebrow" className="text-mist mb-2">
                             Rationale
                           </Typography>
-                          <Typography variant="small" className="text-ash-dim leading-relaxed">
+                          <Typography variant="small" className="text-smoke leading-relaxed">
                             {decision.rationale}
                           </Typography>
                         </div>
@@ -543,11 +543,11 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
 
             <section className="case-study-section" aria-labelledby="results-heading">
               <div className="flex items-center gap-3 mb-8">
-                <Divider variant="gold" className="flex-1" />
-                <Typography variant="eyebrow" className="text-antique-gold">
+                <Divider variant="accent" className="flex-1" />
+                <Typography variant="eyebrow" className="text-cyan">
                   Results
                 </Typography>
-                <Divider variant="gold" className="flex-1" />
+                <Divider variant="accent" className="flex-1" />
               </div>
 
               {project.slug === "motion-processing" ? (
@@ -556,13 +556,13 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
                 <div className="grid md:grid-cols-3 gap-6">
                   {project.metrics.map((metric, index) => (
                     <Card key={index} className="metric-card p-6 text-center">
-                      <Typography variant="display" className="text-antique-gold font-mono mb-2">
+                      <Typography variant="display" className="text-cyan font-mono mb-2">
                         {metric.value}
                       </Typography>
-                      <Typography variant="h3" className="text-ivory mb-1">
+                      <Typography variant="h3" className="text-bone mb-1">
                         {metric.label}
                       </Typography>
-                      <Typography variant="micro" className="text-ash-dim uppercase tracking-wider">
+                      <Typography variant="micro" className="text-smoke uppercase tracking-wider">
                         {metric.context}
                       </Typography>
                     </Card>
@@ -571,7 +571,7 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
               )}
             </section>
 
-            <Divider variant="gold" className="my-8" />
+            <Divider variant="accent" className="my-8" />
 
             <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-border-subtle">
               <div className="flex items-center gap-4">

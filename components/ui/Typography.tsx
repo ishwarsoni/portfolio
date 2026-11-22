@@ -23,17 +23,17 @@ interface TypographyProps extends HTMLAttributes<HTMLElement> {
 }
 
 const variantStyles: Record<TypographyVariant, string> = {
-  display: "font-serif text-[clamp(3.5rem,8vw,6rem)] leading-[1.0] tracking-[0.02em] text-ivory",
-  h1: "font-serif text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.15] tracking-[0.01em] text-ivory",
-  h2: "font-serif text-[clamp(1.5rem,2.5vw,2rem)] leading-[1.2] text-ivory",
-  h3: "font-serif text-xl leading-[1.3] text-ivory",
-  "body-lg": "font-sans text-[1.125rem] leading-[1.65] text-ivory-dim",
-  body: "font-sans text-[1rem] leading-[1.65] text-ash",
-  small: "font-sans text-[0.875rem] leading-[1.6] text-ash",
-  micro: "font-mono text-[0.75rem] leading-[1.5] text-ash-dim",
-  eyebrow: "font-mono text-[0.6875rem] tracking-[0.35em] uppercase text-ash",
-  lead: "font-serif text-[1.125rem] leading-[1.7] italic text-ivory-dim",
-  mono: "font-mono text-[0.875rem] leading-[1.5] text-ash",
+  display: "font-serif text-[clamp(3.5rem,8vw,6rem)] leading-[1.0] tracking-[0.02em] text-bone",
+  h1: "font-serif text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.15] tracking-[0.01em] text-bone",
+  h2: "font-serif text-[clamp(1.5rem,2.5vw,2rem)] leading-[1.2] text-bone",
+  h3: "font-serif text-xl leading-[1.3] text-bone",
+  "body-lg": "font-sans text-[1.125rem] leading-[1.65] text-mist",
+  body: "font-sans text-[1rem] leading-[1.65] text-mist",
+  small: "font-sans text-[0.875rem] leading-[1.6] text-mist",
+  micro: "font-mono text-[0.75rem] leading-[1.5] text-smoke",
+  eyebrow: "font-mono text-[0.6875rem] tracking-[0.35em] uppercase text-mist",
+  lead: "font-serif text-[1.125rem] leading-[1.7] italic text-mist",
+  mono: "font-mono text-[0.875rem] leading-[1.5] text-mist",
 };
 
 const elementTags: Record<TypographyVariant, string> = {

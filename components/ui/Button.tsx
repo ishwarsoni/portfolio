@@ -22,7 +22,7 @@ export type ButtonProps = BaseButtonProps &
 
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   ({ className, variant = "primary", size = "default", asChild = false, children, href, target, rel, ...props }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center gap-2 rounded-none font-medium transition-all duration-300 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson focus-visible:ring-offset-2 focus-visible:ring-offset-void touch-manipulation cursor-pointer";
+    const baseStyles = "inline-flex items-center justify-center gap-2 rounded-none font-medium transition-all duration-300 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-ink touch-manipulation cursor-pointer";
 
     const variants: Record<ButtonVariant, string> = {
       primary: "btn-primary",

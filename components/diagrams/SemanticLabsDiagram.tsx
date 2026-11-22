@@ -193,7 +193,7 @@ export function SemanticLabsDiagram({
       >
         <defs>
           <linearGradient id="bg-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#07080a" />
+            <stop offset="0%" stopColor="#06070b" />
             <stop offset="100%" stopColor="#0b0c0e" />
           </linearGradient>
           <linearGradient id="signal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -222,12 +222,12 @@ export function SemanticLabsDiagram({
         {/* Outer Frame */}
         <rect width="980" height="500" fill="url(#bg-grad)" rx="8" />
         <rect width="980" height="500" fill="url(#subtle-grid)" opacity="0.3" rx="8" />
-        <rect width="980" height="500" fill="none" stroke="#1a1c20" strokeWidth="1" rx="8" />
+        <rect width="980" height="500" fill="none" stroke="#12141d" strokeWidth="1" rx="8" />
 
         {/* Header Bar */}
         <g transform="translate(40, 25)">
-          <circle cx="6" cy="6" r="4" fill="#C6A15B" filter="url(#soft-glow)" />
-          <text x="18" y="9" fontFamily="var(--font-mono)" fontSize="11" fontWeight="600" fill="#C6A15B" letterSpacing="0.08em">
+          <circle cx="6" cy="6" r="4" fill="#38cfe8" filter="url(#soft-glow)" />
+          <text x="18" y="9" fontFamily="var(--font-mono)" fontSize="11" fontWeight="600" fill="#38cfe8" letterSpacing="0.08em">
             SEMANTIC LABS · BVH MOCAP SKELETON KINEMATIC PIPELINE (BVH ➔ SMPL-H)
           </text>
         </g>
@@ -237,7 +237,7 @@ export function SemanticLabsDiagram({
           <path
             d="M 60 55 L 920 55"
             fill="none"
-            stroke="#1a1c20"
+            stroke="#12141d"
             strokeWidth="2"
             strokeDasharray="8 6"
             opacity="0.5"
@@ -252,8 +252,8 @@ export function SemanticLabsDiagram({
                   cx="0"
                   cy="0"
                   r="7"
-                  fill="#0d0e10"
-                  stroke="#2a2d34"
+                  fill="#0b0d13"
+                  stroke="#1e2230"
                   strokeWidth="2"
                   filter="url(#soft-glow)"
                 />
@@ -281,12 +281,12 @@ export function SemanticLabsDiagram({
 
         {/* LEFT: BVH Mocap Kinematic Tree Skeleton (Center at X=190, Y=240) */}
         <g transform="translate(190, 240)" id="bvh-skeleton">
-          <text x="0" y="-140" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">
+          <text x="0" y="-140" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#38cfe8">
             01. BVH KINEMATIC TREE
           </text>
 
           {/* Bone Links */}
-          <g stroke="#C6A15B" strokeWidth="2" strokeLinecap="round" opacity="0.9" filter="url(#soft-glow)">
+          <g stroke="#38cfe8" strokeWidth="2" strokeLinecap="round" opacity="0.9" filter="url(#soft-glow)">
             {BVH_BONES.map(([fromId, toId], i) => {
               const from = jointMap.get(fromId)!;
               const to = jointMap.get(toId)!;
@@ -299,8 +299,8 @@ export function SemanticLabsDiagram({
             <g key={joint.id} transform={`translate(${joint.x}, ${joint.y})`}>
               <circle
                 r={joint.type === "root" ? 6 : joint.type === "head" ? 7 : 4}
-                fill={joint.type === "root" ? "#A51C30" : joint.type === "head" ? "#E8E1D2" : "#0d0e10"}
-                stroke="#C6A15B"
+                fill={joint.type === "root" ? "#8b7cf6" : joint.type === "head" ? "#eceef4" : "#0b0d13"}
+                stroke="#38cfe8"
                 strokeWidth={1.8}
                 filter="url(#soft-glow)"
               />
@@ -308,45 +308,45 @@ export function SemanticLabsDiagram({
           ))}
 
           {/* Key Joint Labels */}
-          <g fontFamily="var(--font-mono)" fontSize="7.5" fill="#85858A">
-            <text x="10" y="48" fill="#A51C30" fontWeight="600">ROOT (0,0,0)</text>
-            <text x="10" y="-108" fill="#E8E1D2">HEAD_END</text>
+          <g fontFamily="var(--font-mono)" fontSize="7.5" fill="#9ba0ad">
+            <text x="10" y="48" fill="#8b7cf6" fontWeight="600">ROOT (0,0,0)</text>
+            <text x="10" y="-108" fill="#eceef4">HEAD_END</text>
             <text x="-140" y="30">L_HAND</text>
             <text x="135" y="30">R_HAND</text>
             <text x="-95" y="196">L_FOOT</text>
             <text x="95" y="196">R_FOOT</text>
           </g>
 
-          <text x="0" y="218" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#5C4A2E">
+          <text x="0" y="218" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#155e75">
             22-Joint BioVision Hierarchy (Euler Rot Channels)
           </text>
         </g>
 
         {/* CENTER: Coordinate Basis Transform Core (X=490, Y=240) */}
         <g transform="translate(490, 240)" id="matrix-display">
-          <text x="0" y="-140" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#A51C30">
+          <text x="0" y="-140" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#8b7cf6">
             02. BASIS XFORM & ROOT FIX
           </text>
 
           {/* 3D Basis Vectors */}
           <g strokeWidth="2.5" fill="none" strokeLinecap="round" filter="url(#soft-glow)">
-            <line x1="0" y1="-45" x2="48" y2="-45" stroke="#A51C30" />
+            <line x1="0" y1="-45" x2="48" y2="-45" stroke="#8b7cf6" />
             <line x1="0" y1="-45" x2="0" y2="-95" stroke="#22d3ee" />
-            <line x1="0" y1="-45" x2="-38" y2="-7" stroke="#C6A15B" />
+            <line x1="0" y1="-45" x2="-38" y2="-7" stroke="#38cfe8" />
           </g>
-          <text x="56" y="-41" fontFamily="var(--font-mono)" fontSize="9" fontWeight="700" fill="#A51C30">X (Right)</text>
+          <text x="56" y="-41" fontFamily="var(--font-mono)" fontSize="9" fontWeight="700" fill="#8b7cf6">X (Right)</text>
           <text x="-4" y="-101" fontFamily="var(--font-mono)" fontSize="9" fontWeight="700" fill="#22d3ee">Y (Up)</text>
-          <text x="-48" y="1" fontFamily="var(--font-mono)" fontSize="9" fontWeight="700" fill="#C6A15B">Z (Fwd)</text>
+          <text x="-48" y="1" fontFamily="var(--font-mono)" fontSize="9" fontWeight="700" fill="#38cfe8">Z (Fwd)</text>
 
           {/* Matrix Display Box */}
           <g transform="translate(0, 15)">
-            <rect x="-85" y="-6" width="170" height="85" rx="5" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" />
-            <text x="0" y="14" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" fontWeight="600" fill="#C6A15B">
+            <rect x="-85" y="-6" width="170" height="85" rx="5" fill="#0b0d13" stroke="#12141d" strokeWidth="1" />
+            <text x="0" y="14" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" fontWeight="600" fill="#38cfe8">
               C_bvh2smpl Matrix
             </text>
 
             <g fontFamily="var(--font-mono)" fontSize="11" fill="#e5e7eb" textAnchor="middle">
-              <text x="-45" y="38" fill="#C6A15B" fontWeight="700">-1</text>
+              <text x="-45" y="38" fill="#38cfe8" fontWeight="700">-1</text>
               <text x="0" y="38" fill="#6b7280">0</text>
               <text x="45" y="38" fill="#6b7280">0</text>
 
@@ -355,18 +355,18 @@ export function SemanticLabsDiagram({
               <text x="45" y="56" fill="#22d3ee" fontWeight="700">1</text>
 
               <text x="-45" y="74" fill="#6b7280">0</text>
-              <text x="0" y="74" fill="#A51C30" fontWeight="700">1</text>
+              <text x="0" y="74" fill="#8b7cf6" fontWeight="700">1</text>
               <text x="45" y="74" fill="#6b7280">0</text>
             </g>
           </g>
 
           {/* Formula Card */}
           <g transform="translate(0, 120)">
-            <rect x="-105" y="-6" width="210" height="32" rx="4" fill="#0d0e10" stroke="#A51C30" strokeWidth="1" />
-            <text x="0" y="10" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fontWeight="600" fill="#A51C30">
+            <rect x="-105" y="-6" width="210" height="32" rx="4" fill="#0b0d13" stroke="#8b7cf6" strokeWidth="1" />
+            <text x="0" y="10" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fontWeight="600" fill="#8b7cf6">
               R_root = R_fix @ R_bvh2smpl
             </text>
-            <text x="0" y="22" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7.5" fill="#85858A">
+            <text x="0" y="22" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7.5" fill="#9ba0ad">
               Frame-0 Inverse Auto Orientation
             </text>
           </g>
@@ -392,7 +392,7 @@ export function SemanticLabsDiagram({
             <g key={joint.id} transform={`translate(${joint.x}, ${joint.y})`}>
               <circle
                 r={joint.type === "root" ? 6 : joint.type === "head" ? 7 : 4}
-                fill={joint.type === "root" ? "#10b981" : "#0d0e10"}
+                fill={joint.type === "root" ? "#10b981" : "#0b0d13"}
                 stroke="#10b981"
                 strokeWidth={1.8}
                 filter="url(#soft-glow)"
@@ -404,7 +404,7 @@ export function SemanticLabsDiagram({
           <g transform="translate(0, 115)">
             {VALIDATION_LABELS.map((label, i) => (
               <g key={label} className="val-badge" transform={`translate(0, ${i * 18 - 25})`} opacity={0}>
-                <rect x="-65" y="-7" width="130" height="15" rx="3" fill="#0d0e10" stroke="#10b981" strokeWidth="0.8" opacity="0.9" />
+                <rect x="-65" y="-7" width="130" height="15" rx="3" fill="#0b0d13" stroke="#10b981" strokeWidth="0.8" opacity="0.9" />
                 <text x="0" y="3" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7" fontWeight="600" fill="#10b981">
                   {label}
                 </text>
@@ -420,13 +420,13 @@ export function SemanticLabsDiagram({
         {/* BOTTOM METRICS BAR (Y = 465) */}
         <g transform="translate(490, 468)" textAnchor="middle">
           <text x="-260" y="0" fontFamily="var(--font-mono)" fontSize="13" fontWeight="700" fill="#e5e7eb">LARGE-SCALE</text>
-          <text x="-260" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#85858A" letterSpacing="0.08em">AMASS DATASETS</text>
+          <text x="-260" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#9ba0ad" letterSpacing="0.08em">AMASS DATASETS</text>
 
           <text x="0" y="0" fontFamily="var(--font-mono)" fontSize="13" fontWeight="700" fill="#e5e7eb">21 JOINTS</text>
-          <text x="0" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#85858A" letterSpacing="0.08em">BODY KINEMATIC MAPPING</text>
+          <text x="0" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#9ba0ad" letterSpacing="0.08em">BODY KINEMATIC MAPPING</text>
 
           <text x="260" y="0" fontFamily="var(--font-mono)" fontSize="13" fontWeight="700" fill="#e5e7eb">3 EXPORT FORMATS</text>
-          <text x="260" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#85858A" letterSpacing="0.08em">NPZ · BVH · MP4</text>
+          <text x="260" y="13" fontFamily="var(--font-sans)" fontSize="7.5" fontWeight="500" fill="#9ba0ad" letterSpacing="0.08em">NPZ · BVH · MP4</text>
         </g>
       </svg>
     </figure>

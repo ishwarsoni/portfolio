@@ -9,12 +9,12 @@ interface TechnicalDiagramProps {
 }
 
 const PIPELINE_STAGES = [
-  { id: "input", label: "01. INPUT", x: 100, color: "#80633A" },
+  { id: "input", label: "01. INPUT", x: 100, color: "#2a9db5" },
   { id: "extraction", label: "02. EXTRACT", x: 260, color: "#2d9cdb" },
   { id: "validation", label: "03. VALIDATE", x: 420, color: "#a51c30" },
-  { id: "normalize", label: "04. NORMALIZE", x: 580, color: "#c6a15b" },
+  { id: "normalize", label: "04. NORMALIZE", x: 580, color: "#38cfe8" },
   { id: "harmonize", label: "05. HARMONIZE", x: 740, color: "#10b981" },
-  { id: "export", label: "06. EXPORT", x: 900, color: "#c6a15b" },
+  { id: "export", label: "06. EXPORT", x: 900, color: "#38cfe8" },
 ];
 
 export function OncoLinkDiagram({
@@ -145,9 +145,9 @@ export function OncoLinkDiagram({
         style={{ maxWidth: "100%", height: "auto" }}
       >
         <defs>
-          <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#C6A15B" />
-            <stop offset="100%" stopColor="#80633A" />
+          <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#38cfe8" />
+            <stop offset="100%" stopColor="#2a9db5" />
           </linearGradient>
           <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#1a6b9e" />
@@ -166,10 +166,10 @@ export function OncoLinkDiagram({
             orient="auto"
             markerUnits="strokeWidth"
           >
-            <path d="M0,0 L0,6 L8,3 z" fill="#80633A" />
+            <path d="M0,0 L0,6 L8,3 z" fill="#2a9db5" />
           </marker>
           <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1A1A20" strokeWidth="0.5" />
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#12141d" strokeWidth="0.5" />
           </pattern>
           <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="2" result="coloredBlur" />
@@ -188,20 +188,20 @@ export function OncoLinkDiagram({
         </defs>
 
         {/* Outer Frame Background */}
-        <rect width="1000" height="600" fill="#0B0C0E" rx="8" />
+        <rect width="1000" height="600" fill="#0b0d13" rx="8" />
         <rect width="1000" height="600" fill="url(#grid)" opacity="0.35" rx="8" />
-        <rect width="1000" height="600" fill="none" stroke="#1A1A20" strokeWidth="1" rx="8" />
+        <rect width="1000" height="600" fill="none" stroke="#12141d" strokeWidth="1" rx="8" />
 
         {/* Top Title Bar */}
         <g transform="translate(40, 25)">
           <circle cx="6" cy="6" r="4" fill="#10b981" filter="url(#soft-glow)" />
-          <text x="18" y="9" fontFamily="var(--font-mono)" fontSize="11" fontWeight="600" fill="#C6A15B" letterSpacing="0.08em">
+          <text x="18" y="9" fontFamily="var(--font-mono)" fontSize="11" fontWeight="600" fill="#38cfe8" letterSpacing="0.08em">
             ONCOLINK ARCHITECTURE · RAG CLINICAL INTELLIGENCE PIPELINE
           </text>
         </g>
 
         {/* Pipeline flow arrows */}
-        <g stroke="#80633A" strokeWidth="1.5" fill="none" markerEnd="url(#arrow)">
+        <g stroke="#2a9db5" strokeWidth="1.5" fill="none" markerEnd="url(#arrow)">
           <path
             id="flow-path"
             d="M160 95 L200 95 M320 95 L360 95 M480 95 L520 95 M640 95 L680 95 M800 95 L840 95"
@@ -212,134 +212,134 @@ export function OncoLinkDiagram({
 
         {/* Stage 1: Input */}
         <g id="stage-input" transform="translate(40, 45)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="#80633A" strokeWidth="1.5" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#E8E1D2">01. INPUT</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">PDF · DOCX · TXT</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Unstructured</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Multi-file Batch</text>
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#06070b" stroke="#2a9db5" strokeWidth="1.5" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#eceef4">01. INPUT</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">PDF · DOCX · TXT</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Unstructured</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Multi-file Batch</text>
         </g>
 
         {/* Stage 2: Extraction */}
         <g id="stage-extraction" transform="translate(200, 45)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="url(#blueGrad)" strokeWidth="1.5" />
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#06070b" stroke="url(#blueGrad)" strokeWidth="1.5" />
           <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#2d9cdb">02. EXTRACTION</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Nemotron-3 Ultra</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">NVIDIA NIM API</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">JSON Output</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Nemotron-3 Ultra</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">NVIDIA NIM API</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">JSON Output</text>
         </g>
 
         {/* Stage 3: Validation */}
         <g id="stage-validation" transform="translate(360, 45)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="#A51C30" strokeWidth="2" filter="url(#soft-glow)" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#A51C30">03. VALIDATE</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Pydantic v2</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Schema Enforce</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Zero Hallucination</text>
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#06070b" stroke="#8b7cf6" strokeWidth="2" filter="url(#soft-glow)" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#8b7cf6">03. VALIDATE</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Pydantic v2</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Schema Enforce</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Zero Hallucination</text>
         </g>
 
         {/* Stage 4: Normalization */}
         <g id="stage-normalize" transform="translate(520, 45)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="url(#goldGrad)" strokeWidth="1.5" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">04. NORMALIZE</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Abbr Expansion</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Term Standardize</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Deduplication</text>
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#06070b" stroke="url(#cyanGrad)" strokeWidth="1.5" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#38cfe8">04. NORMALIZE</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Abbr Expansion</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Term Standardize</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Deduplication</text>
         </g>
 
         {/* Stage 5: Harmonization */}
         <g id="stage-harmonize" transform="translate(680, 45)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="#059669" strokeWidth="1.5" />
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#06070b" stroke="#059669" strokeWidth="1.5" />
           <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#10b981">05. HARMONIZE</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Multi-doc Merge</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Conflict Detect</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Unified Record</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Multi-doc Merge</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Conflict Detect</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Unified Record</text>
         </g>
 
         {/* Stage 6: Export */}
         <g id="stage-export" transform="translate(840, 45)">
-          <rect x="0" y="0" width="120" height="100" rx="4" fill="#07080A" stroke="#C6A15B" strokeWidth="1.5" />
-          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">06. EXPORT</text>
-          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Patient Summary</text>
-          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">Harmonized JSON</text>
-          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">PDF / TXT</text>
+          <rect x="0" y="0" width="120" height="100" rx="4" fill="#06070b" stroke="#38cfe8" strokeWidth="1.5" />
+          <text x="60" y="24" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#38cfe8">06. EXPORT</text>
+          <text x="60" y="44" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Patient Summary</text>
+          <text x="60" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">Harmonized JSON</text>
+          <text x="60" y="76" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">PDF / TXT</text>
         </g>
 
         {/* Row 2 - Left: Per-Document Flow (y = 175) */}
         <g id="per-doc-flow" transform="translate(40, 175)">
-          <rect x="0" y="0" width="260" height="160" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
-          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">PARALLEL EXTRACTION</text>
+          <rect x="0" y="0" width="260" height="160" rx="4" fill="#06070b" stroke="#12141d" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#38cfe8">PARALLEL EXTRACTION</text>
 
           <g transform="translate(12, 36)">
-            <rect x="0" y="0" width="236" height="34" rx="3" fill="#0D0E11" stroke="#2d9cdb" strokeWidth="1" />
+            <rect x="0" y="0" width="236" height="34" rx="3" fill="#0b0d13" stroke="#2d9cdb" strokeWidth="1" />
             <text x="118" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#2d9cdb">Doc 1..N Pathology Notes</text>
           </g>
 
           <g transform="translate(12, 82)">
-            <rect x="0" y="0" width="112" height="34" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
-            <text x="56" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">extract_each_doc()</text>
+            <rect x="0" y="0" width="112" height="34" rx="3" fill="#0b0d13" stroke="#12141d" strokeWidth="1" />
+            <text x="56" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">extract_each_doc()</text>
           </g>
 
           <g transform="translate(136, 82)">
-            <rect x="0" y="0" width="112" height="34" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
-            <text x="56" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">ThreadPoolExecutor</text>
+            <rect x="0" y="0" width="112" height="34" rx="3" fill="#0b0d13" stroke="#12141d" strokeWidth="1" />
+            <text x="56" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">ThreadPoolExecutor</text>
           </g>
 
-          <text x="12" y="142" fontFamily="var(--font-mono)" fontSize="8" fill="#5C4A2E">Concurrent multi-file RAG processing</text>
+          <text x="12" y="142" fontFamily="var(--font-mono)" fontSize="8" fill="#155e75">Concurrent multi-file RAG processing</text>
         </g>
 
         {/* Row 2 - Center: Harmonization Merge Strategies (y = 175) */}
         <g id="merge-strategies" transform="translate(320, 175)">
-          <rect x="0" y="0" width="330" height="160" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
-          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">MERGE STRATEGIES</text>
+          <rect x="0" y="0" width="330" height="160" rx="4" fill="#06070b" stroke="#12141d" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#38cfe8">MERGE STRATEGIES</text>
 
-          <g fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">
-            <text x="12" y="42" fill="#E8E1D2" fontWeight="600">IDENTITY:</text>
+          <g fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">
+            <text x="12" y="42" fill="#eceef4" fontWeight="600">IDENTITY:</text>
             <text x="75" y="42">first_non_null (name, age, gender)</text>
 
-            <text x="12" y="62" fill="#E8E1D2" fontWeight="600">TEXT:</text>
+            <text x="12" y="62" fill="#eceef4" fontWeight="600">TEXT:</text>
             <text x="75" y="62">prefer_longest_string (diagnosis, stage)</text>
 
-            <text x="12" y="82" fill="#E8E1D2" fontWeight="600">LIST:</text>
+            <text x="12" y="82" fill="#eceef4" fontWeight="600">LIST:</text>
             <text x="75" y="82">merge_biomarkers (unique by name)</text>
 
-            <text x="12" y="102" fill="#E8E1D2" fontWeight="600">STRING:</text>
+            <text x="12" y="102" fill="#eceef4" fontWeight="600">STRING:</text>
             <text x="75" y="102">merge_unique_strings (meds, AEs)</text>
 
-            <text x="12" y="122" fill="#E8E1D2" fontWeight="600">SINGLE:</text>
+            <text x="12" y="122" fill="#eceef4" fontWeight="600">SINGLE:</text>
             <text x="75" y="122">merge_numbers (ecog_score, labs)</text>
           </g>
         </g>
 
         {/* Row 2 - Right: Conflict Detection (y = 175) */}
         <g id="conflict-detection" transform="translate(670, 175)">
-          <rect x="0" y="0" width="290" height="160" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
-          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">CONFLICT DETECTION</text>
+          <rect x="0" y="0" width="290" height="160" rx="4" fill="#06070b" stroke="#12141d" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#38cfe8">CONFLICT DETECTION</text>
 
           <g transform="translate(12, 36)">
-            <rect x="0" y="0" width="266" height="32" rx="3" fill="#170A0C" stroke="#A51C30" strokeWidth="1" strokeDasharray="3 2" />
-            <text x="12" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30" fontWeight="600">IDENTITY FIELDS</text>
-            <text x="254" y="20" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30">HIGH SEVERITY</text>
+            <rect x="0" y="0" width="266" height="32" rx="3" fill="#170A0C" stroke="#8b7cf6" strokeWidth="1" strokeDasharray="3 2" />
+            <text x="12" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#8b7cf6" fontWeight="600">IDENTITY FIELDS</text>
+            <text x="254" y="20" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#8b7cf6">HIGH SEVERITY</text>
           </g>
 
           <g transform="translate(12, 76)">
-            <rect x="0" y="0" width="266" height="32" rx="3" fill="#170A0C" stroke="#A51C30" strokeWidth="1" strokeDasharray="3 2" />
-            <text x="12" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30" fontWeight="600">BIOMARKERS</text>
-            <text x="254" y="20" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#A51C30">HIGH SEVERITY</text>
+            <rect x="0" y="0" width="266" height="32" rx="3" fill="#170A0C" stroke="#8b7cf6" strokeWidth="1" strokeDasharray="3 2" />
+            <text x="12" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#8b7cf6" fontWeight="600">BIOMARKERS</text>
+            <text x="254" y="20" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#8b7cf6">HIGH SEVERITY</text>
           </g>
 
           <g transform="translate(12, 116)">
-            <rect x="0" y="0" width="266" height="30" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
-            <text x="12" y="19" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">OTHER FIELDS</text>
-            <text x="254" y="19" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">MEDIUM SEVERITY</text>
+            <rect x="0" y="0" width="266" height="30" rx="3" fill="#0b0d13" stroke="#12141d" strokeWidth="1" />
+            <text x="12" y="19" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">OTHER FIELDS</text>
+            <text x="254" y="19" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">MEDIUM SEVERITY</text>
           </g>
         </g>
 
         {/* Row 3 - Left: Clinical Schema (y = 365) */}
         <g id="clinical-schema" transform="translate(40, 365)">
-          <rect x="0" y="0" width="460" height="165" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
-          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">CLINICAL SCHEMA (Pydantic v2)</text>
+          <rect x="0" y="0" width="460" height="165" rx="4" fill="#06070b" stroke="#12141d" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#38cfe8">CLINICAL SCHEMA (Pydantic v2)</text>
 
-          <g fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">
+          <g fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">
             <text x="12" y="42">patient_name: str | None</text>
             <text x="12" y="60">age: int | None</text>
             <text x="12" y="78">gender: str | None</text>
@@ -358,34 +358,34 @@ export function OncoLinkDiagram({
 
         {/* Row 3 - Right: Biomarker Structure (y = 365) */}
         <g id="biomarker-structure" transform="translate(520, 365)">
-          <rect x="0" y="0" width="440" height="165" rx="4" fill="#07080A" stroke="#1A1A20" strokeWidth="1" />
-          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#C6A15B">BIOMARKER STRUCTURE</text>
+          <rect x="0" y="0" width="440" height="165" rx="4" fill="#06070b" stroke="#12141d" strokeWidth="1" />
+          <text x="12" y="22" fontFamily="var(--font-mono)" fontSize="10" fontWeight="600" fill="#38cfe8">BIOMARKER STRUCTURE</text>
 
           <g transform="translate(12, 36)">
-            <rect x="0" y="0" width="200" height="110" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
+            <rect x="0" y="0" width="200" height="110" rx="3" fill="#0b0d13" stroke="#12141d" strokeWidth="1" />
             <text x="10" y="22" fontFamily="var(--font-mono)" fontSize="8" fill="#10b981">class Biomarker(BaseModel):</text>
-            <text x="20" y="42" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">name: str</text>
-            <text x="20" y="60" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">value: str</text>
-            <text x="20" y="78" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">status: str # Pos/Neg/%</text>
+            <text x="20" y="42" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">name: str</text>
+            <text x="20" y="60" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">value: str</text>
+            <text x="20" y="78" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">status: str # Pos/Neg/%</text>
           </g>
 
           <g transform="translate(224, 36)">
-            <rect x="0" y="0" width="204" height="110" rx="3" fill="#0D0E11" stroke="#1A1A20" strokeWidth="1" />
-            <text x="10" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#E8E1D2" fontWeight="600">VALIDATED EXAMPLES:</text>
-            <text x="10" y="40" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">EGFR: &quot;Exon 19 del&quot; (Positive)</text>
-            <text x="10" y="58" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">ALK: &quot;Rearranged&quot; (Positive)</text>
-            <text x="10" y="76" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">PD-L1: &quot;TPS 65%&quot; (Percent)</text>
-            <text x="10" y="94" fontFamily="var(--font-mono)" fontSize="8" fill="#85858A">Ki-67: &quot;25%&quot; (Percent)</text>
+            <rect x="0" y="0" width="204" height="110" rx="3" fill="#0b0d13" stroke="#12141d" strokeWidth="1" />
+            <text x="10" y="20" fontFamily="var(--font-mono)" fontSize="8" fill="#eceef4" fontWeight="600">VALIDATED EXAMPLES:</text>
+            <text x="10" y="40" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">EGFR: &quot;Exon 19 del&quot; (Positive)</text>
+            <text x="10" y="58" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">ALK: &quot;Rearranged&quot; (Positive)</text>
+            <text x="10" y="76" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">PD-L1: &quot;TPS 65%&quot; (Percent)</text>
+            <text x="10" y="94" fontFamily="var(--font-mono)" fontSize="8" fill="#9ba0ad">Ki-67: &quot;25%&quot; (Percent)</text>
           </g>
         </g>
 
         {/* Row 4: Bottom Tech Stack & Note (y = 560) */}
         <g transform="translate(40, 560)">
-          <text x="0" y="16" fontFamily="var(--font-mono)" fontSize="8.5" fill="#85858A">
-            <tspan fill="#C6A15B" fontWeight="600">STACK: </tspan>
+          <text x="0" y="16" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ba0ad">
+            <tspan fill="#38cfe8" fontWeight="600">STACK: </tspan>
             Python 3.11+ · Streamlit · NVIDIA NIM (Nemotron-3 Ultra) · Pydantic v2 · PyMuPDF · python-docx · fpdf2
           </text>
-          <text x="920" y="16" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#5C4A2E">
+          <text x="920" y="16" textAnchor="end" fontFamily="var(--font-mono)" fontSize="8" fill="#155e75">
             Demonstration AI clinical platform architecture.
           </text>
         </g>

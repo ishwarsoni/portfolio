@@ -138,7 +138,7 @@ export function DatacleanrDiagram({
       >
         <defs>
           <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#07080a" />
+            <stop offset="0%" stopColor="#06070b" />
             <stop offset="100%" stopColor="#0b0c0e" />
           </linearGradient>
           <linearGradient id="signal-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -146,8 +146,8 @@ export function DatacleanrDiagram({
             <stop offset="100%" stopColor="#a855f7" />
           </linearGradient>
           <linearGradient id="engine-bg" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#0d0e10" />
-            <stop offset="100%" stopColor="#111317" />
+            <stop offset="0%" stopColor="#0b0d13" />
+            <stop offset="100%" stopColor="#12141d" />
           </linearGradient>
           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="coloredBlur" />
@@ -164,21 +164,21 @@ export function DatacleanrDiagram({
             </feMerge>
           </filter>
           <pattern id="grid-pattern" width="8" height="8" patternUnits="userSpaceOnUse">
-            <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#1a1c20" strokeWidth="0.5" />
+            <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#12141d" strokeWidth="0.5" />
           </pattern>
         </defs>
 
         {/* Outer Frame */}
         <rect width="760" height="520" fill="url(#bg-gradient)" rx="8" />
         <rect width="760" height="520" fill="url(#grid-pattern)" opacity="0.3" rx="8" />
-        <rect width="760" height="520" fill="none" stroke="#1a1c20" strokeWidth="1" rx="8" />
+        <rect width="760" height="520" fill="none" stroke="#12141d" strokeWidth="1" rx="8" />
 
         {/* TOP: Pipeline Stepper Flow (y = 40) */}
         <g className="pipeline-flow">
           <path
             d="M 80 40 L 680 40"
             fill="none"
-            stroke="#1a1c20"
+            stroke="#12141d"
             strokeWidth="2"
             strokeDasharray="8 6"
             opacity="0.5"
@@ -193,8 +193,8 @@ export function DatacleanrDiagram({
                   cx="0"
                   cy="0"
                   r="8"
-                  fill="#0d0e10"
-                  stroke="#2a2d34"
+                  fill="#0b0d13"
+                  stroke="#1e2230"
                   strokeWidth="2"
                   filter="url(#glow)"
                 />
@@ -223,8 +223,8 @@ export function DatacleanrDiagram({
         {/* MIDDLE ROW: Data Cleaning Core (y = 80 to 250) */}
         {/* Left: Raw DataFrame Preview */}
         <g transform="translate(40, 80)">
-          <rect x="0" y="0" width="320" height="170" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="6" />
-          <rect x="0" y="0" width="320" height="28" fill="#111317" stroke="#1a1c20" strokeWidth="1" rx="6" />
+          <rect x="0" y="0" width="320" height="170" fill="#0b0d13" stroke="#12141d" strokeWidth="1" rx="6" />
+          <rect x="0" y="0" width="320" height="28" fill="#12141d" stroke="#12141d" strokeWidth="1" rx="6" />
           <text x="12" y="18" fontFamily="var(--font-mono)" fontSize="10" fontWeight={600} fill="#f87171">RAW DATAFRAME (DIRTY INPUT)</text>
           <text x="308" y="18" textAnchor="end" fontFamily="var(--font-mono)" fontSize="9" fill="#6b7280">5 × 4</text>
 
@@ -237,8 +237,8 @@ export function DatacleanrDiagram({
                     y="0"
                     width="70"
                     height="18"
-                    fill={ri === 0 ? "#1a1c20" : cell === null ? "#371d1d" : "#0d0e10"}
-                    stroke="#1a1c20"
+                    fill={ri === 0 ? "#12141d" : cell === null ? "#371d1d" : "#0b0d13"}
+                    stroke="#12141d"
                     strokeWidth={0.5}
                   />
                   <text
@@ -266,7 +266,7 @@ export function DatacleanrDiagram({
         {/* Right: Cleaning Engine - 2x2 Grid */}
         <g transform="translate(380, 80)">
           <rect x="0" y="0" width="340" height="170" fill="url(#engine-bg)" stroke="#22d3ee" strokeWidth="1" rx="6" filter="url(#soft-glow)" />
-          <rect x="0" y="0" width="340" height="28" fill="#111317" stroke="#22d3ee" strokeWidth="1" rx="6" />
+          <rect x="0" y="0" width="340" height="28" fill="#12141d" stroke="#22d3ee" strokeWidth="1" rx="6" />
           <text x="170" y="18" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fontWeight={600} fill="#22d3ee">CLEANING ENGINE MODULES</text>
 
           <g transform="translate(12, 40)">
@@ -277,7 +277,7 @@ export function DatacleanrDiagram({
               const y = row * 58;
               return (
                 <g key={stage.label} className="engine-stage" transform={`translate(${x}, ${y})`} opacity={0}>
-                  <rect x="0" y="0" width="148" height="48" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="4" />
+                  <rect x="0" y="0" width="148" height="48" fill="#0b0d13" stroke="#12141d" strokeWidth="1" rx="4" />
                   <svg x="8" y="10" width="14" height="14" viewBox="0 0 24 24">
                     <path d={stage.icon} fill="none" stroke="#22d3ee" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -291,8 +291,8 @@ export function DatacleanrDiagram({
 
         {/* LOWER ROW: Validation & Clean Output DataFrame (y = 275 to 435) */}
         <g transform="translate(40, 275)">
-          <rect x="0" y="0" width="680" height="150" fill="#0d0e10" stroke="#1a1c20" strokeWidth="1" rx="6" />
-          <rect x="0" y="0" width="680" height="28" fill="#111317" stroke="#1a1c20" strokeWidth="1" rx="6" />
+          <rect x="0" y="0" width="680" height="150" fill="#0b0d13" stroke="#12141d" strokeWidth="1" rx="6" />
+          <rect x="0" y="0" width="680" height="28" fill="#12141d" stroke="#12141d" strokeWidth="1" rx="6" />
           <text x="12" y="18" fontFamily="var(--font-mono)" fontSize="10" fontWeight={600} fill="#22d3ee">VALIDATION & CLEAN OUTPUT</text>
 
           <g transform="translate(12, 38)">
@@ -307,7 +307,7 @@ export function DatacleanrDiagram({
           </g>
 
           <g transform="translate(12, 58)">
-            <line x1="0" y1="0" x2="656" y2="0" stroke="#1a1c20" strokeWidth="1" opacity="0.6" />
+            <line x1="0" y1="0" x2="656" y2="0" stroke="#12141d" strokeWidth="1" opacity="0.6" />
           </g>
 
           <g transform="translate(12, 68)">
@@ -350,7 +350,7 @@ export function DatacleanrDiagram({
           <g transform="translate(50, 0)">
             {TECH_STACK.map((tech, i) => (
               <g key={tech} transform={`translate(${i * 100}, 0)`}>
-                <rect x="0" y="0" width="92" height="22" rx="3" fill="#111317" stroke="#2a2d34" strokeWidth="1" />
+                <rect x="0" y="0" width="92" height="22" rx="3" fill="#12141d" stroke="#1e2230" strokeWidth="1" />
                 <text x="46" y="14" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8.5" fill="#9ca3af">{tech}</text>
               </g>
             ))}

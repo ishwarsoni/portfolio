@@ -3,19 +3,19 @@
 import { forwardRef, HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
-type DividerVariant = "bronze" | "gold" | "gold-thick" | "crimson";
+type DividerVariant = "subtle" | "accent" | "accent-thick" | "violet";
 
 interface DividerProps extends HTMLAttributes<HTMLHRElement> {
   variant?: DividerVariant;
 }
 
 export const Divider = forwardRef<HTMLHRElement, DividerProps>(
-  ({ className, variant = "bronze", ...props }, ref) => {
+  ({ className, variant = "subtle", ...props }, ref) => {
     const variants = {
-      bronze: "bronze-rule",
-      gold: "gold-rule",
-      "gold-thick": "gold-rule-thick",
-      crimson: "h-px w-full bg-gradient-to-r from-transparent via-crimson/30 to-transparent",
+      subtle: "accent-rule-subtle",
+      accent: "accent-rule",
+      "accent-thick": "accent-rule-thick",
+      violet: "h-px w-full bg-gradient-to-r from-transparent via-violet/30 to-transparent",
     };
 
     return (
